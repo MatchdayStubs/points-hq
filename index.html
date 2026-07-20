@@ -1168,7 +1168,12 @@ function renderChart(){
         ctx.strokeStyle = mk.color; ctx.lineWidth = 1.2; ctx.setLineDash([3,3]);
         ctx.beginPath(); ctx.moveTo(x, chartArea.top); ctx.lineTo(x, chartArea.bottom); ctx.stroke();
         ctx.setLineDash([]);
-        ctx.fillStyle = mk.color; ctx.font = "700 9px Inter, sans-serif"; ctx.textAlign = "center";
+        ctx.fillStyle = mk.color; ctx.font = "700 9px Inter, sans-serif";
+        // keep the label inside the plot: right-align near the right edge, left-align near the left
+        const halfW = ctx.measureText(mk.text).width / 2;
+        if (x + halfW > chartArea.right){ ctx.textAlign = "right"; }
+        else if (x - halfW < chartArea.left){ ctx.textAlign = "left"; }
+        else { ctx.textAlign = "center"; }
         ctx.fillText(mk.text, x, chartArea.top - 4);
         ctx.restore();
       });
