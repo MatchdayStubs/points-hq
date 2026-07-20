@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="color-scheme" content="light dark" />
-<title>Points HQ — Hayden &amp; Tammy</title>
+<title>Points HQ — Hayden &amp; Tami</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -390,15 +390,8 @@
                   font-size: 12px; line-height: 1.5; border: 1px solid var(--border-strong); border-radius: 12px;
                   padding: 12px; background: var(--surface-2); color: var(--text); resize: vertical; }
 
-  /* ---- FORECAST CONTROLS ---- */
-  .fc-controls { display: flex; align-items: center; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
-  .fc-controls > label { font-size: 12px; font-weight: 600; color: var(--text-2); }
-  .fc-input-wrap { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 220px; }
-  .fc-input-wrap input[type=range] { flex: 1; min-width: 120px; accent-color: var(--accent); height: 4px; }
-  .fc-input-wrap input[type=number] { width: 92px; text-align: right; font: inherit; font-weight: 700; font-size: 14px;
-    padding: 7px 9px; border-radius: 9px; border: 1px solid var(--border-strong); background: var(--surface-2); color: var(--text); }
-  .fc-unit { font-size: 12px; color: var(--text-3); white-space: nowrap; }
-  .fc-readout { display: flex; flex-direction: column; gap: 6px; margin-top: 14px; }
+  /* ---- FORECAST READOUT ---- */
+  .fc-readout { display: flex; flex-direction: column; gap: 6px; margin-top: 16px; }
   .fc-line { font-size: 12.5px; font-weight: 600; padding: 9px 12px; border-radius: 10px; line-height: 1.4; }
   .fc-line.ok { background: var(--ok-bg); color: var(--ok); }
   .fc-line.bad { background: var(--bad-bg); color: var(--bad); }
@@ -471,16 +464,8 @@
         <canvas id="trajChart"></canvas>
         <div id="chartFallback" class="chart-fallback" style="display:none">Chart couldn't load — see the history table below.</div>
       </div>
-      <div class="fc-controls">
-        <label for="earnInput">Assumed monthly earn</label>
-        <div class="fc-input-wrap">
-          <input type="range" id="earnRange" min="0" max="60000" step="1000" aria-label="Monthly earn slider" />
-          <input type="number" id="earnInput" class="num" min="0" step="1000" aria-label="Monthly earn (Avios)" />
-          <span class="fc-unit">Avios / mo</span>
-        </div>
-      </div>
       <div id="forecastReadout" class="fc-readout"></div>
-      <p class="fc-help">Projection anchors at today's pooled total, adds your monthly earn plus known welcome bonuses, and subtracts the NYC redemption in Jan 2027. Drag the slider to match your real spend — the whole forecast and both verdicts update live.</p>
+      <p class="fc-help" id="fcHelp"></p>
     </div>
   </section>
 
@@ -557,33 +542,33 @@
    to GitHub Pages to publish new numbers to both phones.
    ============================================================ */
 const DATA = {
-  household: "Hayden & Tammy — Points HQ",
+  household: "Hayden & Tami — Points HQ",
   lastUpdated: "2026-07-20",
   people: [
     {
       name: "Hayden",
       balances: { avios: 1500, virgin: 0, amexMR: 0, hilton: 120000, nectar: 0 },
-      note: "Amex Platinum ordered via Tammy's referral — 80k MR welcome incoming (+£250 credit). Hilton Gold via work stays (~60 nights/yr)."
+      note: "Amex Platinum ordered via Tami's referral — 80k MR welcome incoming (+£250 credit). Hilton Gold via work stays (~60 nights/yr)."
     },
     {
-      name: "Tammy",
+      name: "Tami",
       balances: { avios: 27500, virgin: 5000, amexMR: 75000, hilton: 0, nectar: 0 },
       note: "Ordering BA Amex Premium Plus (the 2-4-1 card). Keeps Amex Gold. Second earner: Barclaycard Avios Plus."
     }
   ],
   gates: [
-    { id: "ny",    name: "New York — Club",  targetAvios: 187000, deadline: "2027-01-31", priority: false, extra: "Needs Tammy's BA Amex 2-4-1 voucher in hand" },
+    { id: "ny",    name: "New York — Club",  targetAvios: 187000, deadline: "2027-01-31", priority: false, extra: "Needs Tami's BA Amex 2-4-1 voucher in hand" },
     { id: "tokyo", name: "Tokyo — Qatar business", targetAvios: 320000, deadline: "2027-05-31", priority: true,  extra: "PRIORITY. Book from Birmingham (787-8, not full Qsuite). ~£600 cash." }
   ],
   cards: [
     { owner: "Hayden", name: "Barclaycard Avios Plus", fee: "£240/yr (£20/mo)", earn: "1.5 Avios/£", status: "Active — everyday engine", perk: "Cabin upgrade voucher or 7k Avios at £10k/yr spend", spendYTD: null, spendTarget: 10000 },
-    { owner: "Hayden", name: "Amex Platinum", fee: "£650/yr", earn: "1 MR/£ (more on travel)", status: "Ordered (via Tammy referral)", perk: "80k MR welcome + £250 travel credit; Hilton & Marriott Gold; lounges", welcomeBonus: 80000, welcomeSpendTarget: 6000, spendYTD: 0 },
-    { owner: "Tammy", name: "Amex Preferred Rewards Gold", fee: "£195 (free yr1)", earn: "1 MR/£", status: "Active — MR tank + referrals", perk: "Lounge passes, dining credits" },
-    { owner: "Tammy", name: "BA Amex Premium Plus", fee: "£300/yr", earn: "1.5 Avios/£ (3 on BA)", status: "Ordering", perk: "2-4-1 ANY-CABIN companion voucher at £15k/yr spend (valid 2yr)", welcomeBonus: 30000, welcomeSpendTarget: 6000, spendYTD: 0, voucherSpendTarget: 15000 },
-    { owner: "Tammy", name: "Barclaycard Avios Plus", fee: "£240/yr", earn: "1.5 Avios/£", status: "Planned (2nd earner)", perk: "Cabin upgrade voucher at £10k/yr" }
+    { owner: "Hayden", name: "Amex Platinum", fee: "£650/yr", earn: "1 MR/£ (more on travel)", status: "Ordered (via Tami referral)", perk: "80k MR welcome + £250 travel credit; Hilton & Marriott Gold; lounges", welcomeBonus: 80000, welcomeSpendTarget: 6000, spendYTD: 0 },
+    { owner: "Tami", name: "Amex Preferred Rewards Gold", fee: "£195 (free yr1)", earn: "1 MR/£", status: "Active — MR tank + referrals", perk: "Lounge passes, dining credits" },
+    { owner: "Tami", name: "BA Amex Premium Plus", fee: "£300/yr", earn: "1.5 Avios/£ (3 on BA)", status: "Ordering", perk: "2-4-1 ANY-CABIN companion voucher at £15k/yr spend (valid 2yr)", welcomeBonus: 30000, welcomeSpendTarget: 6000, spendYTD: 0, voucherSpendTarget: 15000 },
+    { owner: "Tami", name: "Barclaycard Avios Plus", fee: "£240/yr", earn: "1.5 Avios/£", status: "Planned (2nd earner)", perk: "Cabin upgrade voucher at £10k/yr" }
   ],
   vouchers: [
-    { name: "BA Amex 2-4-1 (Premium Plus)", owner: "Tammy", earnedBy: "£15k/yr on Premium Plus", status: "Not yet earned", value: "2 people, any cabin, one person's Avios; valid 2yr", targetForGate: "ny" },
+    { name: "BA Amex 2-4-1 (Premium Plus)", owner: "Tami", earnedBy: "£15k/yr on Premium Plus", status: "Not yet earned", value: "2 people, any cabin, one person's Avios; valid 2yr", targetForGate: "ny" },
     { name: "Barclaycard cabin upgrade", owner: "Hayden", earnedBy: "£10k/yr on Avios Plus", status: "In progress", value: "Bump a reward booking up one cabin (backup lever)" },
     { name: "Hilton 5th night free", owner: "Hayden", earnedBy: "Any Hilton status", status: "Available", value: "On 5-night award stays" }
   ],
@@ -605,17 +590,21 @@ const DATA = {
   ],
   history: [
     { month: "2026-07", name: "Hayden", avios: 1500, virgin: 0, amexMR: 0, hilton: 120000, nectar: 0 },
-    { month: "2026-07", name: "Tammy", avios: 27500, virgin: 5000, amexMR: 75000, hilton: 0, nectar: 0 }
+    { month: "2026-07", name: "Tami", avios: 27500, virgin: 5000, amexMR: 75000, hilton: 0, nectar: 0 }
   ],
-  // ---- FORECAST MODEL (editable assumptions; drives the projection chart) ----
+  // ============================================================================
+  // FORECAST ASSUMPTIONS  ——  this is your editable "spreadsheet".
+  // Change any number/month/amount here, then commit & push to update the chart.
+  // Nothing is adjustable on the page itself; the forecast always reflects these.
+  // ============================================================================
   forecast: {
-    monthlyEarn: 30000,          // pooled Avios earned per month from ongoing card spend (tune to real spend)
-    horizon: "2027-05",          // project through the Tokyo booking month
-    oneOffs: [                   // welcome bonuses / big lumps landing in a specific month
+    monthlyEarn: 30000,          // ongoing pooled Avios earned per month from everyday card spend
+    horizon: "2027-05",          // last month to project to (the Tokyo booking)
+    oneOffs: [                   // welcome bonuses / one-off lumps, each in the month it posts
       { month: "2026-09", label: "Platinum welcome", amount: 80000 },
-      { month: "2026-11", label: "BA PP welcome", amount: 30000 }
+      { month: "2026-11", label: "BA PP welcome",    amount: 30000 }
     ],
-    redemptions: [               // gate bookings that spend down the pool
+    redemptions: [               // gate bookings that spend the pool down (gateId links to a gate)
       { month: "2027-01", gateId: "ny", label: "NYC booking", amount: 187000 }
     ]
   }
@@ -725,7 +714,6 @@ function render(){
   renderOffers();
   renderNextAction();
   renderFootNote();
-  initForecastControls();
   renderChart();
 }
 
@@ -1003,7 +991,7 @@ function renderNextAction(){
 
   let ic = "🎯", msg = "", sub = "";
   if (v241 && !voucherEarned(v241)){
-    ic = "💳"; msg = "Get Tammy's Premium Plus to £15k to unlock the 2-4-1 voucher.";
+    ic = "💳"; msg = "Get Tami's Premium Plus to £15k to unlock the 2-4-1 voucher.";
     sub = "That companion voucher is the key that makes the New York gate work.";
   } else if (tokProg && tokProg.status !== "ok"){
     ic = "✈️"; msg = `Tokyo (priority) is short by ${fmt(tokProg.shortfall)} Avios — keep the earn engines running.`;
@@ -1095,13 +1083,19 @@ function renderForecastReadout(){
     return `<span class="fc-line ${onTime?"ok":"bad"}">${onTime?"✓":"✗"} ${name}: forecast reaches ${fmt(g.targetAvios)} by <b>${formatMonth(hit.month)}</b> — ${onTime?"on track for "+shortMonth(g.deadline):"MISSES the "+shortMonth(g.deadline)+" deadline"}</span>`;
   });
   el.innerHTML = lines.join("");
-}
 
-function initForecastControls(){
-  const v = (state.forecast && Number(state.forecast.monthlyEarn)) || 0;
-  const r = document.getElementById("earnRange"), i = document.getElementById("earnInput");
-  if (r) r.value = Math.min(Number(r.max), v);
-  if (i) i.value = v;
+  // Plain-English summary of the assumptions driving the forecast (read from DATA.forecast).
+  const help = document.getElementById("fcHelp");
+  if (help){
+    const f = state.forecast || {};
+    const bonuses = (f.oneOffs||[]).map(o => `${o.label} +${fmt(o.amount)} (${shortMonth(o.month)})`).join(", ");
+    const reds = (f.redemptions||[]).map(r => `${r.label} −${fmt(r.amount)} (${shortMonth(r.month)})`).join(", ");
+    help.innerHTML =
+      `Assumptions (edit in the <code>DATA.forecast</code> block, then commit): ongoing earn <b>${fmt(f.monthlyEarn||0)} Avios/mo</b>` +
+      (bonuses ? ` · welcome bonuses ${bonuses}` : "") +
+      (reds ? ` · redemptions ${reds}` : "") +
+      `. Projection anchors at today's pooled total and rolls forward to ${f.horizon?shortMonth(f.horizon):"the horizon"}.`;
+  }
 }
 
 function renderChart(){
@@ -1371,22 +1365,6 @@ function boot(){
   document.getElementById("copyBtn2").addEventListener("click", copyData);
   document.getElementById("exportBtn").addEventListener("click", exportJSON);
   document.getElementById("importBtn").addEventListener("click", importJSON);
-
-  // forecast earn controls
-  const earnRange = document.getElementById("earnRange");
-  const earnInput = document.getElementById("earnInput");
-  function setEarn(v){
-    v = Math.max(0, Math.round(Number(v)||0));
-    state.forecast = state.forecast || {};
-    state.forecast.monthlyEarn = v;
-    earnRange.value = Math.min(Number(earnRange.max), v);
-    earnInput.value = v;
-    saveDraft();
-    renderChart();
-  }
-  earnRange.addEventListener("input", e => setEarn(e.target.value));
-  earnInput.addEventListener("input", e => setEarn(e.target.value));
-  initForecastControls();
 
   document.getElementById("modalClose").addEventListener("click", closeModal);
   document.getElementById("modalBack").addEventListener("click", e => { if (e.target.id==="modalBack") closeModal(); });
