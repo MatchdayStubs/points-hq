@@ -616,7 +616,7 @@ const DATA = {
       { month: "2026-11", label: "BA PP welcome", amount: 30000 }
     ],
     redemptions: [               // gate bookings that spend down the pool
-      { month: "2027-01", label: "NYC booking", amount: 187000 }
+      { month: "2027-01", gateId: "ny", label: "NYC booking", amount: 187000 }
     ]
   }
 };
@@ -1078,18 +1078,23 @@ function renderForecastReadout(){
   if (!el) return;
   const fc = forecastModel();
   const series = [{ month: fc.startMonth, bal: fc.startVal }].concat(fc.points);
-  const crossing = target => { const hit = series.find(pt => pt.bal >= target); return hit ? hit.month : null; };
-  const line = gate => {
-    if (!gate) return "";
-    const name = gate.name.split("—")[0].trim();
-    const hitMonth = crossing(gate.targetAvios);
-    const deadlineMonth = gate.deadline.slice(0,7);
-    if (!hitMonth)
-      return `<span class="fc-line bad">✗ ${name}: forecast never reaches ${fmt(gate.targetAvios)} — needs more monthly earn</span>`;
-    const onTime = hitMonth <= deadlineMonth;
-    return `<span class="fc-line ${onTime?"ok":"bad"}">${onTime?"✓":"✗"} ${name}: forecast hits ${fmt(gate.targetAvios)} in <b>${formatMonth(hitMonth)}</b> — ${onTime?"on track for "+shortMonth(gate.deadline):"MISSES the "+shortMonth(gate.deadline)+" deadline"}</span>`;
-  };
-  el.innerHTML = line(state.gates.find(g=>g.id==="ny")) + line(state.gates.find(g=>g.id==="tokyo"));
+  const reds = (state.forecast && state.forecast.redemptions) || [];
+  // Gates are SEQUENTIAL: each gate can only be funded from the month after the
+  // previous gate's redemption spends the pool down. Search windows advance in order.
+  const gatesByDeadline = [...state.gates].sort((a,b)=>a.deadline.localeCompare(b.deadline));
+  let searchFrom = fc.startMonth;
+  const lines = gatesByDeadline.map(g => {
+    const name = g.name.split("—")[0].trim();
+    const hit = series.find(pt => pt.month >= searchFrom && pt.bal >= g.targetAvios);
+    const red = reds.find(r => r.gateId === g.id);
+    if (red) searchFrom = nextMonth(red.month);   // next gate rebuilds after this booking
+    const deadlineMonth = g.deadline.slice(0,7);
+    if (!hit)
+      return `<span class="fc-line bad">✗ ${name}: forecast never rebuilds to ${fmt(g.targetAvios)} in time — increase monthly earn</span>`;
+    const onTime = hit.month <= deadlineMonth;
+    return `<span class="fc-line ${onTime?"ok":"bad"}">${onTime?"✓":"✗"} ${name}: forecast reaches ${fmt(g.targetAvios)} by <b>${formatMonth(hit.month)}</b> — ${onTime?"on track for "+shortMonth(g.deadline):"MISSES the "+shortMonth(g.deadline)+" deadline"}</span>`;
+  });
+  el.innerHTML = lines.join("");
 }
 
 function initForecastControls(){
