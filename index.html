@@ -9,398 +9,327 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <style>
-  /* ============================================================
-     THEME TOKENS
-     ============================================================ */
   :root {
-    --bg: #f4f6f8;
-    --bg-2: #eef1f4;
-    --surface: #ffffff;
-    --surface-2: #f8fafb;
-    --border: #e3e8ee;
-    --border-strong: #d3dae2;
-    --text: #131a24;
-    --text-2: #566172;
-    --text-3: #8a94a3;
-    --accent: #0e7c86;        /* petrol/teal accent */
-    --accent-soft: #d7eef0;
-    --shadow: 0 1px 2px rgba(16,32,48,.05), 0 8px 24px rgba(16,32,48,.06);
-    --shadow-lg: 0 2px 4px rgba(16,32,48,.06), 0 18px 44px rgba(16,32,48,.12);
-    --radius: 16px;
-    --radius-sm: 12px;
-
-    /* currency colours */
-    --c-avios: #0e7c86;
-    --c-avios-bg: #d7eef0;
-    --c-virgin: #d1213a;
-    --c-virgin-bg: #fbdfe3;
-    --c-mr: #1f3a93;
-    --c-mr-bg: #dde3f7;
-    --c-hilton: #12294d;
-    --c-hilton-bg: #e0d7b8;
-    --c-nectar: #7a3aa0;
-    --c-nectar-bg: #ecdcf5;
-
-    /* status */
-    --ok: #1a7f4b;
-    --ok-bg: #d8f0e2;
-    --warn: #9a6400;
-    --warn-bg: #fbeecb;
-    --bad: #b3261e;
-    --bad-bg: #fbdedb;
-    --live: #1a7f4b;
-    --live-bg: #d8f0e2;
-    --watch: #9a6400;
-    --watch-bg: #fbeecb;
-    --expired: #6b7684;
-    --expired-bg: #e7ebef;
+    --bg:#f4f6f8; --bg-2:#eef1f4; --surface:#fff; --surface-2:#f8fafb;
+    --border:#e3e8ee; --border-strong:#d3dae2;
+    --text:#131a24; --text-2:#566172; --text-3:#8a94a3;
+    --accent:#0e7c86; --accent-soft:#d7eef0;
+    --shadow:0 1px 2px rgba(16,32,48,.05), 0 8px 24px rgba(16,32,48,.06);
+    --shadow-lg:0 2px 4px rgba(16,32,48,.06), 0 18px 44px rgba(16,32,48,.12);
+    --radius:16px; --radius-sm:12px;
+    --c-avios:#0e7c86; --c-avios-bg:#d7eef0;
+    --c-virgin:#d1213a; --c-virgin-bg:#fbdfe3;
+    --c-mr:#1f3a93; --c-mr-bg:#dde3f7;
+    --c-hilton:#12294d; --c-hilton-bg:#e0d7b8;
+    --c-nectar:#7a3aa0; --c-nectar-bg:#ecdcf5;
+    --ok:#1a7f4b; --ok-bg:#d8f0e2;
+    --warn:#9a6400; --warn-bg:#fbeecb;
+    --bad:#b3261e; --bad-bg:#fbdedb;
+    --live:#1a7f4b; --live-bg:#d8f0e2;
+    --watch:#9a6400; --watch-bg:#fbeecb;
+    --expired:#6b7684; --expired-bg:#e7ebef;
+    --cat-fee:#1f3a93; --cat-fee-bg:#dde3f7;
+    --cat-tax:#b3261e; --cat-tax-bg:#fbdedb;
+    --cat-boost:#7a3aa0; --cat-boost-bg:#ecdcf5;
   }
-
-  :root[data-theme="dark"], html.dark {
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #0c1117;
-      --bg-2: #0f151c;
-      --surface: #161d26;
-      --surface-2: #1b232d;
-      --border: #263141;
-      --border-strong: #33414f;
-      --text: #eef2f7;
-      --text-2: #a4b0bf;
-      --text-3: #74808f;
-      --accent: #34c0cc;
-      --accent-soft: #123338;
-      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.4);
-      --shadow-lg: 0 2px 6px rgba(0,0,0,.4), 0 22px 50px rgba(0,0,0,.55);
-
-      --c-avios: #34c0cc; --c-avios-bg: #123338;
-      --c-virgin: #ff5f73; --c-virgin-bg: #3d1a20;
-      --c-mr: #6d8bff; --c-mr-bg: #1a2445;
-      --c-hilton: #d8c98a; --c-hilton-bg: #2b2a1a;
-      --c-nectar: #c48ee0; --c-nectar-bg: #2c1c38;
-
-      --ok: #4fd08a; --ok-bg: #123326;
-      --warn: #f0c060; --warn-bg: #33280f;
-      --bad: #ff7369; --bad-bg: #3a1815;
-      --live: #4fd08a; --live-bg: #123326;
-      --watch: #f0c060; --watch-bg: #33280f;
-      --expired: #97a3b2; --expired-bg: #232c37;
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0c1117; --bg-2:#0f151c; --surface:#161d26; --surface-2:#1b232d;
+      --border:#263141; --border-strong:#33414f;
+      --text:#eef2f7; --text-2:#a4b0bf; --text-3:#74808f;
+      --accent:#34c0cc; --accent-soft:#123338;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.4);
+      --shadow-lg:0 2px 6px rgba(0,0,0,.4), 0 22px 50px rgba(0,0,0,.55);
+      --c-avios:#34c0cc; --c-avios-bg:#123338;
+      --c-virgin:#ff5f73; --c-virgin-bg:#3d1a20;
+      --c-mr:#6d8bff; --c-mr-bg:#1a2445;
+      --c-hilton:#d8c98a; --c-hilton-bg:#2b2a1a;
+      --c-nectar:#c48ee0; --c-nectar-bg:#2c1c38;
+      --ok:#4fd08a; --ok-bg:#123326; --warn:#f0c060; --warn-bg:#33280f;
+      --bad:#ff7369; --bad-bg:#3a1815;
+      --live:#4fd08a; --live-bg:#123326; --watch:#f0c060; --watch-bg:#33280f;
+      --expired:#97a3b2; --expired-bg:#232c37;
+      --cat-fee:#6d8bff; --cat-fee-bg:#1a2445;
+      --cat-tax:#ff7369; --cat-tax-bg:#3a1815;
+      --cat-boost:#c48ee0; --cat-boost-bg:#2c1c38;
     }
   }
-  /* explicit override wins over media query */
-  :root[data-theme="dark"] {
-    --bg: #0c1117; --bg-2: #0f151c; --surface: #161d26; --surface-2: #1b232d;
-    --border: #263141; --border-strong: #33414f;
-    --text: #eef2f7; --text-2: #a4b0bf; --text-3: #74808f;
-    --accent: #34c0cc; --accent-soft: #123338;
-    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.4);
-    --shadow-lg: 0 2px 6px rgba(0,0,0,.4), 0 22px 50px rgba(0,0,0,.55);
-    --c-avios: #34c0cc; --c-avios-bg: #123338;
-    --c-virgin: #ff5f73; --c-virgin-bg: #3d1a20;
-    --c-mr: #6d8bff; --c-mr-bg: #1a2445;
-    --c-hilton: #d8c98a; --c-hilton-bg: #2b2a1a;
-    --c-nectar: #c48ee0; --c-nectar-bg: #2c1c38;
-    --ok: #4fd08a; --ok-bg: #123326;
-    --warn: #f0c060; --warn-bg: #33280f;
-    --bad: #ff7369; --bad-bg: #3a1815;
-    --live: #4fd08a; --live-bg: #123326;
-    --watch: #f0c060; --watch-bg: #33280f;
-    --expired: #97a3b2; --expired-bg: #232c37;
+  :root[data-theme="dark"]{
+    --bg:#0c1117; --bg-2:#0f151c; --surface:#161d26; --surface-2:#1b232d;
+    --border:#263141; --border-strong:#33414f;
+    --text:#eef2f7; --text-2:#a4b0bf; --text-3:#74808f;
+    --accent:#34c0cc; --accent-soft:#123338;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.4);
+    --shadow-lg:0 2px 6px rgba(0,0,0,.4), 0 22px 50px rgba(0,0,0,.55);
+    --c-avios:#34c0cc; --c-avios-bg:#123338;
+    --c-virgin:#ff5f73; --c-virgin-bg:#3d1a20;
+    --c-mr:#6d8bff; --c-mr-bg:#1a2445;
+    --c-hilton:#d8c98a; --c-hilton-bg:#2b2a1a;
+    --c-nectar:#c48ee0; --c-nectar-bg:#2c1c38;
+    --ok:#4fd08a; --ok-bg:#123326; --warn:#f0c060; --warn-bg:#33280f;
+    --bad:#ff7369; --bad-bg:#3a1815;
+    --live:#4fd08a; --live-bg:#123326; --watch:#f0c060; --watch-bg:#33280f;
+    --expired:#97a3b2; --expired-bg:#232c37;
+    --cat-fee:#6d8bff; --cat-fee-bg:#1a2445;
+    --cat-tax:#ff7369; --cat-tax-bg:#3a1815;
+    --cat-boost:#c48ee0; --cat-boost-bg:#2c1c38;
   }
-  :root[data-theme="light"] {
-    --bg: #f4f6f8; --bg-2: #eef1f4; --surface: #ffffff; --surface-2: #f8fafb;
-    --border: #e3e8ee; --border-strong: #d3dae2;
-    --text: #131a24; --text-2: #566172; --text-3: #8a94a3;
-    --accent: #0e7c86; --accent-soft: #d7eef0;
-  }
-
-  * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; }
-  body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.45;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    overflow-x: hidden;
-  }
-  .num { font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
-  h1,h2,h3 { margin: 0; font-weight: 700; letter-spacing: -.01em; }
-
-  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px 64px; }
-
-  /* ============================================================
-     HEADER
-     ============================================================ */
-  header.top {
-    position: sticky; top: 0; z-index: 50;
-    background: color-mix(in srgb, var(--bg) 82%, transparent);
-    backdrop-filter: saturate(180%) blur(14px);
-    -webkit-backdrop-filter: saturate(180%) blur(14px);
-    border-bottom: 1px solid var(--border);
-  }
-  .top-inner {
-    max-width: 1120px; margin: 0 auto; padding: 10px 16px;
-    display: flex; align-items: center; gap: 10px;
-  }
-  .brand { display: flex; flex-direction: column; min-width: 0; }
-  .brand .name { font-size: 15px; font-weight: 800; letter-spacing: -.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .brand .sub { font-size: 11px; color: var(--text-3); white-space: nowrap; }
-  .top-actions { margin-left: auto; display: flex; align-items: center; gap: 8px; }
-
-  .btn {
-    appearance: none; border: 1px solid var(--border-strong); background: var(--surface);
-    color: var(--text); font: inherit; font-size: 13px; font-weight: 600;
-    padding: 9px 13px; border-radius: 11px; cursor: pointer; min-height: 40px;
-    display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
-    transition: transform .08s ease, background .15s ease, border-color .15s ease;
-  }
-  .btn:hover { border-color: var(--accent); }
-  .btn:active { transform: scale(.97); }
-  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-  :root[data-theme="dark"] .btn.primary,
-  @media (prefers-color-scheme: dark) { }
-  .btn.primary { color: #04252a; }
-  .btn.ghost { background: transparent; border-color: var(--border); }
-  .btn.icon { padding: 9px 11px; }
-  .btn.sm { min-height: 34px; padding: 6px 10px; font-size: 12px; }
-  .btn.wide { width: 100%; justify-content: center; }
-  .btn:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-
-  /* Edit toggle switch look */
-  .edit-toggle.on { background: var(--accent); border-color: var(--accent); color: #04252a; }
-
-  /* ============================================================
-     SECTIONS
-     ============================================================ */
-  section { margin-top: 26px; }
-  .sec-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px; }
-  .sec-head h2 { font-size: 16px; letter-spacing: -.01em; }
-  .sec-head .hint { font-size: 12px; color: var(--text-3); }
-
-  .card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px;
+  :root[data-theme="light"]{
+    --bg:#f4f6f8; --bg-2:#eef1f4; --surface:#fff; --surface-2:#f8fafb;
+    --border:#e3e8ee; --border-strong:#d3dae2;
+    --text:#131a24; --text-2:#566172; --text-3:#8a94a3;
+    --accent:#0e7c86; --accent-soft:#d7eef0;
   }
 
-  /* ---- GATES (hero) ---- */
-  .gates { display: grid; grid-template-columns: 1fr; gap: 14px; }
-  @media (min-width: 768px) { .gates { grid-template-columns: 1fr 1fr; } }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg); color:var(--text); line-height:1.45; -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility; overflow-x:hidden; padding-bottom:88px;}
+  @media (min-width:768px){ body{ padding-bottom:0; } }
+  .num{font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1;}
+  h1,h2,h3{margin:0;font-weight:700;letter-spacing:-.01em;}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em;background:var(--surface-2);
+    padding:1px 5px;border-radius:5px;border:1px solid var(--border);}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 16px 48px;}
 
-  .gate {
-    position: relative; overflow: hidden;
-    padding: 18px 18px 20px;
-    box-shadow: var(--shadow-lg);
+  /* HEADER + TABS */
+  header.top{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 86%,transparent);
+    backdrop-filter:saturate(180%) blur(14px);-webkit-backdrop-filter:saturate(180%) blur(14px);
+    border-bottom:1px solid var(--border);}
+  .top-inner{max-width:1120px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:10px;}
+  .brand{display:flex;flex-direction:column;min-width:0;}
+  .brand .name{font-size:15px;font-weight:800;letter-spacing:-.02em;white-space:nowrap;}
+  .brand .sub{font-size:11px;color:var(--text-3);white-space:nowrap;}
+  .top-actions{margin-left:auto;display:flex;align-items:center;gap:8px;}
+
+  .tabnav{position:fixed;bottom:0;left:0;right:0;z-index:60;display:flex;
+    background:color-mix(in srgb,var(--bg) 92%,transparent);
+    backdrop-filter:saturate(180%) blur(14px);-webkit-backdrop-filter:saturate(180%) blur(14px);
+    border-top:1px solid var(--border);padding-bottom:env(safe-area-inset-bottom);}
+  .tabnav button{flex:1;appearance:none;border:none;background:none;color:var(--text-3);font:inherit;
+    font-size:10.5px;font-weight:600;padding:8px 2px 9px;cursor:pointer;display:flex;flex-direction:column;
+    align-items:center;gap:3px;min-height:56px;position:relative;}
+  .tabnav button .ic{font-size:19px;line-height:1;}
+  .tabnav button.active{color:var(--accent);}
+  .tabnav button.active::before{content:"";position:absolute;top:0;left:22%;right:22%;height:2.5px;
+    background:var(--accent);border-radius:0 0 3px 3px;}
+  @media (min-width:768px){
+    .tabnav{position:static;max-width:1120px;margin:0 auto;padding:0 8px;border-top:none;background:none;backdrop-filter:none;}
+    .tabnav button{flex:0 0 auto;flex-direction:row;gap:7px;font-size:13.5px;padding:12px 16px;min-height:auto;}
+    .tabnav button .ic{font-size:16px;}
+    .tabnav button.active::before{top:auto;bottom:0;left:16px;right:16px;height:2.5px;border-radius:3px 3px 0 0;}
   }
-  .gate.priority { border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); }
-  .gate.priority::before {
-    content: ""; position: absolute; inset: 0; pointer-events: none;
-    background: radial-gradient(120% 100% at 100% 0%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 55%);
-  }
-  .gate-top { display: flex; align-items: flex-start; gap: 10px; position: relative; }
-  .gate-title { font-size: 17px; font-weight: 800; letter-spacing: -.02em; }
-  .gate-meta { font-size: 12px; color: var(--text-2); margin-top: 2px; }
-  .star { color: var(--accent); font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;
-          background: var(--accent-soft); padding: 3px 8px; border-radius: 999px; }
 
-  .gate-body { display: flex; align-items: center; gap: 16px; margin-top: 14px; position: relative; }
-  .ring { width: 110px; height: 110px; flex: 0 0 auto; position: relative; }
-  .ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
-  .ring .track { fill: none; stroke: var(--border); stroke-width: 11; }
-  .ring .prog { fill: none; stroke-width: 11; stroke-linecap: round;
-                transition: stroke-dashoffset 1s cubic-bezier(.2,.7,.2,1); }
-  .ring-label { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-  .ring-pct { font-size: 24px; font-weight: 800; letter-spacing: -.03em; }
-  .ring-sub { font-size: 10px; color: var(--text-3); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+  .btn{appearance:none;border:1px solid var(--border-strong);background:var(--surface);color:var(--text);
+    font:inherit;font-size:13px;font-weight:600;padding:9px 13px;border-radius:11px;cursor:pointer;min-height:40px;
+    display:inline-flex;align-items:center;gap:6px;white-space:nowrap;transition:transform .08s,border-color .15s;}
+  .btn:hover{border-color:var(--accent);} .btn:active{transform:scale(.97);}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:#04252a;}
+  .btn.ghost{background:transparent;border-color:var(--border);}
+  .btn.icon{padding:9px 11px;} .btn.sm{min-height:34px;padding:6px 10px;font-size:12px;}
+  .btn:focus-visible,a:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  .edit-toggle.on{background:var(--accent);border-color:var(--accent);color:#04252a;}
 
-  .gate-stats { flex: 1; min-width: 0; }
-  .gate-nums { font-size: 13px; color: var(--text-2); }
-  .gate-nums b { color: var(--text); font-weight: 700; }
-  .pill { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700;
-          padding: 5px 10px; border-radius: 999px; white-space: nowrap; }
-  .pill.ok { background: var(--ok-bg); color: var(--ok); }
-  .pill.warn { background: var(--warn-bg); color: var(--warn); }
-  .pill.bad { background: var(--bad-bg); color: var(--bad); }
-  .pill.muted { background: var(--surface-2); color: var(--text-2); border: 1px solid var(--border); }
-  .gate-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-  .gate-extra { font-size: 12px; color: var(--text-2); margin-top: 12px; line-height: 1.4;
-                border-top: 1px dashed var(--border); padding-top: 10px; }
-  .countdown { font-size: 12px; font-weight: 700; color: var(--text); }
+  /* TAB PANELS */
+  .tab{display:none;} .tab.active{display:block;}
+  section{margin-top:24px;} .tab > section:first-child{margin-top:20px;}
+  .sec-head{display:flex;align-items:baseline;gap:10px;margin-bottom:12px;flex-wrap:wrap;}
+  .sec-head h2{font-size:16px;} .sec-head .hint{font-size:12px;color:var(--text-3);}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;}
+  .page-intro{font-size:13px;color:var(--text-2);margin:2px 0 4px;line-height:1.5;}
 
-  /* ---- POOLED STRIP ---- */
-  .pooled { display: grid; grid-template-columns: 1fr; gap: 14px; align-items: center; }
-  @media (min-width: 620px) { .pooled { grid-template-columns: auto 1fr; } }
-  .pooled-big { line-height: 1; }
-  .pooled-big .n { font-size: 40px; font-weight: 800; letter-spacing: -.03em; color: var(--accent); }
-  .pooled-big .u { font-size: 13px; color: var(--text-2); font-weight: 600; margin-top: 4px; }
-  .pooled-incoming { font-size: 12.5px; color: var(--text-2); margin-top: 8px; }
-  .pooled-incoming b { color: var(--text); }
-  .breakdown { display: flex; flex-wrap: wrap; gap: 8px; }
-  .bk {
-    display: flex; flex-direction: column; gap: 2px; padding: 9px 12px; border-radius: 12px;
-    background: var(--surface-2); border: 1px solid var(--border); min-width: 92px; flex: 1 1 92px;
-  }
-  .bk .k { font-size: 11px; color: var(--text-3); font-weight: 600; }
-  .bk .v { font-size: 16px; font-weight: 700; }
+  /* GATES */
+  .gates{display:grid;grid-template-columns:1fr;gap:14px;}
+  @media (min-width:768px){.gates{grid-template-columns:1fr 1fr;}}
+  .gate{position:relative;overflow:hidden;padding:18px 18px 20px;box-shadow:var(--shadow-lg);}
+  .gate.priority{border-color:color-mix(in srgb,var(--accent) 45%,var(--border));}
+  .gate.priority::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(120% 100% at 100% 0%,color-mix(in srgb,var(--accent) 12%,transparent),transparent 55%);}
+  .gate-top{display:flex;align-items:flex-start;gap:10px;position:relative;}
+  .gate-title{font-size:17px;font-weight:800;letter-spacing:-.02em;}
+  .gate-meta{font-size:12px;color:var(--text-2);margin-top:2px;}
+  .star{color:var(--accent);font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:4px;
+    background:var(--accent-soft);padding:3px 8px;border-radius:999px;white-space:nowrap;}
+  .gate-body{display:flex;align-items:center;gap:16px;margin-top:14px;position:relative;}
+  .ring{width:104px;height:104px;flex:0 0 auto;position:relative;}
+  .ring svg{width:100%;height:100%;transform:rotate(-90deg);}
+  .ring .track{fill:none;stroke:var(--border);stroke-width:11;}
+  .ring .prog{fill:none;stroke-width:11;stroke-linecap:round;transition:stroke-dashoffset 1s cubic-bezier(.2,.7,.2,1);}
+  .ring-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .ring-pct{font-size:23px;font-weight:800;letter-spacing:-.03em;}
+  .ring-sub{font-size:10px;color:var(--text-3);font-weight:600;text-transform:uppercase;letter-spacing:.04em;}
+  .gate-stats{flex:1;min-width:0;}
+  .gate-nums{font-size:13px;color:var(--text-2);} .gate-nums b{color:var(--text);font-weight:700;}
+  .pill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;padding:5px 10px;border-radius:999px;white-space:nowrap;}
+  .pill.ok{background:var(--ok-bg);color:var(--ok);} .pill.warn{background:var(--warn-bg);color:var(--warn);}
+  .pill.bad{background:var(--bad-bg);color:var(--bad);} .pill.muted{background:var(--surface-2);color:var(--text-2);border:1px solid var(--border);}
+  .gate-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+  .gate-extra{font-size:12px;color:var(--text-2);margin-top:12px;line-height:1.4;border-top:1px dashed var(--border);padding-top:10px;}
+  .countdown{font-size:12px;font-weight:700;}
 
-  /* ---- PEOPLE ---- */
-  .people { display: grid; grid-template-columns: 1fr; gap: 14px; }
-  @media (min-width: 700px) { .people { grid-template-columns: 1fr 1fr; } }
-  .person-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-  .avatar { width: 38px; height: 38px; border-radius: 11px; background: var(--accent); color: #04252a;
-            display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; flex: 0 0 auto; }
-  .person-head .pname { font-size: 15px; font-weight: 700; }
-  .person-head .prole { font-size: 11px; color: var(--text-3); }
-  .bal-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid var(--border); }
-  .bal-row:first-of-type { border-top: none; }
-  .cur-badge { width: 30px; height: 30px; border-radius: 9px; display: flex; align-items: center; justify-content: center;
-               font-size: 11px; font-weight: 800; flex: 0 0 auto; letter-spacing: -.02em; }
-  .bal-name { font-size: 13px; color: var(--text-2); flex: 1; }
-  .bal-val { font-size: 15px; font-weight: 700; text-align: right; }
-  .bal-input { width: 116px; text-align: right; font: inherit; font-weight: 700; font-size: 15px;
-               padding: 7px 9px; border-radius: 9px; border: 1px solid var(--border-strong);
-               background: var(--surface-2); color: var(--text); }
-  .note { margin-top: 12px; font-size: 12px; color: var(--text-2); background: var(--surface-2);
-          border: 1px solid var(--border); border-radius: 11px; padding: 10px 12px; line-height: 1.45; }
-  .note-input { width: 100%; font: inherit; font-size: 12px; color: var(--text); background: var(--surface-2);
-                border: 1px solid var(--border-strong); border-radius: 11px; padding: 10px 12px; resize: vertical; min-height: 60px; }
+  /* POOLED */
+  .pooled{display:grid;grid-template-columns:1fr;gap:14px;align-items:center;}
+  @media (min-width:620px){.pooled{grid-template-columns:auto 1fr;}}
+  .pooled-big .n{font-size:40px;font-weight:800;letter-spacing:-.03em;color:var(--accent);line-height:1;}
+  .pooled-big .u{font-size:13px;color:var(--text-2);font-weight:600;margin-top:6px;}
+  .pooled-incoming{font-size:12.5px;color:var(--text-2);margin-top:8px;} .pooled-incoming b{color:var(--text);}
+  .breakdown{display:flex;flex-wrap:wrap;gap:8px;}
+  .bk{display:flex;flex-direction:column;gap:2px;padding:9px 12px;border-radius:12px;background:var(--surface-2);
+    border:1px solid var(--border);min-width:92px;flex:1 1 92px;}
+  .bk .k{font-size:11px;color:var(--text-3);font-weight:600;} .bk .v{font-size:16px;font-weight:700;}
 
-  /* ---- CARDS IN PLAY ---- */
-  .ccard { padding: 14px; }
-  .ccard + .ccard { margin-top: 12px; }
-  .ccard-top { display: flex; align-items: flex-start; gap: 8px; flex-wrap: wrap; }
-  .ccard-name { font-size: 14px; font-weight: 700; }
-  .ccard-owner { font-size: 11px; color: var(--text-3); font-weight: 600; }
-  .ccard-grid { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 8px; font-size: 12px; color: var(--text-2); }
-  .ccard-grid b { color: var(--text); font-weight: 600; }
-  .ccard-perk { font-size: 12px; color: var(--text-2); margin-top: 8px; line-height: 1.4; }
-  .prog-wrap { margin-top: 10px; }
-  .prog-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-2); margin-bottom: 4px; font-weight: 600; }
-  .bar { height: 8px; border-radius: 999px; background: var(--border); overflow: hidden; }
-  .bar > span { display: block; height: 100%; border-radius: 999px; background: var(--accent);
-                transition: width 1s cubic-bezier(.2,.7,.2,1); }
-  .bar.gold > span { background: linear-gradient(90deg, #c9a227, #e8c85a); }
+  /* PEOPLE */
+  .people{display:grid;grid-template-columns:1fr;gap:14px;}
+  @media (min-width:700px){.people{grid-template-columns:1fr 1fr;}}
+  .person-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+  .avatar{width:38px;height:38px;border-radius:11px;background:var(--accent);color:#04252a;display:flex;
+    align-items:center;justify-content:center;font-weight:800;font-size:16px;flex:0 0 auto;}
+  .person-head .pname{font-size:15px;font-weight:700;} .person-head .prole{font-size:11px;color:var(--text-3);}
+  .bal-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--border);}
+  .bal-row:first-of-type{border-top:none;}
+  .cur-badge{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;
+    font-size:11px;font-weight:800;flex:0 0 auto;letter-spacing:-.02em;}
+  .bal-name{font-size:13px;color:var(--text-2);flex:1;} .bal-val{font-size:15px;font-weight:700;text-align:right;}
+  .bal-input{width:116px;text-align:right;font:inherit;font-weight:700;font-size:15px;padding:7px 9px;border-radius:9px;
+    border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);}
+  .note{margin-top:12px;font-size:12px;color:var(--text-2);background:var(--surface-2);border:1px solid var(--border);
+    border-radius:11px;padding:10px 12px;line-height:1.45;}
+  .note-input{width:100%;font:inherit;font-size:12px;color:var(--text);background:var(--surface-2);
+    border:1px solid var(--border-strong);border-radius:11px;padding:10px 12px;resize:vertical;min-height:60px;}
 
-  .status-active { background: var(--ok-bg); color: var(--ok); }
-  .status-order { background: var(--warn-bg); color: var(--warn); }
-  .status-plan { background: var(--surface-2); color: var(--text-2); border: 1px solid var(--border); }
+  /* CARDS IN PLAY */
+  .ccard{padding:14px;} .ccard+.ccard{margin-top:12px;}
+  .ccard-top{display:flex;align-items:flex-start;gap:8px;flex-wrap:wrap;}
+  .ccard-name{font-size:14px;font-weight:700;} .ccard-owner{font-size:11px;color:var(--text-3);font-weight:600;}
+  .ccard-grid{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:8px;font-size:12px;color:var(--text-2);}
+  .ccard-grid b{color:var(--text);font-weight:600;}
+  .ccard-perk{font-size:12px;color:var(--text-2);margin-top:8px;line-height:1.4;}
+  .prog-wrap{margin-top:10px;} .prog-label{display:flex;justify-content:space-between;font-size:11px;color:var(--text-2);margin-bottom:4px;font-weight:600;}
+  .bar{height:8px;border-radius:999px;background:var(--border);overflow:hidden;}
+  .bar>span{display:block;height:100%;border-radius:999px;background:var(--accent);transition:width 1s cubic-bezier(.2,.7,.2,1);}
+  .bar.gold>span{background:linear-gradient(90deg,#c9a227,#e8c85a);}
+  .status-active{background:var(--ok-bg);color:var(--ok);} .status-order{background:var(--warn-bg);color:var(--warn);}
+  .status-plan{background:var(--surface-2);color:var(--text-2);border:1px solid var(--border);}
 
-  /* ---- VOUCHERS ---- */
-  .tiles { display: grid; grid-template-columns: 1fr; gap: 12px; }
-  @media (min-width: 620px) { .tiles { grid-template-columns: 1fr 1fr; } }
-  @media (min-width: 920px) { .tiles { grid-template-columns: 1fr 1fr 1fr; } }
-  .tile { padding: 14px; }
-  .tile h3 { font-size: 13.5px; font-weight: 700; }
-  .tile .row { font-size: 12px; color: var(--text-2); margin-top: 6px; }
-  .tile .row b { color: var(--text); font-weight: 600; }
+  /* TILES */
+  .tiles{display:grid;grid-template-columns:1fr;gap:12px;}
+  @media (min-width:620px){.tiles{grid-template-columns:1fr 1fr;}}
+  @media (min-width:920px){.tiles{grid-template-columns:1fr 1fr 1fr;}}
+  .tile{padding:14px;} .tile h3{font-size:13.5px;font-weight:700;}
+  .tile .row{font-size:12px;color:var(--text-2);margin-top:6px;} .tile .row b{color:var(--text);font-weight:600;}
 
-  /* ---- CHART ---- */
-  .chart-box { position: relative; height: 300px; }
-  #trajChart { max-width: 100%; }
-  .chart-fallback { font-size: 12.5px; color: var(--text-2); }
+  /* CHART */
+  .chart-box{position:relative;height:320px;} #trajChart{max-width:100%;}
+  .chart-fallback{font-size:12.5px;color:var(--text-2);}
 
-  /* ---- TABLE ---- */
-  .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: var(--radius-sm); }
-  table { border-collapse: collapse; width: 100%; font-size: 12.5px; min-width: 460px; }
-  th, td { padding: 9px 10px; text-align: right; white-space: nowrap; }
-  th:first-child, td:first-child { text-align: left; }
-  thead th { color: var(--text-3); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: .04em;
-             border-bottom: 1px solid var(--border); }
-  tbody td { border-bottom: 1px solid var(--border); }
-  tbody tr:last-child td { border-bottom: none; }
+  /* TABLE */
+  .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--radius-sm);}
+  table{border-collapse:collapse;width:100%;font-size:12.5px;min-width:460px;}
+  th,td{padding:9px 10px;text-align:right;white-space:nowrap;} th:first-child,td:first-child{text-align:left;}
+  thead th{color:var(--text-3);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--border);}
+  tbody td{border-bottom:1px solid var(--border);} tbody tr:last-child td{border-bottom:none;}
+  .var-pos{color:var(--ok);font-weight:700;} .var-neg{color:var(--bad);font-weight:700;}
 
-  /* ---- TRANSFER MAP ---- */
-  details.collapsible summary { cursor: pointer; list-style: none; }
-  details.collapsible summary::-webkit-details-marker { display: none; }
-  .tmap { display: grid; grid-template-columns: 1fr; gap: 8px; }
-  @media (min-width: 620px) { .tmap { grid-template-columns: 1fr 1fr; } }
-  .tmap-row { display: flex; align-items: center; gap: 8px; font-size: 12.5px; padding: 9px 12px;
-              background: var(--surface-2); border: 1px solid var(--border); border-radius: 11px; }
-  .tmap-row .from { font-weight: 700; }
-  .tmap-row .arrow { color: var(--text-3); }
-  .tmap-row .to { font-weight: 700; }
-  .tmap-row .ratio { margin-left: auto; color: var(--text-2); font-weight: 600; text-align: right; }
+  /* READOUTS */
+  .readout{display:flex;flex-direction:column;gap:8px;}
+  .rline{font-size:12.5px;font-weight:600;padding:10px 12px;border-radius:10px;line-height:1.45;}
+  .rline.ok{background:var(--ok-bg);color:var(--ok);} .rline.warn{background:var(--warn-bg);color:var(--warn);}
+  .rline.bad{background:var(--bad-bg);color:var(--bad);} .rline.info{background:var(--surface-2);color:var(--text-2);border:1px solid var(--border);}
+  .rline b{font-weight:800;}
 
-  /* ---- TIMELINE ---- */
-  .timeline { position: relative; padding-left: 22px; }
-  .timeline::before { content: ""; position: absolute; left: 6px; top: 4px; bottom: 4px; width: 2px; background: var(--border); }
-  .tl-item { position: relative; padding: 4px 0 14px; }
-  .tl-item::before { content: ""; position: absolute; left: -19px; top: 6px; width: 11px; height: 11px; border-radius: 50%;
-                     background: var(--accent); border: 2px solid var(--surface); }
-  .tl-date { font-size: 12px; font-weight: 700; color: var(--accent); }
-  .tl-label { font-size: 13px; margin-top: 2px; }
-  .tl-count { font-size: 11px; color: var(--text-3); margin-top: 2px; }
+  /* EVENT LIST / TIMELINE */
+  .evlist{display:flex;flex-direction:column;}
+  .evrow{display:flex;gap:12px;padding:11px 0;border-top:1px solid var(--border);}
+  .evrow:first-child{border-top:none;}
+  .evrow.past{opacity:.55;}
+  .evmonth{flex:0 0 66px;font-size:12px;font-weight:800;color:var(--accent);}
+  .evbody{flex:1;min-width:0;} .evbody .t{font-size:13px;font-weight:600;} .evbody .d{font-size:12px;color:var(--text-2);margin-top:2px;line-height:1.4;}
+  .evbody .amt{font-size:12px;font-weight:700;}
+  .booking-tag{display:inline-block;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;
+    background:var(--accent-soft);color:var(--accent);padding:2px 7px;border-radius:999px;margin-left:6px;}
 
-  /* ---- OFFERS ---- */
-  .offers { display: grid; grid-template-columns: 1fr; gap: 10px; }
-  @media (min-width: 620px) { .offers { grid-template-columns: 1fr 1fr; } }
-  .offer { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; }
-  .offer .otag { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em;
-                 padding: 4px 8px; border-radius: 999px; flex: 0 0 auto; }
-  .otag.live { background: var(--live-bg); color: var(--live); }
-  .otag.watch { background: var(--watch-bg); color: var(--watch); }
-  .otag.expired { background: var(--expired-bg); color: var(--expired); }
-  .offer.is-expired .otitle { text-decoration: line-through; color: var(--text-3); }
-  .otitle { font-size: 13px; font-weight: 700; }
-  .odetail { font-size: 12px; color: var(--text-2); margin-top: 2px; }
+  /* CASH */
+  .cash-summary{display:grid;grid-template-columns:1fr;gap:10px;}
+  @media(min-width:560px){.cash-summary{grid-template-columns:repeat(3,1fr);}}
+  .cash-stat{padding:14px;text-align:center;} .cash-stat .k{font-size:11px;color:var(--text-3);font-weight:600;text-transform:uppercase;letter-spacing:.04em;}
+  .cash-stat .v{font-size:26px;font-weight:800;letter-spacing:-.02em;margin-top:4px;}
+  .cat-badge{display:inline-flex;align-items:center;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;
+    padding:2px 7px;border-radius:999px;}
+  .cat-fee{background:var(--cat-fee-bg);color:var(--cat-fee);}
+  .cat-tax{background:var(--cat-tax-bg);color:var(--cat-tax);}
+  .cat-boost{background:var(--cat-boost-bg);color:var(--cat-boost);}
+  .cashrow{display:flex;gap:12px;align-items:center;padding:11px 0;border-top:1px solid var(--border);}
+  .cashrow:first-child{border-top:none;}
+  .cashrow .cm{flex:0 0 60px;font-size:12px;font-weight:800;color:var(--text-2);}
+  .cashrow .cl{flex:1;min-width:0;font-size:13px;} .cashrow .cl small{display:block;color:var(--text-3);font-size:11px;margin-top:1px;}
+  .cashrow .ca{font-size:14px;font-weight:700;text-align:right;flex:0 0 auto;}
+  .cashrow .cc{font-size:11px;color:var(--text-3);text-align:right;flex:0 0 64px;}
 
-  /* ---- FOOTER / NEXT ACTION ---- */
-  .nextaction { display: flex; gap: 12px; align-items: center; padding: 16px 18px;
-                background: linear-gradient(135deg, var(--accent-soft), transparent);
-                border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--border)); }
-  .nextaction .na-ic { font-size: 20px; }
-  .nextaction .na-txt { font-size: 13.5px; font-weight: 600; }
-  .nextaction .na-txt small { display: block; font-weight: 500; color: var(--text-2); font-size: 12px; margin-top: 2px; }
+  /* TRANSFER MAP */
+  details.collapsible summary{cursor:pointer;list-style:none;} details.collapsible summary::-webkit-details-marker{display:none;}
+  .tmap{display:grid;grid-template-columns:1fr;gap:8px;} @media(min-width:620px){.tmap{grid-template-columns:1fr 1fr;}}
+  .tmap-row{display:flex;align-items:center;gap:8px;font-size:12.5px;padding:9px 12px;background:var(--surface-2);
+    border:1px solid var(--border);border-radius:11px;}
+  .tmap-row .from,.tmap-row .to{font-weight:700;} .tmap-row .arrow{color:var(--text-3);}
+  .tmap-row .ratio{margin-left:auto;color:var(--text-2);font-weight:600;text-align:right;}
 
-  .foot-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-  .foot-note { font-size: 11px; color: var(--text-3); margin-top: 16px; line-height: 1.5; }
-  .foot-note a { color: var(--accent); }
+  /* PLAYBOOK */
+  .timeline{position:relative;padding-left:22px;}
+  .timeline::before{content:"";position:absolute;left:6px;top:4px;bottom:4px;width:2px;background:var(--border);}
+  .tl-item{position:relative;padding:4px 0 14px;}
+  .tl-item::before{content:"";position:absolute;left:-19px;top:6px;width:11px;height:11px;border-radius:50%;
+    background:var(--accent);border:2px solid var(--surface);}
+  .tl-item.cancel::before{background:var(--bad);} .tl-item.apply::before{background:var(--ok);}
+  .tl-when{font-size:12px;font-weight:700;color:var(--accent);}
+  .tl-label{font-size:13px;margin-top:2px;font-weight:600;} .tl-label .act{color:var(--text-2);font-weight:700;}
+  .tl-note{font-size:11.5px;color:var(--text-2);margin-top:2px;line-height:1.4;}
 
-  /* ---- EDIT MODE PANEL ---- */
-  .edit-banner {
-    display: none; align-items: center; gap: 10px; flex-wrap: wrap;
-    background: var(--warn-bg); border: 1px solid color-mix(in srgb, var(--warn) 40%, var(--border));
-    color: var(--warn); border-radius: var(--radius); padding: 12px 14px; margin-top: 16px; font-size: 12.5px; font-weight: 600;
-  }
-  body.editing .edit-banner { display: flex; }
-  body.editing .edit-only { display: inline-flex; }
-  .edit-only { display: none; }
-  body:not(.editing) .view-hide { }
+  /* OFFERS */
+  .offers{display:grid;grid-template-columns:1fr;gap:10px;} @media(min-width:620px){.offers{grid-template-columns:1fr 1fr;}}
+  .offer{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;}
+  .offer .otag{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:4px 8px;border-radius:999px;flex:0 0 auto;}
+  .otag.live{background:var(--live-bg);color:var(--live);} .otag.watch{background:var(--watch-bg);color:var(--watch);}
+  .otag.expired{background:var(--expired-bg);color:var(--expired);}
+  .offer.is-expired .otitle{text-decoration:line-through;color:var(--text-3);}
+  .otitle{font-size:13px;font-weight:700;} .odetail{font-size:12px;color:var(--text-2);margin-top:2px;}
 
-  /* Toast */
-  .toast {
-    position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%) translateY(20px);
-    background: var(--text); color: var(--bg); padding: 11px 18px; border-radius: 12px; font-size: 13px; font-weight: 600;
-    box-shadow: var(--shadow-lg); opacity: 0; pointer-events: none; transition: opacity .25s ease, transform .25s ease; z-index: 200;
-  }
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  /* NEXT ACTION */
+  .nextaction{display:flex;gap:12px;align-items:center;padding:16px 18px;
+    background:linear-gradient(135deg,var(--accent-soft),transparent);
+    border:1px solid color-mix(in srgb,var(--accent) 30%,var(--border));}
+  .nextaction .na-ic{font-size:20px;} .nextaction .na-txt{font-size:13.5px;font-weight:600;}
+  .nextaction .na-txt small{display:block;font-weight:500;color:var(--text-2);font-size:12px;margin-top:2px;}
+  .foot-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+  .foot-note{font-size:11px;color:var(--text-3);margin-top:16px;line-height:1.5;} .foot-note code{font-size:11px;}
 
-  /* Modal for copy/import */
-  .modal-back { position: fixed; inset: 0; background: rgba(6,12,20,.55); display: none; z-index: 150;
-                align-items: center; justify-content: center; padding: 16px; }
-  .modal-back.show { display: flex; }
-  .modal { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-           max-width: 640px; width: 100%; max-height: 82vh; overflow: auto; box-shadow: var(--shadow-lg); }
-  .modal-head { display: flex; align-items: center; gap: 10px; padding: 16px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--surface); }
-  .modal-head h3 { font-size: 15px; }
-  .modal-body { padding: 16px; }
-  textarea.code { width: 100%; min-height: 300px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-                  font-size: 12px; line-height: 1.5; border: 1px solid var(--border-strong); border-radius: 12px;
-                  padding: 12px; background: var(--surface-2); color: var(--text); resize: vertical; }
+  /* LEVERS */
+  .lever{display:flex;gap:11px;padding:11px 0;border-top:1px solid var(--border);font-size:13px;line-height:1.45;}
+  .lever:first-child{border-top:none;} .lever .lnum{flex:0 0 22px;height:22px;border-radius:7px;background:var(--accent-soft);
+    color:var(--accent);font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;}
 
-  /* ---- FORECAST READOUT ---- */
-  .fc-readout { display: flex; flex-direction: column; gap: 6px; margin-top: 16px; }
-  .fc-line { font-size: 12.5px; font-weight: 600; padding: 9px 12px; border-radius: 10px; line-height: 1.4; }
-  .fc-line.ok { background: var(--ok-bg); color: var(--ok); }
-  .fc-line.bad { background: var(--bad-bg); color: var(--bad); }
-  .fc-line b { font-weight: 800; }
-  .fc-help { font-size: 11px; color: var(--text-3); margin: 12px 0 0; line-height: 1.5; }
+  /* EDIT BANNER */
+  .edit-banner{display:none;align-items:center;gap:10px;flex-wrap:wrap;background:var(--warn-bg);
+    border:1px solid color-mix(in srgb,var(--warn) 40%,var(--border));color:var(--warn);border-radius:var(--radius);
+    padding:12px 14px;margin-top:14px;font-size:12.5px;font-weight:600;}
+  body.editing .edit-banner{display:flex;} .edit-only{display:none;} body.editing .edit-only{display:inline-flex;}
 
-  @media (prefers-reduced-motion: reduce) {
-    * { transition: none !important; animation: none !important; }
-  }
+  .toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%) translateY(20px);background:var(--text);
+    color:var(--bg);padding:11px 18px;border-radius:12px;font-size:13px;font-weight:600;box-shadow:var(--shadow-lg);
+    opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:200;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  @media(min-width:768px){.toast{bottom:22px;}}
+
+  .modal-back{position:fixed;inset:0;background:rgba(6,12,20,.55);display:none;z-index:150;align-items:center;justify-content:center;padding:16px;}
+  .modal-back.show{display:flex;}
+  .modal{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);max-width:640px;width:100%;
+    max-height:82vh;overflow:auto;box-shadow:var(--shadow-lg);}
+  .modal-head{display:flex;align-items:center;gap:10px;padding:16px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface);}
+  .modal-head h3{font-size:15px;} .modal-body{padding:16px;}
+  textarea.code{width:100%;min-height:300px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.5;
+    border:1px solid var(--border-strong);border-radius:12px;padding:12px;background:var(--surface-2);color:var(--text);resize:vertical;}
+
+  @media (prefers-reduced-motion: reduce){*{transition:none !important;animation:none !important;}}
 </style>
 </head>
 <body>
@@ -408,7 +337,7 @@
 <header class="top">
   <div class="top-inner">
     <div class="brand">
-      <span class="name" id="hhName">Points HQ</span>
+      <span class="name">Points HQ</span>
       <span class="sub" id="hhUpdated">Last updated —</span>
     </div>
     <div class="top-actions">
@@ -416,165 +345,197 @@
       <button class="btn edit-toggle" id="editBtn" aria-pressed="false">✎ Edit</button>
     </div>
   </div>
+  <nav class="tabnav" id="tabnav" role="tablist">
+    <button data-tab="home"   class="active"><span class="ic">📊</span>Home</button>
+    <button data-tab="budget"><span class="ic">📈</span>Budget</button>
+    <button data-tab="cash"><span class="ic">💷</span>Cash</button>
+    <button data-tab="cards"><span class="ic">💳</span>Cards</button>
+    <button data-tab="boost"><span class="ic">🚀</span>Boost</button>
+  </nav>
 </header>
 
 <div class="wrap">
 
   <div class="edit-banner" role="status">
-    <span>✎ Edit mode — changes are a local draft only. Copy the updated DATA and commit it to publish for both of you.</span>
-    <button class="btn sm" id="resetBtn">↺ Reset to published data</button>
+    <span>✎ Edit mode — a local draft only. Copy the updated DATA and commit it to publish for both of you.</span>
+    <button class="btn sm" id="resetBtn">↺ Reset to published</button>
     <button class="btn sm primary" id="copyBtn2">⧉ Copy updated DATA</button>
   </div>
 
-  <!-- GATES -->
-  <section id="secGates">
-    <div class="sec-head"><h2>Reward-flight gates</h2><span class="hint">Progress toward both trips</span></div>
-    <div class="gates" id="gates"></div>
-  </section>
-
-  <!-- POOLED -->
-  <section id="secPooled">
-    <div class="sec-head"><h2>Pooled position</h2></div>
-    <div class="card pooled" id="pooled"></div>
-  </section>
-
-  <!-- PEOPLE -->
-  <section id="secPeople">
-    <div class="sec-head"><h2>Balances by person</h2><span class="hint edit-only" style="color:var(--accent)">tap a number to edit</span></div>
-    <div class="people" id="people"></div>
-  </section>
-
-  <!-- CARDS -->
-  <section id="secCards">
-    <div class="sec-head"><h2>Cards in play</h2></div>
-    <div class="people" id="cards"></div>
-  </section>
-
-  <!-- VOUCHERS -->
-  <section id="secVouchers">
-    <div class="sec-head"><h2>Vouchers &amp; levers</h2></div>
-    <div class="tiles" id="vouchers"></div>
-  </section>
-
-  <!-- CHART / FORECAST -->
-  <section id="secChart">
-    <div class="sec-head"><h2>Trajectory &amp; forecast</h2><span class="hint">Actuals + rolling projection to the Tokyo booking</span></div>
-    <div class="card">
-      <div class="chart-box">
-        <canvas id="trajChart"></canvas>
-        <div id="chartFallback" class="chart-fallback" style="display:none">Chart couldn't load — see the history table below.</div>
+  <!-- ============ HOME ============ -->
+  <div class="tab active" id="tab-home">
+    <section>
+      <div class="sec-head"><h2>Reward-flight gates</h2><span class="hint">Progress vs the locked budget</span></div>
+      <div class="gates" id="gates"></div>
+    </section>
+    <section>
+      <div class="sec-head"><h2>Pooled position</h2></div>
+      <div class="card pooled" id="pooled"></div>
+    </section>
+    <section>
+      <div class="card nextaction" id="nextAction"></div>
+    </section>
+    <section>
+      <div class="sec-head"><h2>Live offers</h2><span class="hint">Refreshed weekly by the offer scanner</span></div>
+      <div class="offers" id="offers"></div>
+    </section>
+    <section>
+      <div class="foot-actions">
+        <button class="btn" id="copyBtn">⧉ Copy updated DATA</button>
+        <button class="btn" id="exportBtn">⭳ Export JSON</button>
+        <button class="btn" id="importBtn">⭱ Import JSON</button>
       </div>
-      <div id="forecastReadout" class="fc-readout"></div>
-      <p class="fc-help" id="fcHelp"></p>
-    </div>
-  </section>
+      <p class="foot-note" id="footNote"></p>
+    </section>
+  </div>
 
-  <!-- HISTORY -->
-  <section id="secHistory">
-    <div class="sec-head"><h2>Monthly history</h2>
-      <button class="btn sm edit-only" id="addMonthBtn" style="margin-left:auto">＋ Add this month</button>
-    </div>
-    <div class="card table-scroll">
-      <table id="histTable"><thead></thead><tbody></tbody></table>
-    </div>
-  </section>
+  <!-- ============ BUDGET ============ -->
+  <div class="tab" id="tab-budget">
+    <section>
+      <div class="sec-head"><h2>Budget vs actual</h2><span class="hint" id="budgetLockLabel"></span></div>
+      <p class="page-intro" id="budgetIntro"></p>
+      <div class="card">
+        <div class="chart-box"><canvas id="trajChart"></canvas>
+          <div id="chartFallback" class="chart-fallback" style="display:none">Chart couldn't load — see the tables below.</div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="sec-head"><h2>Performance</h2></div>
+      <div class="card readout" id="perfReadout"></div>
+    </section>
+    <section>
+      <div class="sec-head"><h2>Budget path &amp; key events</h2><span class="hint">The locked plan, month by month</span></div>
+      <div class="card"><div class="evlist" id="budgetEvents"></div></div>
+    </section>
+    <section>
+      <div class="sec-head"><h2>Monthly history (actuals)</h2>
+        <button class="btn sm edit-only" id="addMonthBtn" style="margin-left:auto">＋ Add this month</button></div>
+      <div class="card table-scroll"><table id="histTable"><thead></thead><tbody></tbody></table></div>
+    </section>
+  </div>
 
-  <!-- TRANSFER MAP -->
-  <section id="secTransfers">
-    <details class="collapsible card" id="transDetails">
-      <summary class="sec-head" style="margin:0; cursor:pointer">
-        <h2>Transfer map</h2><span class="hint" id="transToggle">tap to expand ▾</span>
-      </summary>
-      <div class="tmap" id="transfers" style="margin-top:14px"></div>
-    </details>
-  </section>
+  <!-- ============ CASH ============ -->
+  <div class="tab" id="tab-cash">
+    <section>
+      <div class="sec-head"><h2>Cash to budget</h2><span class="hint">When real money goes out</span></div>
+      <p class="page-intro" id="cashIntro"></p>
+      <div class="cash-summary" id="cashSummary"></div>
+    </section>
+    <section>
+      <div class="sec-head"><h2>Cash-out timeline</h2><span class="hint">Fees · Balance Boost · flight taxes</span></div>
+      <div class="card" id="cashTimeline"></div>
+    </section>
+    <section>
+      <div class="sec-head"><h2>Fees saved by cancelling on time</h2></div>
+      <div class="card" id="feesSaved"></div>
+    </section>
+  </div>
 
-  <!-- ELIGIBILITY -->
-  <section id="secEligibility">
-    <div class="sec-head"><h2>Eligibility timeline</h2></div>
-    <div class="card"><div class="timeline" id="eligibility"></div></div>
-  </section>
+  <!-- ============ CARDS ============ -->
+  <div class="tab" id="tab-cards">
+    <section>
+      <div class="sec-head"><h2>Balances by person</h2><span class="hint edit-only" style="color:var(--accent)">tap a number to edit</span></div>
+      <div class="people" id="people"></div>
+    </section>
+    <section>
+      <div class="sec-head"><h2>Cards in play</h2></div>
+      <div class="people" id="cards"></div>
+    </section>
+    <section>
+      <div class="sec-head"><h2>Vouchers &amp; levers</h2></div>
+      <div class="tiles" id="vouchers"></div>
+    </section>
+    <section>
+      <div class="sec-head"><h2>Card playbook</h2><span class="hint">Chronological apply / cancel / collect</span></div>
+      <div class="people" id="playbook"></div>
+    </section>
+    <section>
+      <div class="sec-head"><h2>Eligibility timeline</h2></div>
+      <div class="card"><div class="timeline" id="eligibility"></div></div>
+    </section>
+  </div>
 
-  <!-- OFFERS -->
-  <section id="secOffers">
-    <div class="sec-head"><h2>Live offers</h2><span class="hint">Refreshed weekly by the offer scanner</span></div>
-    <div class="offers" id="offers"></div>
-  </section>
-
-  <!-- FOOTER / NEXT ACTION -->
-  <section id="secFooter">
-    <div class="card nextaction" id="nextAction"></div>
-    <div class="foot-actions">
-      <button class="btn" id="copyBtn">⧉ Copy updated DATA</button>
-      <button class="btn" id="exportBtn">⭳ Export JSON</button>
-      <button class="btn" id="importBtn">⭱ Import JSON</button>
-    </div>
-    <p class="foot-note" id="footNote"></p>
-  </section>
+  <!-- ============ BOOST ============ -->
+  <div class="tab" id="tab-boost">
+    <section>
+      <div class="sec-head"><h2>Avios Balance Boost</h2><span class="hint">The Tokyo closer</span></div>
+      <p class="page-intro" id="boostIntro"></p>
+      <div class="cash-summary" id="boostSummary"></div>
+    </section>
+    <section>
+      <div class="sec-head"><h2>Boost schedule</h2><span class="hint" id="boostRate"></span></div>
+      <div class="card table-scroll"><table id="boostTable"><thead></thead><tbody></tbody></table></div>
+    </section>
+    <section>
+      <div class="sec-head"><h2>Boosting levers</h2><span class="hint">How the points get earned faster</span></div>
+      <div class="card" id="levers"></div>
+    </section>
+    <section>
+      <details class="collapsible card" id="transDetails">
+        <summary class="sec-head" style="margin:0;cursor:pointer"><h2>Transfer map</h2><span class="hint" id="transToggle">tap to expand ▾</span></summary>
+        <div class="tmap" id="transfers" style="margin-top:14px"></div>
+      </details>
+    </section>
+  </div>
 
 </div>
 
 <div class="toast" id="toast"></div>
-
-<!-- Modal (copy DATA / import) -->
-<div class="modal-back" id="modalBack">
-  <div class="modal">
-    <div class="modal-head">
-      <h3 id="modalTitle">Updated DATA</h3>
-      <button class="btn sm ghost" id="modalClose" style="margin-left:auto">✕ Close</button>
-    </div>
-    <div class="modal-body">
-      <p id="modalHelp" style="font-size:12.5px;color:var(--text-2);margin:0 0 10px"></p>
-      <textarea class="code" id="modalText" spellcheck="false"></textarea>
-      <div style="display:flex;gap:8px;margin-top:12px">
-        <button class="btn primary" id="modalPrimary"></button>
-      </div>
-    </div>
+<div class="modal-back" id="modalBack"><div class="modal">
+  <div class="modal-head"><h3 id="modalTitle"></h3><button class="btn sm ghost" id="modalClose" style="margin-left:auto">✕ Close</button></div>
+  <div class="modal-body"><p id="modalHelp" style="font-size:12.5px;color:var(--text-2);margin:0 0 10px"></p>
+    <textarea class="code" id="modalText" spellcheck="false"></textarea>
+    <div style="display:flex;gap:8px;margin-top:12px"><button class="btn primary" id="modalPrimary"></button></div>
   </div>
-</div>
-
+</div></div>
 <input type="file" id="fileInput" accept="application/json,.json" style="display:none" />
 
 <script>
-/* ============================================================
-   DATA — single source of truth.
-   Edit this block (or paste from "Copy updated DATA") and commit
-   to GitHub Pages to publish new numbers to both phones.
-   ============================================================ */
+/* ============================================================================
+   DATA — single source of truth. Aligned to Points_Scenario_Engine_v6.xlsx.
+   Monthly workflow: edit here (or paste from "Copy updated DATA"), commit & push.
+   ============================================================================ */
 const DATA = {
   household: "Hayden & Tami — Points HQ",
   lastUpdated: "2026-07-20",
+
   people: [
-    {
-      name: "Hayden",
+    { name: "Hayden",
       balances: { avios: 1500, virgin: 0, amexMR: 0, hilton: 120000, nectar: 0 },
-      note: "Amex Platinum ordered via Tami's referral — 80k MR welcome incoming (+£250 credit). Hilton Gold via work stays (~60 nights/yr)."
-    },
-    {
-      name: "Tami",
+      note: "Amex Platinum ordered via Tami's referral — 80k MR welcome incoming (posts ~Oct after £6k spend). Hilton Gold via work stays (~60 nights/yr)." },
+    { name: "Tami",
       balances: { avios: 27500, virgin: 5000, amexMR: 75000, hilton: 0, nectar: 0 },
-      note: "Ordering BA Amex Premium Plus (the 2-4-1 card). Keeps Amex Gold. Second earner: Barclaycard Avios Plus."
-    }
+      note: "BA Amex Premium Plus (the 2-4-1 card) — 50k bonus ~Aug. Keeps Amex Gold until Jan '27. Second earner: Barclaycard Avios Plus from Dec '26." }
   ],
+
+  // Gates are BOOKING events (per Excel v6). NY books Jan '27, Tokyo books Jun '27.
   gates: [
-    { id: "ny",    name: "New York — Club",  targetAvios: 187000, deadline: "2027-01-31", priority: false, extra: "Needs Tami's BA Amex 2-4-1 voucher in hand" },
-    { id: "tokyo", name: "Tokyo — Qatar business", targetAvios: 320000, deadline: "2027-05-31", priority: true,  extra: "PRIORITY. Book from Birmingham (787-8, not full Qsuite). ~£600 cash." }
+    { id: "ny",    name: "New York — Club",       targetAvios: 187000, deadline: "2027-01-31", priority: false,
+      extra: "Book Jan '27 (travel Dec '27/Jan '28). 187k via Tami's 2-4-1, Club both ways. Taxes ~£750." },
+    { id: "tokyo", name: "Tokyo — Qatar business", targetAvios: 320000, deadline: "2027-06-30", priority: true,
+      extra: "PRIORITY. Book Jun '27 (travel Apr '28). 320k via Qatar BHX (787-8, not full Qsuite). Taxes ~£250. Relies on Balance Boost purchases." }
   ],
+
   cards: [
     { owner: "Hayden", name: "Barclaycard Avios Plus", fee: "£240/yr (£20/mo)", earn: "1.5 Avios/£", status: "Active — everyday engine", perk: "Cabin upgrade voucher or 7k Avios at £10k/yr spend", spendYTD: null, spendTarget: 10000 },
-    { owner: "Hayden", name: "Amex Platinum", fee: "£650/yr", earn: "1 MR/£ (more on travel)", status: "Ordered (via Tami referral)", perk: "80k MR welcome + £250 travel credit; Hilton & Marriott Gold; lounges", welcomeBonus: 80000, welcomeSpendTarget: 6000, spendYTD: 0 },
-    { owner: "Tami", name: "Amex Preferred Rewards Gold", fee: "£195 (free yr1)", earn: "1 MR/£", status: "Active — MR tank + referrals", perk: "Lounge passes, dining credits" },
-    { owner: "Tami", name: "BA Amex Premium Plus", fee: "£300/yr", earn: "1.5 Avios/£ (3 on BA)", status: "Ordering", perk: "2-4-1 ANY-CABIN companion voucher at £15k/yr spend (valid 2yr)", welcomeBonus: 30000, welcomeSpendTarget: 6000, spendYTD: 0, voucherSpendTarget: 15000 },
-    { owner: "Tami", name: "Barclaycard Avios Plus", fee: "£240/yr", earn: "1.5 Avios/£", status: "Planned (2nd earner)", perk: "Cabin upgrade voucher at £10k/yr" }
+    { owner: "Hayden", name: "Amex Platinum", fee: "£650/yr", earn: "1 MR/£ (more on travel)", status: "Ordered (via Tami referral)", perk: "80k MR welcome + £250 travel credit; Hilton & Marriott Gold; lounges. Cancel before Jun '27 renewal.", welcomeBonus: 80000, welcomeSpendTarget: 6000, spendYTD: 0 },
+    { owner: "Tami", name: "Amex Preferred Rewards Gold", fee: "£195 (free yr1)", earn: "1 MR/£", status: "Active — MR tank", perk: "Lounge passes, dining credits. Transfer all MR to Avios, then cancel Jan/Feb '27 (before Mar renewal)." },
+    { owner: "Tami", name: "BA Amex Premium Plus", fee: "£300/yr", earn: "1.5 Avios/£ → 1.25 from 7 Oct '26", status: "Ordering", perk: "50k bonus (£3k/3mo) + 2-4-1 ANY-CABIN voucher at £15k/yr spend (valid 2yr in BAEC).", welcomeBonus: 50000, welcomeSpendTarget: 3000, spendYTD: 0, voucherSpendTarget: 15000 },
+    { owner: "Tami", name: "Barclaycard Avios Plus", fee: "£240/yr (£20/mo)", earn: "1.5 Avios/£", status: "Planned — apply Dec '26", perk: "25k bonus (£1k spend, lands ~Feb '27). Cabin upgrade voucher at £10k/yr." }
   ],
+
   vouchers: [
-    { name: "BA Amex 2-4-1 (Premium Plus)", owner: "Tami", earnedBy: "£15k/yr on Premium Plus", status: "Not yet earned", value: "2 people, any cabin, one person's Avios; valid 2yr", targetForGate: "ny" },
+    { name: "BA Amex 2-4-1 (Premium Plus)", owner: "Tami", earnedBy: "£15k/yr on Premium Plus (~Nov '26)", status: "Not yet earned", value: "2 people, any cabin, one person's Avios; valid 2yr", targetForGate: "ny" },
     { name: "Barclaycard cabin upgrade", owner: "Hayden", earnedBy: "£10k/yr on Avios Plus", status: "In progress", value: "Bump a reward booking up one cabin (backup lever)" },
     { name: "Hilton 5th night free", owner: "Hayden", earnedBy: "Any Hilton status", status: "Available", value: "On 5-night award stays" }
   ],
+
   eligibility: [
-    { date: "2027-06-01", label: "Hayden: BA Amex Premium Plus new-bonus eligibility returns", who: "Hayden" }
+    { date: "2027-06-01", label: "Hayden: BA Amex Premium Plus new-bonus eligibility returns (own 2-4-1 pathway)", who: "Hayden" },
+    { date: "2027-03-01", label: "Tami: cancel Amex Gold before renewal (transfer MR to Avios first)", who: "Tami" }
   ],
+
   transfers: [
     { from: "Amex MR", to: "Avios", ratio: "1:1" },
     { from: "Amex MR", to: "Virgin", ratio: "1:1 (UK — any 30% bonus quoted online is US-only; verify in-account)" },
@@ -583,224 +544,231 @@ const DATA = {
     { from: "Avios family", to: "Avios family", ratio: "1:1 (BA / Aer Lingus / Iberia / Qatar / Finnair)" },
     { from: "Virgin", to: "—", ratio: "One-way IN only — transfer only against a confirmed booking" }
   ],
+
   liveOffers: [
     { title: "Amex referral window", detail: "Enhanced referrer bonuses ended 21 Jul 2026", tag: "expired" },
     { title: "BA Amex (free) welcome", detail: "Boosted 30k Avios (£5k/3mo) currently live", tag: "live" },
     { title: "BA devaluation", detail: "Cash element of Avios redemptions rose 27 May — favour off-peak & partner (Qatar/Iberia) sweet spots", tag: "watch" }
   ],
+
   history: [
     { month: "2026-07", name: "Hayden", avios: 1500, virgin: 0, amexMR: 0, hilton: 120000, nectar: 0 },
-    { month: "2026-07", name: "Tami", avios: 27500, virgin: 5000, amexMR: 75000, hilton: 0, nectar: 0 }
+    { month: "2026-07", name: "Tami",  avios: 27500, virgin: 5000, amexMR: 75000, hilton: 0, nectar: 0 }
   ],
-  // ============================================================================
-  // FORECAST ASSUMPTIONS  ——  this is your editable "spreadsheet".
-  // Change any number/month/amount here, then commit & push to update the chart.
-  // Nothing is adjustable on the page itself; the forecast always reflects these.
-  // ============================================================================
-  forecast: {
-    monthlyEarn: 30000,          // ongoing pooled Avios earned per month from everyday card spend
-    horizon: "2027-05",          // last month to project to (the Tokyo booking)
-    oneOffs: [                   // welcome bonuses / one-off lumps, each in the month it posts
-      { month: "2026-09", label: "Platinum welcome", amount: 80000 },
-      { month: "2026-11", label: "BA PP welcome",    amount: 30000 }
+
+  // ==========================================================================
+  // LOCKED BUDGET  ——  frozen monthly targets from Excel v6 (this is the plan).
+  // Anchored at real current pooled (104k). Each `target` is the pooled
+  // Avios-equivalent closing balance the plan expects that month. Track actuals
+  // against these. To re-baseline, edit these numbers and bump `lockedOn`.
+  // ==========================================================================
+  budget: {
+    lockedOn: "2026-07-20",
+    finalSurplus: 22000,
+    path: [
+      { month: "2026-07", target: 104000, events: ["Baseline — real pooled balance"] },
+      { month: "2026-08", target: 161500, events: ["Tami BA PP 50k sign-up bonus lands"] },
+      { month: "2026-09", target: 169000, events: ["Hayden hits £6k Platinum min spend → 80k MR triggered"] },
+      { month: "2026-10", target: 277000, events: ["Platinum 80k MR + Tami's 20k referral MR → Avios", "BA PP earn cut to 1.25/£ from 7 Oct"] },
+      { month: "2026-11", target: 285000, events: ["Tami hits £15k on BA PP → 2-4-1 voucher earned"] },
+      { month: "2026-12", target: 293000, events: ["Tami applies Barclaycard Avios Plus"] },
+      { month: "2027-01", target: 117000, booking: "ny",    events: ["BOOK NEW YORK — 187k via 2-4-1 (Club both ways), taxes ~£750"] },
+      { month: "2027-02", target: 222000, events: ["Tami Barclaycard 25k bonus", "Balance Boost: buy 70k Avios @0.92p = £644"] },
+      { month: "2027-03", target: 252000, events: ["Balance Boost: buy 20k Avios = £184"] },
+      { month: "2027-04", target: 282000, events: ["Balance Boost: buy 20k Avios = £184"] },
+      { month: "2027-05", target: 312000, events: ["Balance Boost: buy 20k Avios = £184"] },
+      { month: "2027-06", target: 22000,  booking: "tokyo", events: ["Balance Boost before booking: buy 20k = £184", "BOOK TOKYO — 320k via Qatar BHX, taxes ~£250"] }
+    ]
+  },
+
+  // ---- CASH OUT (fees, Balance Boost purchases, flight taxes) — Excel v6 Cash Flow ----
+  cashflow: [
+    { month: "2026-07", label: "Amex Platinum annual fee", who: "Hayden", amount: 650, cat: "fee", note: "Yr1. Cancel before Jun '27 renewal." },
+    { month: "2026-07", label: "BA Amex Premium Plus annual fee", who: "Tami", amount: 300, cat: "fee", note: "Yr1. Cancel before Jun '27 renewal." },
+    { month: "2026-12", label: "Barclaycard Avios Plus (Tami)", who: "Tami", amount: 140, cat: "fee", note: "£20/mo × 7 months (Dec–Jun). Keep long-term." },
+    { month: "2027-01", label: "New York flight taxes (2 pax, Club both ways)", amount: 750, cat: "tax", note: "~£300–400pp. Verify live at booking." },
+    { month: "2027-02", label: "Balance Boost — buy 70k Avios @0.92p", amount: 644, cat: "boost", note: "Boost the 35k Feb earn (10k card + 25k bonus) at 200%." },
+    { month: "2027-03", label: "Balance Boost — buy 20k Avios", amount: 184, cat: "boost" },
+    { month: "2027-04", label: "Balance Boost — buy 20k Avios", amount: 184, cat: "boost" },
+    { month: "2027-05", label: "Balance Boost — buy 20k Avios", amount: 184, cat: "boost" },
+    { month: "2027-06", label: "Balance Boost — buy 20k Avios (before Tokyo)", amount: 184, cat: "boost", note: "Do BEFORE booking to ensure balance ≥ 320k." },
+    { month: "2027-06", label: "Hayden BA Amex PP annual fee (Yr1)", who: "Hayden", amount: 300, cat: "fee", note: "Cool-off cleared; own 2-4-1 pathway." },
+    { month: "2027-06", label: "Tokyo flight taxes (2 pax, Qatar)", amount: 250, cat: "tax", note: "Qatar has no fuel surcharges. Verify live." }
+  ],
+  feesSaved: [
+    { label: "Hayden cancels Amex Platinum before Jul '27", amount: 650 },
+    { label: "Tami cancels BA Amex PP before Jul '27", amount: 300 },
+    { label: "Tami cancels Amex Gold before Mar '27", amount: 195 }
+  ],
+  seatValue: "£20,000+",
+
+  // ---- BALANCE BOOST (avios.com) — buy 200% of recent 30-day earn at 0.92p ----
+  balanceBoost: {
+    rate: 0.92, annualCap: 300000,
+    note: "Buy Avios equal to 200% of your recent 30-day earn (total becomes 3× earn) at 0.92p each. Eligible: card spend, sign-up bonuses, MR transfers. 300k/yr cap. Each transaction boostable once.",
+    purchases: [
+      { month: "2027-02", earn: "35k (10k card + 25k Barclaycard bonus)", buy: 70000, cost: 644 },
+      { month: "2027-03", earn: "10k card spend", buy: 20000, cost: 184 },
+      { month: "2027-04", earn: "10k card spend", buy: 20000, cost: 184 },
+      { month: "2027-05", earn: "10k card spend", buy: 20000, cost: 184 },
+      { month: "2027-06", earn: "10k card spend (before Tokyo)", buy: 20000, cost: 184 }
+    ]
+  },
+
+  levers: [
+    "Balance Boost (avios.com): buy 200% of your 30-day earn at 0.92p — this is the Tokyo closer, ~150k bought for ~£1,380.",
+    "Route ALL spend to clear welcome thresholds first (Platinum £6k, BA PP £3k), then push BA PP to £15k fast for the 2-4-1.",
+    "Hayden spends on Tami's cards as a supplementary holder — pool the combined ~£6.5k/mo where it's needed.",
+    "After 7 Oct '26 BA PP drops to 1.25/£ — send day-to-day spend to Barclaycard (stays 1.5/£).",
+    "Transfer 80k Platinum MR + 20k referral MR to Avios in Oct '26; move Tami's Gold MR to Avios before cancelling.",
+    "Nectar↔Avios 400→250; watch for 10–20% bonuses. Virgin: transfer in only, against a confirmed booking."
+  ],
+
+  playbook: {
+    Hayden: [
+      { when: "Now",      action: "Keep",          card: "Barclaycard Avios Plus", note: "1.5/£ main daily spend. Upgrade voucher at £10k/yr. Never cancel." },
+      { when: "Jul '26",  action: "Apply",         card: "Amex Platinum",          note: "80k MR after £6k spend. Via Tami's referral (+20k to Tami)." },
+      { when: "Sep '26",  action: "Hit min spend", card: "Amex Platinum",          note: "£6k by end Sep → 80k MR triggered. Then route spend back to Barclaycard." },
+      { when: "Oct '26",  action: "Transfer MR",   card: "Amex Platinum",          note: "80k + Tami's 20k referral MR → Avios." },
+      { when: "Jun '27",  action: "Cancel",        card: "Amex Platinum",          note: "Day before renewal — saves £650 (no pro-rata refund)." },
+      { when: "Jun '27",  action: "Apply",         card: "BA Amex Premium Plus",   note: "Cool-off clears. 50k bonus ~Sep '27. Starts his own 2-4-1 pathway." }
     ],
-    redemptions: [               // gate bookings that spend the pool down (gateId links to a gate)
-      { month: "2027-01", gateId: "ny", label: "NYC booking", amount: 187000 }
+    Tami: [
+      { when: "Now",      action: "Keep",          card: "Amex Gold",              note: "1 MR/£. Transfer all MR to Avios before cancelling." },
+      { when: "Jul '26",  action: "Apply",         card: "BA Amex Premium Plus",   note: "50k after £3k. Target £15k total for the 2-4-1 by Nov '26." },
+      { when: "Aug '26",  action: "Collect bonus", card: "BA Amex PP",             note: "50k Avios lands after £3k min spend." },
+      { when: "Nov '26",  action: "2-4-1 earned",  card: "BA Amex PP",             note: "£15k hit → voucher (any cabin), valid 2yr in BAEC. Use at NY booking." },
+      { when: "Dec '26",  action: "Apply",         card: "Barclaycard Avios Plus", note: "25k after £1k, lands ~Feb '27." },
+      { when: "Jan '27",  action: "Cancel",        card: "Amex Gold",              note: "Transfer MR to Avios first. Before Mar renewal — saves £195." },
+      { when: "Jun '27",  action: "Cancel",        card: "BA Amex PP",             note: "2-4-1 stays valid in BAEC. Saves £300." },
+      { when: "~Oct '27", action: "Upgrade voucher", card: "Barclaycard Avios Plus", note: "After £10k/yr spend. Accept in app when you know the trip." }
     ]
   }
 };
 
-/* ============================================================
-   STATE — deep clone DATA into a working `state`.
-   A local draft (editing) may be kept in localStorage, but the
-   PUBLISHED source of truth is always the DATA const above.
-   ============================================================ */
-const DRAFT_KEY = "pointsHQ_draft_v1";
-const PLATINUM_INCOMING_MR = 80000;
-
+/* ============================================================================ */
+const DRAFT_KEY = "pointsHQ_draft_v2";
 function deepClone(o){ return JSON.parse(JSON.stringify(o)); }
-
 let state = deepClone(DATA);
-let editing = false;
-let chart = null;
-let hasDraft = false;
+let editing = false, chart = null, hasDraft = false;
+try { const raw = localStorage.getItem(DRAFT_KEY); if (raw){ state = JSON.parse(raw); hasDraft = true; } } catch(e){}
 
-// Load any saved draft (so a half-finished edit survives refresh)
-try {
-  const raw = localStorage.getItem(DRAFT_KEY);
-  if (raw) { state = JSON.parse(raw); hasDraft = true; }
-} catch(e){ /* ignore */ }
-
-/* ---- Currency metadata ---- */
 const CUR = [
-  { key: "avios",  label: "Avios",   short: "AV", varc: "avios" },
-  { key: "virgin", label: "Virgin",  short: "VS", varc: "virgin" },
-  { key: "amexMR", label: "Amex MR", short: "MR", varc: "mr" },
-  { key: "hilton", label: "Hilton",  short: "HH", varc: "hilton" },
-  { key: "nectar", label: "Nectar",  short: "NE", varc: "nectar" }
+  { key:"avios", label:"Avios", short:"AV", varc:"avios" },
+  { key:"virgin", label:"Virgin", short:"VS", varc:"virgin" },
+  { key:"amexMR", label:"Amex MR", short:"MR", varc:"mr" },
+  { key:"hilton", label:"Hilton", short:"HH", varc:"hilton" },
+  { key:"nectar", label:"Nectar", short:"NE", varc:"nectar" }
 ];
 
-/* ============================================================
-   CALCULATIONS (per spec §5)
-   ============================================================ */
-function sumBal(key){ return state.people.reduce((a,p)=> a + (Number(p.balances[key])||0), 0); }
-
+/* ---- calc ---- */
+function sumBal(k){ return state.people.reduce((a,p)=>a+(Number(p.balances[k])||0),0); }
 function nectarToAvios(n){ return Math.floor(n/400*250); }
-
-function pooledAvios(){
-  return sumBal("avios") + sumBal("amexMR") + nectarToAvios(sumBal("nectar"));
-  // Virgin excluded by design.
-}
-function pooledBreakdown(){
-  return {
-    avios: sumBal("avios"),
-    mr: sumBal("amexMR"),
-    nectar: nectarToAvios(sumBal("nectar")),
-    nectarRaw: sumBal("nectar")
-  };
-}
-function gateProgress(gate, pooled){
-  const pct = Math.min(100, Math.round(pooled * 100 / gate.targetAvios)); // integer-first avoids float rounding (e.g. 0.575*100=57.4999)
-  const shortfall = Math.max(0, gate.targetAvios - pooled);
-  let status; // ok | warn | bad
-  if (pooled >= gate.targetAvios) status = "ok";
-  else if (pooled >= gate.targetAvios * 0.75) status = "warn";
-  else status = "bad";
+function pooledAvios(){ return sumBal("avios")+sumBal("amexMR")+nectarToAvios(sumBal("nectar")); }
+function pooledBreakdown(){ return { avios:sumBal("avios"), mr:sumBal("amexMR"), nectar:nectarToAvios(sumBal("nectar")), nectarRaw:sumBal("nectar") }; }
+function gateProgress(g, pooled){
+  const pct = Math.min(100, Math.round(pooled*100/g.targetAvios));
+  const shortfall = Math.max(0, g.targetAvios - pooled);
+  let status = pooled>=g.targetAvios ? "ok" : pooled>=g.targetAvios*0.75 ? "warn" : "bad";
   return { pct, shortfall, status };
 }
-function voucherForGate(gateId){
-  return state.vouchers.find(v => v.targetForGate === gateId);
+function voucherForGate(id){ return state.vouchers.find(v=>v.targetForGate===id); }
+function voucherEarned(v){ return v && /earned|in hand|available|complete/i.test(v.status) && !/not/i.test(v.status); }
+
+/* ---- budget helpers ---- */
+function budgetPath(){ return (state.budget && state.budget.path) || []; }
+function budgetMap(){ const m={}; budgetPath().forEach(p=>m[p.month]=p.target); return m; }
+function currentMonth(){ return (state.lastUpdated||"2026-07").slice(0,7); }
+function actualPooledByMonth(){
+  const m={}; state.history.forEach(r=>{ const eq=(Number(r.avios)||0)+(Number(r.amexMR)||0)+nectarToAvios(Number(r.nectar)||0); m[r.month]=(m[r.month]||0)+eq; });
+  // the latest/current month reflects live edited balances
+  m[currentMonth()] = pooledAvios();
+  return m;
 }
-function voucherEarned(v){
-  if(!v) return false;
-  return /earned|in hand|available|complete/i.test(v.status) && !/not/i.test(v.status);
+function performance(){
+  const bMap = budgetMap(), aMap = actualPooledByMonth();
+  const actualMonths = Object.keys(aMap).sort();
+  const latest = actualMonths[actualMonths.length-1];
+  const budgetToDate = bMap[latest];
+  const actual = aMap[latest];
+  if (budgetToDate == null) return { latest, actual, budget:null, variance:null, status:"info" };
+  const variance = actual - budgetToDate;
+  const pct = budgetToDate ? variance/budgetToDate : 0;
+  let status = variance>=0 ? "ok" : pct> -0.08 ? "warn" : "bad";
+  return { latest, actual, budget:budgetToDate, variance, pct, status };
 }
 
-/* ---- date helpers ---- */
+/* ---- dates ---- */
+function parseISO(d){ const p=d.split("-").map(Number); return new Date(p[0], (p[1]||1)-1, p[2]||1); }
 function today(){ return new Date(); }
-function parseISO(d){ const [y,m,day]=d.split("-").map(Number); return new Date(y, m-1, day); }
-function daysBetween(a,b){ return Math.round((b - a) / 86400000); }
-function countdownText(deadlineISO){
-  const now = today(); now.setHours(0,0,0,0);
-  const dl = parseISO(deadlineISO);
-  const days = daysBetween(now, dl);
-  if (days < 0) return { text: "Past deadline", days, over: true };
-  const months = Math.floor(days / 30.44);
-  const remDays = days - Math.round(months*30.44);
-  if (months >= 1) return { text: months + " mo" + (months>1?"s":"") + " · " + days + " days left", days, over:false };
-  return { text: days + " days left", days, over:false };
+function daysBetween(a,b){ return Math.round((b-a)/86400000); }
+function countdownText(iso){
+  const now=today(); now.setHours(0,0,0,0); const dl=parseISO(iso); const days=daysBetween(now,dl);
+  if (days<0) return { text:"Past deadline", days, over:true };
+  const months=Math.floor(days/30.44);
+  if (months>=1) return { text:months+" mo"+(months>1?"s":"")+" · "+days+" days left", days, over:false };
+  return { text:days+" days left", days, over:false };
 }
+function fmt(n){ return Number(Math.round(n)).toLocaleString("en-GB"); }
+function fmtGBP(n){ return "£"+Number(Math.round(n)).toLocaleString("en-GB"); }
+function formatDate(iso){ try{ return parseISO(iso).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"});}catch(e){return iso;} }
+function formatMonth(m){ const p=m.split("-").map(Number); return new Date(p[0],p[1]-1,1).toLocaleDateString("en-GB",{month:"short",year:"numeric"}); }
+function shortMonth(m){ const ym=m.length>7?m.slice(0,7):m; return parseISO(ym+"-01").toLocaleDateString("en-GB",{month:"short",year:"2-digit"}); }
+function initials(n){ return n.trim().charAt(0).toUpperCase(); }
 
-/* ---- formatting ---- */
-function fmt(n){ return Number(n).toLocaleString("en-GB"); }
-function initials(name){ return name.trim().charAt(0).toUpperCase(); }
-
-/* ============================================================
+/* ============================================================================
    RENDER
-   ============================================================ */
+   ============================================================================ */
 function render(){
-  document.getElementById("hhName").textContent = state.household.split("—").pop().trim() || state.household;
-  document.querySelector(".brand .name").textContent = "Points HQ";
-  document.getElementById("hhUpdated").textContent = "Last updated " + formatDate(state.lastUpdated);
-
-  renderGates();
-  renderPooled();
-  renderPeople();
-  renderCards();
-  renderVouchers();
-  renderHistory();
-  renderTransfers();
-  renderEligibility();
-  renderOffers();
-  renderNextAction();
-  renderFootNote();
+  document.getElementById("hhUpdated").textContent = "Last updated "+formatDate(state.lastUpdated);
+  renderGates(); renderPooled(); renderNextAction(); renderOffers(); renderFootNote();
+  renderBudgetText(); renderPerformance(); renderBudgetEvents(); renderHistory();
+  renderCash(); renderFeesSaved();
+  renderPeople(); renderCards(); renderVouchers(); renderPlaybook(); renderEligibility();
+  renderBoost(); renderLevers(); renderTransfers();
   renderChart();
 }
 
-function formatDate(iso){
-  try { return parseISO(iso).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}); }
-  catch(e){ return iso; }
-}
-
 function ringSVG(pct, colorVar){
-  const r = 46, c = 2*Math.PI*r;
-  const off = c * (1 - pct/100);
-  return `<svg viewBox="0 0 110 110" aria-hidden="true">
-    <circle class="track" cx="55" cy="55" r="${r}"></circle>
-    <circle class="prog" cx="55" cy="55" r="${r}" stroke="var(${colorVar})"
-      stroke-dasharray="${c.toFixed(1)}" stroke-dashoffset="${c.toFixed(1)}"
-      data-target="${off.toFixed(1)}"></circle>
-  </svg>`;
+  const r=45, c=2*Math.PI*r, off=c*(1-pct/100);
+  return `<svg viewBox="0 0 104 104" aria-hidden="true"><circle class="track" cx="52" cy="52" r="${r}"></circle>
+    <circle class="prog" cx="52" cy="52" r="${r}" stroke="var(${colorVar})" stroke-dasharray="${c.toFixed(1)}"
+      stroke-dashoffset="${c.toFixed(1)}" data-target="${off.toFixed(1)}"></circle></svg>`;
 }
-
 function renderGates(){
-  const pooled = pooledAvios();
-  const withIncoming = pooled + PLATINUM_INCOMING_MR;
-  const el = document.getElementById("gates");
-  el.innerHTML = state.gates.map(g => {
-    const p = gateProgress(g, pooled);
-    const pInc = gateProgress(g, withIncoming);
-    const cd = countdownText(g.deadline);
-    const statusPill = p.status === "ok"
-      ? `<span class="pill ok">✓ On track</span>`
-      : `<span class="pill ${p.status==="warn"?"warn":"bad"}">Short by ${fmt(p.shortfall)}</span>`;
-
-    // Voucher chip for NY gate
-    let voucherChip = "";
-    const v = voucherForGate(g.id);
-    if (v){
-      voucherChip = voucherEarned(v)
-        ? `<span class="pill ok">✓ 2-4-1 in hand</span>`
-        : `<span class="pill warn">2-4-1 not yet earned</span>`;
-    }
-    const colorVar = p.status==="ok" ? "--ok" : p.status==="warn" ? "--warn" : "--bad";
-
+  const pooled=pooledAvios(), perf=performance();
+  const budgetPill = perf.variance==null ? `<span class="pill muted">Tracking</span>`
+    : perf.status==="ok" ? `<span class="pill ok">✓ On budget</span>`
+    : `<span class="pill ${perf.status==="warn"?"warn":"bad"}">${fmt(Math.abs(perf.variance))} behind budget</span>`;
+  document.getElementById("gates").innerHTML = state.gates.map(g=>{
+    const p=gateProgress(g,pooled); const cd=countdownText(g.deadline);
+    const colorVar = p.status==="ok"?"--ok":p.status==="warn"?"--warn":"--accent";
+    let voucherChip=""; const v=voucherForGate(g.id);
+    if (v) voucherChip = voucherEarned(v) ? `<span class="pill ok">✓ 2-4-1 in hand</span>` : `<span class="pill warn">2-4-1 not yet earned</span>`;
+    const cdCol = cd.over?"var(--bad)":cd.days<60?"var(--warn)":"var(--text-2)";
     return `<div class="card gate ${g.priority?"priority":""}">
-      <div class="gate-top">
-        <div style="flex:1;min-width:0">
-          <div class="gate-title">${g.name}</div>
-          <div class="gate-meta">${countdownLine(cd)} · target ${fmt(g.targetAvios)}</div>
-        </div>
-        ${g.priority?`<span class="star">★ Priority</span>`:``}
-      </div>
+      <div class="gate-top"><div style="flex:1;min-width:0">
+        <div class="gate-title">${g.name}</div>
+        <div class="gate-meta"><span class="countdown" style="color:${cdCol}">Book by ${shortMonth(g.deadline)} · ${cd.text}</span></div>
+      </div>${g.priority?`<span class="star">★ Priority</span>`:``}</div>
       <div class="gate-body">
-        <div class="ring">
-          ${ringSVG(p.pct, colorVar)}
-          <div class="ring-label"><span class="ring-pct num">${p.pct}%</span><span class="ring-sub">funded</span></div>
-        </div>
+        <div class="ring">${ringSVG(p.pct,colorVar)}<div class="ring-label"><span class="ring-pct num">${p.pct}%</span><span class="ring-sub">of target</span></div></div>
         <div class="gate-stats">
-          <div class="gate-nums"><b class="num">${fmt(pooled)}</b> / <span class="num">${fmt(g.targetAvios)}</span> Avios</div>
-          <div class="gate-chips">
-            ${statusPill}
-            ${voucherChip}
-          </div>
-          <div class="gate-nums" style="margin-top:8px">With incoming +80k MR → <b class="num">${pInc.pct}%</b> (${fmt(withIncoming)})</div>
+          <div class="gate-nums"><b class="num">${fmt(pooled)}</b> / <span class="num">${fmt(g.targetAvios)}</span> Avios today</div>
+          <div class="gate-chips">${budgetPill}${voucherChip}</div>
+          <div class="gate-nums" style="margin-top:8px">Budget funds this by <b>${shortMonth(g.deadline)}</b></div>
         </div>
       </div>
-      <div class="gate-extra">${g.extra}</div>
-    </div>`;
+      <div class="gate-extra">${g.extra}</div></div>`;
   }).join("");
-  // animate rings
-  requestAnimationFrame(()=> {
-    document.querySelectorAll(".ring .prog").forEach(c => {
-      c.style.strokeDashoffset = c.getAttribute("data-target");
-    });
-  });
+  requestAnimationFrame(()=>document.querySelectorAll(".ring .prog").forEach(c=>c.style.strokeDashoffset=c.getAttribute("data-target")));
 }
-function countdownLine(cd){
-  const cls = cd.over ? "bad" : (cd.days < 60 ? "warn" : "");
-  return `<span class="countdown" style="${cd.over?'color:var(--bad)':''}">${cd.text}</span>`;
-}
-
 function renderPooled(){
-  const b = pooledBreakdown();
-  const pooled = pooledAvios();
-  const withIncoming = pooled + PLATINUM_INCOMING_MR;
+  const b=pooledBreakdown(), pooled=pooledAvios();
   document.getElementById("pooled").innerHTML = `
-    <div class="pooled-big">
-      <div class="n num">${fmt(pooled)}</div>
-      <div class="u">Pooled Avios-equivalent<br><span style="color:var(--text-3)">MR &amp; Nectar counted at transfer value; Virgin excluded</span></div>
-      <div class="pooled-incoming">Pooled today: <b class="num">${fmt(pooled)}</b> · with confirmed incoming (Platinum 80k MR): <b class="num">${fmt(withIncoming)}</b></div>
+    <div class="pooled-big"><div class="n num">${fmt(pooled)}</div>
+      <div class="u">Pooled Avios-equivalent<br><span style="color:var(--text-3)">MR &amp; Nectar at transfer value; Virgin excluded</span></div>
+      <div class="pooled-incoming">The budget accounts for the confirmed <b>80k Platinum MR</b> + <b>50k BA PP</b> bonuses landing over Aug–Oct.</div>
     </div>
     <div class="breakdown">
       <div class="bk"><span class="k">Avios (raw)</span><span class="v num">${fmt(b.avios)}</span></div>
@@ -808,605 +776,334 @@ function renderPooled(){
       <div class="bk"><span class="k">Nectar → Avios</span><span class="v num">${fmt(b.nectar)}</span><span class="k">${fmt(b.nectarRaw)} Nectar</span></div>
     </div>`;
 }
+function renderNextAction(){
+  const v=voucherForGate("ny");
+  let ic="🎯", msg="", sub="";
+  if (v && !voucherEarned(v)){
+    ic="💳"; msg="Clear both welcome bonuses, then drive Tami's BA PP to £15k for the 2-4-1.";
+    sub="Now: £6k on Platinum by Sep (80k MR) · £3k on BA PP (50k) · then push BA PP to £15k by Nov for the companion voucher.";
+  } else {
+    const perf=performance();
+    if (perf.status!=="ok"){ ic="⚠️"; msg=`Actuals are ${fmt(Math.abs(perf.variance))} behind the budget.`; sub="Check the Budget tab and lean on the Balance Boost to catch up."; }
+    else { ic="✈️"; msg="On budget — next milestone is the Oct MR transfer (100k → Avios)."; sub="Then hold to 187k for the Jan NY booking."; }
+  }
+  document.getElementById("nextAction").innerHTML = `<span class="na-ic">${ic}</span><div class="na-txt">${msg}<small>${sub}</small></div>`;
+}
+function renderOffers(){
+  document.getElementById("offers").innerHTML = state.liveOffers.map(o=>`
+    <div class="card offer ${o.tag==="expired"?"is-expired":""}"><span class="otag ${o.tag}">${o.tag}</span>
+      <div><div class="otitle">${o.title}</div><div class="odetail">${o.detail}</div></div></div>`).join("");
+}
+function renderFootNote(){
+  document.getElementById("footNote").innerHTML =
+    `Shared source of truth is the committed <code>DATA</code> block in <code>index.html</code>. Monthly: edit balances → <b>Copy updated DATA</b> → commit &amp; push → both phones update on the same link.<br>`+
+    `Numbers mirror <code>Points_Scenario_Engine_v6.xlsx</code>. The <code>budget</code> block is locked; the assumptions (bonuses, Balance Boost, taxes) live in <code>DATA</code> for you to edit.`;
+}
 
+/* ---- budget tab ---- */
+function renderBudgetText(){
+  const b=state.budget||{};
+  document.getElementById("budgetLockLabel").textContent = b.lockedOn ? "Locked "+formatDate(b.lockedOn) : "";
+  document.getElementById("budgetIntro").innerHTML =
+    `This is the plan from your Excel v6, <b>locked as the budget</b>. It funds both trips and ends about <b>+${fmt(b.finalSurplus||0)} Avios</b> after the Jun '27 Tokyo booking — but it <b>relies on ~£1,380 of Balance Boost purchases</b> (≈150k Avios) to close Tokyo. The solid line is where you actually are; the dashed line is the budget.`;
+}
+function renderPerformance(){
+  const perf=performance(), el=document.getElementById("perfReadout");
+  let rows="";
+  if (perf.budget==null){
+    rows = `<div class="rline info">Add monthly balances to start tracking actuals vs budget.</div>`;
+  } else {
+    const cls = perf.status==="ok"?"ok":perf.status==="warn"?"warn":"bad";
+    const word = perf.variance>=0 ? (perf.variance===0?"exactly on budget":fmt(perf.variance)+" ahead of budget") : fmt(Math.abs(perf.variance))+" behind budget";
+    rows += `<div class="rline ${cls}">${perf.status==="ok"?"✓":"⚠️"} ${formatMonth(perf.latest)}: actual <b>${fmt(perf.actual)}</b> vs budget <b>${fmt(perf.budget)}</b> — ${word}.</div>`;
+  }
+  rows += `<div class="rline info">Budget verdict: both gates funded — NY (187k) by <b>Jan '27</b>, Tokyo (320k) by <b>Jun '27</b> — ending ~<b>+${fmt((state.budget||{}).finalSurplus||0)}</b>. Tokyo depends on the Balance Boost buys (see the Boost tab).</div>`;
+  el.innerHTML = rows;
+}
+function renderBudgetEvents(){
+  const cm=currentMonth();
+  document.getElementById("budgetEvents").innerHTML = budgetPath().map(p=>{
+    const past = p.month < cm;
+    const booking = p.booking ? `<span class="booking-tag">Book ${p.booking==="ny"?"NY":"Tokyo"}</span>` : "";
+    const evs = (p.events||[]).map(e=>`<div class="d">• ${e}</div>`).join("");
+    return `<div class="evrow ${past?"past":""}"><div class="evmonth">${shortMonth(p.month)}</div>
+      <div class="evbody"><div class="t">Target ${fmt(p.target)}${booking}</div>${evs}</div></div>`;
+  }).join("");
+}
+function renderHistory(){
+  const cols=["Month","Name","Avios","Virgin","Amex MR","Hilton","Nectar","Pooled eq.","vs budget"];
+  document.querySelector("#histTable thead").innerHTML = "<tr>"+cols.map(c=>`<th>${c}</th>`).join("")+"</tr>";
+  const bMap=budgetMap();
+  const rows=[...state.history].sort((a,b)=> b.month.localeCompare(a.month)||a.name.localeCompare(b.name));
+  // compute per-month combined pooled for variance (only show variance on first row of each month)
+  const perMonth={}; state.history.forEach(r=>{ const eq=(Number(r.avios)||0)+(Number(r.amexMR)||0)+nectarToAvios(Number(r.nectar)||0); perMonth[r.month]=(perMonth[r.month]||0)+eq; });
+  perMonth[currentMonth()] = pooledAvios();
+  const seen={};
+  document.querySelector("#histTable tbody").innerHTML = rows.map(r=>{
+    const eq=(Number(r.avios)||0)+(Number(r.amexMR)||0)+nectarToAvios(Number(r.nectar)||0);
+    let varCell="";
+    if (!seen[r.month]){ seen[r.month]=1;
+      const bt=bMap[r.month];
+      if (bt!=null){ const dv=perMonth[r.month]-bt; varCell=`<span class="${dv>=0?"var-pos":"var-neg"}">${dv>=0?"+":""}${fmt(dv)}</span>`; }
+      else varCell="—";
+    }
+    return `<tr><td>${formatMonth(r.month)}</td><td>${r.name}</td>
+      <td class="num">${fmt(r.avios)}</td><td class="num">${fmt(r.virgin)}</td><td class="num">${fmt(r.amexMR)}</td>
+      <td class="num">${fmt(r.hilton)}</td><td class="num">${fmt(r.nectar)}</td>
+      <td class="num"><b>${fmt(eq)}</b></td><td class="num">${varCell}</td></tr>`;
+  }).join("");
+}
+
+/* ---- cash tab ---- */
+function renderCash(){
+  const cf=[...(state.cashflow||[])].sort((a,b)=>a.month.localeCompare(b.month));
+  const total=cf.reduce((s,c)=>s+(Number(c.amount)||0),0);
+  const byCat={fee:0,tax:0,boost:0}; cf.forEach(c=>byCat[c.cat]=(byCat[c.cat]||0)+(Number(c.amount)||0));
+  document.getElementById("cashIntro").innerHTML =
+    `Points are "free" but the plan still needs real cash: card fees, flight taxes, and — the big one — <b>buying Avios via Balance Boost</b> to fund Tokyo. Against that, four business-class seats worth <b>${state.seatValue||""}</b>.`;
+  document.getElementById("cashSummary").innerHTML = `
+    <div class="card cash-stat"><div class="k">Total cash out</div><div class="v num" style="color:var(--accent)">${fmtGBP(total)}</div></div>
+    <div class="card cash-stat"><div class="k">of which Balance Boost</div><div class="v num" style="color:var(--cat-boost)">${fmtGBP(byCat.boost||0)}</div></div>
+    <div class="card cash-stat"><div class="k">Fees + taxes</div><div class="v num">${fmtGBP((byCat.fee||0)+(byCat.tax||0))}</div></div>`;
+  let run=0;
+  document.getElementById("cashTimeline").innerHTML = cf.map(c=>{
+    run+=Number(c.amount)||0;
+    const catLabel={fee:"Fee",tax:"Tax",boost:"Boost"}[c.cat]||c.cat;
+    return `<div class="cashrow"><div class="cm">${shortMonth(c.month)}</div>
+      <div class="cl">${c.label}${c.who?` · ${c.who}`:""}<small><span class="cat-badge cat-${c.cat}">${catLabel}</span>${c.note?" "+c.note:""}</small></div>
+      <div class="ca num">${fmtGBP(c.amount)}</div><div class="cc num">Σ ${fmtGBP(run)}</div></div>`;
+  }).join("");
+}
+function renderFeesSaved(){
+  const fs=state.feesSaved||[]; const total=fs.reduce((s,f)=>s+(Number(f.amount)||0),0);
+  document.getElementById("feesSaved").innerHTML =
+    fs.map(f=>`<div class="cashrow"><div class="cl">${f.label}</div><div class="ca num" style="color:var(--ok)">${fmtGBP(f.amount)}</div></div>`).join("")+
+    `<div class="cashrow"><div class="cl"><b>Total saved by cancelling on time</b></div><div class="ca num" style="color:var(--ok)"><b>${fmtGBP(total)}</b></div></div>`;
+}
+
+/* ---- cards tab ---- */
 function renderPeople(){
-  const el = document.getElementById("people");
-  el.innerHTML = state.people.map((p, pi) => {
-    const rows = CUR.map(cur => {
-      const val = Number(p.balances[cur.key])||0;
-      const valCell = editing
-        ? `<input class="bal-input num" type="number" inputmode="numeric" min="0" step="1"
-             data-person="${pi}" data-key="${cur.key}" value="${val}" aria-label="${p.name} ${cur.label}">`
+  const el=document.getElementById("people");
+  el.innerHTML = state.people.map((p,pi)=>{
+    const rows=CUR.map(cur=>{
+      const val=Number(p.balances[cur.key])||0;
+      const cell = editing
+        ? `<input class="bal-input num" type="number" inputmode="numeric" min="0" step="1" data-person="${pi}" data-key="${cur.key}" value="${val}" aria-label="${p.name} ${cur.label}">`
         : `<span class="bal-val num">${fmt(val)}</span>`;
-      return `<div class="bal-row">
-        <span class="cur-badge" style="background:var(--c-${cur.varc}-bg);color:var(--c-${cur.varc})">${cur.short}</span>
-        <span class="bal-name">${cur.label}</span>
-        ${valCell}
-      </div>`;
+      return `<div class="bal-row"><span class="cur-badge" style="background:var(--c-${cur.varc}-bg);color:var(--c-${cur.varc})">${cur.short}</span>
+        <span class="bal-name">${cur.label}</span>${cell}</div>`;
     }).join("");
-    const noteBlock = editing
+    const note = editing
       ? `<textarea class="note-input" data-person="${pi}" data-note="1" aria-label="${p.name} note">${p.note||""}</textarea>`
       : `<div class="note">${p.note||""}</div>`;
-    return `<div class="card">
-      <div class="person-head">
-        <div class="avatar">${initials(p.name)}</div>
-        <div><div class="pname">${p.name}</div><div class="prole">Player ${pi+1}</div></div>
-      </div>
-      ${rows}
-      <div style="margin-top:6px">${noteBlock}</div>
-    </div>`;
+    return `<div class="card"><div class="person-head"><div class="avatar">${initials(p.name)}</div>
+      <div><div class="pname">${p.name}</div><div class="prole">Player ${pi+1}</div></div></div>
+      ${rows}<div style="margin-top:6px">${note}</div></div>`;
   }).join("");
-
-  // wire inputs
   if (editing){
-    el.querySelectorAll(".bal-input").forEach(inp => {
-      inp.addEventListener("input", e => {
-        const pi = +e.target.dataset.person, key = e.target.dataset.key;
-        state.people[pi].balances[key] = Math.max(0, Math.round(Number(e.target.value)||0));
-        saveDraft();
-        // live-update dependents (not people, to avoid losing focus)
-        renderGates(); renderPooled(); renderNextAction(); renderChart();
-      });
-    });
-    el.querySelectorAll(".note-input").forEach(t => {
-      t.addEventListener("input", e => {
-        state.people[+e.target.dataset.person].note = e.target.value;
-        saveDraft();
-      });
-    });
+    el.querySelectorAll(".bal-input").forEach(inp=>inp.addEventListener("input",e=>{
+      state.people[+e.target.dataset.person].balances[e.target.dataset.key]=Math.max(0,Math.round(Number(e.target.value)||0));
+      saveDraft(); renderGates(); renderPooled(); renderNextAction(); renderPerformance(); renderChart();
+    }));
+    el.querySelectorAll(".note-input").forEach(t=>t.addEventListener("input",e=>{ state.people[+e.target.dataset.person].note=e.target.value; saveDraft(); }));
   }
 }
-
-function statusClass(status){
-  if (/active/i.test(status)) return "status-active";
-  if (/order|ordering/i.test(status)) return "status-order";
-  return "status-plan";
-}
-
+function statusClass(s){ return /active/i.test(s)?"status-active":/order/i.test(s)?"status-order":"status-plan"; }
+function barBlock(label,right,pct,gold){ return `<div class="prog-wrap"><div class="prog-label"><span>${label}</span><span class="num">${right} · ${pct}%</span></div>
+  <div class="bar ${gold?"gold":""}"><span style="width:0" data-w="${pct}%"></span></div></div>`; }
 function renderCards(){
-  // group by owner into two columns like people
-  const owners = state.people.map(p=>p.name);
-  const el = document.getElementById("cards");
-  el.innerHTML = owners.map(owner => {
-    const cards = state.cards.filter(c => c.owner === owner);
-    const cardHTML = cards.map(c => {
-      let bars = "";
-      if (c.welcomeSpendTarget){
-        const done = Number(c.spendYTD)||0, tgt = c.welcomeSpendTarget;
-        const pct = Math.min(100, Math.round(done/tgt*100));
-        bars += barBlock(`Welcome bonus spend (${fmt(c.welcomeBonus||0)} pts)`, `£${fmt(done)} / £${fmt(tgt)}`, pct, false);
-      }
-      if (c.voucherSpendTarget){
-        const done = Number(c.spendYTD)||0, tgt = c.voucherSpendTarget;
-        const pct = Math.min(100, Math.round(done/tgt*100));
-        bars += barBlock(`2-4-1 voucher spend`, `£${fmt(done)} / £${fmt(tgt)}`, pct, true);
-      }
-      if (c.spendTarget && !c.welcomeSpendTarget && !c.voucherSpendTarget){
-        const done = Number(c.spendYTD)||0, tgt = c.spendTarget;
-        const pct = Math.min(100, Math.round(done/tgt*100));
-        bars += barBlock(`Annual spend perk`, `£${fmt(done)} / £${fmt(tgt)}`, pct, true);
-      }
-      return `<div class="card ccard">
-        <div class="ccard-top">
-          <div style="flex:1;min-width:0">
-            <div class="ccard-name">${c.name}</div>
-            <div class="ccard-owner">${c.owner}</div>
-          </div>
-          <span class="pill ${statusClass(c.status)}" style="font-size:11px">${c.status}</span>
-        </div>
-        <div class="ccard-grid">
-          <span>Fee <b>${c.fee}</b></span>
-          <span>Earn <b>${c.earn}</b></span>
-        </div>
-        <div class="ccard-perk">${c.perk}</div>
-        ${bars}
-      </div>`;
+  const owners=state.people.map(p=>p.name);
+  document.getElementById("cards").innerHTML = owners.map(owner=>{
+    const cardHTML=state.cards.filter(c=>c.owner===owner).map(c=>{
+      let bars="";
+      if (c.welcomeSpendTarget){ const d=Number(c.spendYTD)||0,t=c.welcomeSpendTarget,pct=Math.min(100,Math.round(d*100/t)); bars+=barBlock(`Welcome spend (${fmt(c.welcomeBonus||0)} pts)`,`£${fmt(d)} / £${fmt(t)}`,pct,false); }
+      if (c.voucherSpendTarget){ const d=Number(c.spendYTD)||0,t=c.voucherSpendTarget,pct=Math.min(100,Math.round(d*100/t)); bars+=barBlock(`2-4-1 voucher spend`,`£${fmt(d)} / £${fmt(t)}`,pct,true); }
+      if (c.spendTarget && !c.welcomeSpendTarget && !c.voucherSpendTarget){ const d=Number(c.spendYTD)||0,t=c.spendTarget,pct=Math.min(100,Math.round(d*100/t)); bars+=barBlock(`Annual spend perk`,`£${fmt(d)} / £${fmt(t)}`,pct,true); }
+      return `<div class="card ccard"><div class="ccard-top"><div style="flex:1;min-width:0"><div class="ccard-name">${c.name}</div><div class="ccard-owner">${c.owner}</div></div>
+        <span class="pill ${statusClass(c.status)}" style="font-size:11px">${c.status}</span></div>
+        <div class="ccard-grid"><span>Fee <b>${c.fee}</b></span><span>Earn <b>${c.earn}</b></span></div>
+        <div class="ccard-perk">${c.perk}</div>${bars}</div>`;
     }).join("");
     return `<div><div class="prole" style="margin:0 4px 8px;font-weight:700;color:var(--text-2)">${owner}</div>${cardHTML}</div>`;
   }).join("");
 }
-function barBlock(label, right, pct, gold){
-  return `<div class="prog-wrap">
-    <div class="prog-label"><span>${label}</span><span class="num">${right} · ${pct}%</span></div>
-    <div class="bar ${gold?"gold":""}"><span style="width:0" data-w="${pct}%"></span></div>
-  </div>`;
-}
-
 function renderVouchers(){
-  document.getElementById("vouchers").innerHTML = state.vouchers.map(v => {
-    const earned = voucherEarned(v);
-    const inProg = /progress/i.test(v.status);
-    const pillCls = earned ? "ok" : inProg ? "warn" : "muted";
-    return `<div class="card tile">
-      <h3>${v.name}</h3>
-      <div class="row"><span class="pill ${pillCls}" style="font-size:11px">${v.status}</span></div>
-      <div class="row">Owner <b>${v.owner}</b></div>
-      <div class="row">Earned by <b>${v.earnedBy}</b></div>
-      <div class="row">${v.value}</div>
-    </div>`;
+  document.getElementById("vouchers").innerHTML = state.vouchers.map(v=>{
+    const earned=voucherEarned(v), inProg=/progress/i.test(v.status);
+    const cls=earned?"ok":inProg?"warn":"muted";
+    return `<div class="card tile"><h3>${v.name}</h3><div class="row"><span class="pill ${cls}" style="font-size:11px">${v.status}</span></div>
+      <div class="row">Owner <b>${v.owner}</b></div><div class="row">Earned by <b>${v.earnedBy}</b></div><div class="row">${v.value}</div></div>`;
   }).join("");
 }
-
-function renderHistory(){
-  const cols = ["Month","Name","Avios","Virgin","Amex MR","Hilton","Nectar","Pooled eq."];
-  document.querySelector("#histTable thead").innerHTML =
-    "<tr>" + cols.map(c=>`<th>${c}</th>`).join("") + "</tr>";
-  const rows = [...state.history].sort((a,b)=> b.month.localeCompare(a.month) || a.name.localeCompare(b.name));
-  document.querySelector("#histTable tbody").innerHTML = rows.map(r => {
-    const pooledEq = (Number(r.avios)||0) + (Number(r.amexMR)||0) + nectarToAvios(Number(r.nectar)||0);
-    return `<tr>
-      <td>${formatMonth(r.month)}</td>
-      <td>${r.name}</td>
-      <td class="num">${fmt(r.avios)}</td>
-      <td class="num">${fmt(r.virgin)}</td>
-      <td class="num">${fmt(r.amexMR)}</td>
-      <td class="num">${fmt(r.hilton)}</td>
-      <td class="num">${fmt(r.nectar)}</td>
-      <td class="num"><b>${fmt(pooledEq)}</b></td>
-    </tr>`;
+function renderPlaybook(){
+  const pb=state.playbook||{};
+  document.getElementById("playbook").innerHTML = Object.keys(pb).map(who=>{
+    const items=pb[who].map(a=>{
+      const cls=/cancel/i.test(a.action)?"cancel":/apply/i.test(a.action)?"apply":"";
+      return `<div class="tl-item ${cls}"><div class="tl-when">${a.when}</div>
+        <div class="tl-label"><span class="act">${a.action}</span> — ${a.card}</div><div class="tl-note">${a.note}</div></div>`;
+    }).join("");
+    return `<div class="card"><div class="person-head"><div class="avatar">${initials(who)}</div><div><div class="pname">${who}</div><div class="prole">card actions</div></div></div>
+      <div class="timeline">${items}</div></div>`;
   }).join("");
 }
-function formatMonth(m){
-  const [y,mo] = m.split("-").map(Number);
-  return new Date(y, mo-1, 1).toLocaleDateString("en-GB",{month:"short",year:"numeric"});
-}
-
-function renderTransfers(){
-  document.getElementById("transfers").innerHTML = state.transfers.map(t => `
-    <div class="tmap-row">
-      <span class="from">${t.from}</span>
-      <span class="arrow">→</span>
-      <span class="to">${t.to}</span>
-      <span class="ratio">${t.ratio}</span>
-    </div>`).join("");
-}
-
 function renderEligibility(){
-  const items = [...state.eligibility].sort((a,b)=>a.date.localeCompare(b.date));
-  document.getElementById("eligibility").innerHTML = items.map(e => {
-    const cd = countdownText(e.date);
-    return `<div class="tl-item">
-      <div class="tl-date">${formatDate(e.date)}</div>
-      <div class="tl-label">${e.label}</div>
-      <div class="tl-count">${cd.over ? "Now eligible" : cd.text}</div>
-    </div>`;
+  const items=[...(state.eligibility||[])].sort((a,b)=>a.date.localeCompare(b.date));
+  document.getElementById("eligibility").innerHTML = items.map(e=>{
+    const cd=countdownText(e.date);
+    return `<div class="tl-item"><div class="tl-when">${formatDate(e.date)}</div><div class="tl-label" style="font-weight:600">${e.label}</div>
+      <div class="tl-note">${cd.over?"Now":cd.text}</div></div>`;
   }).join("");
 }
 
-function renderOffers(){
-  document.getElementById("offers").innerHTML = state.liveOffers.map(o => `
-    <div class="card offer ${o.tag==="expired"?"is-expired":""}">
-      <span class="otag ${o.tag}">${o.tag}</span>
-      <div><div class="otitle">${o.title}</div><div class="odetail">${o.detail}</div></div>
-    </div>`).join("");
+/* ---- boost tab ---- */
+function renderBoost(){
+  const bb=state.balanceBoost||{}; const buys=bb.purchases||[];
+  const totalBuy=buys.reduce((s,p)=>s+(Number(p.buy)||0),0), totalCost=buys.reduce((s,p)=>s+(Number(p.cost)||0),0);
+  document.getElementById("boostIntro").innerHTML =
+    `Organic card earn alone doesn't reach 320k for Tokyo — this is the lever that closes the gap. <b>Avios Balance Boost</b> lets you buy Avios equal to 200% of your recent 30-day earn at <b>${bb.rate||0.92}p each</b>. Across Feb–Jun '27 the plan buys <b>${fmt(totalBuy)} Avios</b> for <b>${fmtGBP(totalCost)}</b>.`;
+  document.getElementById("boostSummary").innerHTML = `
+    <div class="card cash-stat"><div class="k">Avios bought</div><div class="v num" style="color:var(--cat-boost)">${fmt(totalBuy)}</div></div>
+    <div class="card cash-stat"><div class="k">Cash cost</div><div class="v num">${fmtGBP(totalCost)}</div></div>
+    <div class="card cash-stat"><div class="k">Annual cap</div><div class="v num">${fmt(bb.annualCap||300000)}</div></div>`;
+  document.getElementById("boostRate").textContent = (bb.rate||0.92)+"p per Avios · "+ (bb.note||"");
+  document.querySelector("#boostTable thead").innerHTML = "<tr>"+["Month","Earn boosted (200%)","Avios bought","Cost"].map(c=>`<th>${c}</th>`).join("")+"</tr>";
+  document.querySelector("#boostTable tbody").innerHTML = buys.map(p=>`<tr><td>${shortMonth(p.month)}</td><td style="white-space:normal">${p.earn}</td>
+    <td class="num">${fmt(p.buy)}</td><td class="num">${fmtGBP(p.cost)}</td></tr>`).join("")+
+    `<tr><td><b>Total</b></td><td></td><td class="num"><b>${fmt(totalBuy)}</b></td><td class="num"><b>${fmtGBP(totalCost)}</b></td></tr>`;
+}
+function renderLevers(){
+  document.getElementById("levers").innerHTML = (state.levers||[]).map((l,i)=>`<div class="lever"><span class="lnum">${i+1}</span><span>${l}</span></div>`).join("");
+}
+function renderTransfers(){
+  document.getElementById("transfers").innerHTML = state.transfers.map(t=>`<div class="tmap-row"><span class="from">${t.from}</span>
+    <span class="arrow">→</span><span class="to">${t.to}</span><span class="ratio">${t.ratio}</span></div>`).join("");
 }
 
-function renderNextAction(){
-  const pooled = pooledAvios();
-  const ny = state.gates.find(g=>g.id==="ny");
-  const tokyo = state.gates.find(g=>g.id==="tokyo");
-  const v241 = voucherForGate("ny");
-  const nyProg = ny ? gateProgress(ny, pooled) : null;
-  const tokProg = tokyo ? gateProgress(tokyo, pooled) : null;
-
-  let ic = "🎯", msg = "", sub = "";
-  if (v241 && !voucherEarned(v241)){
-    ic = "💳"; msg = "Get Tami's Premium Plus to £15k to unlock the 2-4-1 voucher.";
-    sub = "That companion voucher is the key that makes the New York gate work.";
-  } else if (tokProg && tokProg.status !== "ok"){
-    ic = "✈️"; msg = `Tokyo (priority) is short by ${fmt(tokProg.shortfall)} Avios — keep the earn engines running.`;
-    sub = "Bank to 187k for NY first, then rebuild to 320k for Tokyo by end May.";
-  } else if (nyProg && nyProg.status !== "ok"){
-    ic = "✈️"; msg = `New York gate short by ${fmt(nyProg.shortfall)} Avios.`;
-    sub = "Voucher is in hand — now top up the Avios pool.";
-  } else {
-    ic = "🎉"; msg = "Both gates funded and the 2-4-1 is in hand — time to book.";
-    sub = "Lock in the reward seats before the next devaluation.";
-  }
-  document.getElementById("nextAction").innerHTML =
-    `<span class="na-ic">${ic}</span><div class="na-txt">${msg}<small>${sub}</small></div>`;
-}
-
-function renderFootNote(){
-  document.getElementById("footNote").innerHTML =
-    `Shared source of truth is the committed <code>DATA</code> block in <code>index.html</code>. ` +
-    `Monthly: edit balances → <b>Copy updated DATA</b> → commit &amp; push → GitHub Pages redeploys → both phones see the update on the same link.<br>` +
-    `Privacy: a free GitHub Pages site is public (obscure URL, public repo). This is only points balances &amp; card names — low sensitivity — but for full privacy use a private repo (paid) or Cloudflare Pages/Netlify with access protection.`;
-}
-
-/* ============================================================
-   CHART (Chart.js via CDN, graceful fallback)
-   ============================================================ */
-function monthlyPooledSeries(){
-  // aggregate history into pooled-equivalent per month
-  const byMonth = {};
-  state.history.forEach(r => {
-    const eq = (Number(r.avios)||0) + (Number(r.amexMR)||0) + nectarToAvios(Number(r.nectar)||0);
-    byMonth[r.month] = (byMonth[r.month]||0) + eq;
-  });
-  const months = Object.keys(byMonth).sort();
-  return { months, values: months.map(m=>byMonth[m]) };
-}
-function nextMonth(ym){
-  let [y,m] = ym.split("-").map(Number);
-  m++; if (m>12){ m=1; y++; }
-  return y + "-" + String(m).padStart(2,"0");
-}
-function shortMonth(iso){
-  const ym = iso.length>7 ? iso.slice(0,7) : iso;
-  return parseISO(ym + "-01").toLocaleDateString("en-GB",{month:"short",year:"2-digit"});
-}
-
-/* Roll the pooled balance forward month by month from today's total,
-   adding monthlyEarn + one-off bonuses and subtracting gate redemptions. */
-function forecastModel(){
-  const f = state.forecast || {};
-  const monthlyEarn = Math.max(0, Number(f.monthlyEarn)||0);
-  const hist = monthlyPooledSeries();
-  const startMonth = hist.months.length ? hist.months[hist.months.length-1] : (state.lastUpdated||"2026-07").slice(0,7);
-  const startVal = pooledAvios();          // anchor at current pooled total
-  const horizon = f.horizon || startMonth;
-  const oneOffs = f.oneOffs || [];
-  const redemptions = f.redemptions || [];
-  const months = [], points = [];
-  let cur = startMonth, bal = startVal, guard = 0;
-  while (cur < horizon && guard < 240){
-    cur = nextMonth(cur); guard++;
-    bal += monthlyEarn;
-    const events = [];
-    oneOffs.filter(o=>o.month===cur).forEach(o=>{ bal += Number(o.amount)||0; events.push("＋"+fmt(o.amount)+" "+o.label); });
-    redemptions.filter(r=>r.month===cur).forEach(r=>{ bal = Math.max(0, bal - (Number(r.amount)||0)); events.push("－"+fmt(r.amount)+" "+r.label); });
-    months.push(cur); points.push({ month: cur, bal: Math.round(bal), events });
-  }
-  return { startMonth, startVal, months, points, monthlyEarn };
-}
-
-function renderForecastReadout(){
-  const el = document.getElementById("forecastReadout");
-  if (!el) return;
-  const fc = forecastModel();
-  const series = [{ month: fc.startMonth, bal: fc.startVal }].concat(fc.points);
-  const reds = (state.forecast && state.forecast.redemptions) || [];
-  // Gates are SEQUENTIAL: each gate can only be funded from the month after the
-  // previous gate's redemption spends the pool down. Search windows advance in order.
-  const gatesByDeadline = [...state.gates].sort((a,b)=>a.deadline.localeCompare(b.deadline));
-  let searchFrom = fc.startMonth;
-  const lines = gatesByDeadline.map(g => {
-    const name = g.name.split("—")[0].trim();
-    const hit = series.find(pt => pt.month >= searchFrom && pt.bal >= g.targetAvios);
-    const red = reds.find(r => r.gateId === g.id);
-    if (red) searchFrom = nextMonth(red.month);   // next gate rebuilds after this booking
-    const deadlineMonth = g.deadline.slice(0,7);
-    if (!hit)
-      return `<span class="fc-line bad">✗ ${name}: forecast never rebuilds to ${fmt(g.targetAvios)} in time — increase monthly earn</span>`;
-    const onTime = hit.month <= deadlineMonth;
-    return `<span class="fc-line ${onTime?"ok":"bad"}">${onTime?"✓":"✗"} ${name}: forecast reaches ${fmt(g.targetAvios)} by <b>${formatMonth(hit.month)}</b> — ${onTime?"on track for "+shortMonth(g.deadline):"MISSES the "+shortMonth(g.deadline)+" deadline"}</span>`;
-  });
-  el.innerHTML = lines.join("");
-
-  // Plain-English summary of the assumptions driving the forecast (read from DATA.forecast).
-  const help = document.getElementById("fcHelp");
-  if (help){
-    const f = state.forecast || {};
-    const bonuses = (f.oneOffs||[]).map(o => `${o.label} +${fmt(o.amount)} (${shortMonth(o.month)})`).join(", ");
-    const reds = (f.redemptions||[]).map(r => `${r.label} −${fmt(r.amount)} (${shortMonth(r.month)})`).join(", ");
-    help.innerHTML =
-      `Assumptions (edit in the <code>DATA.forecast</code> block, then commit): ongoing earn <b>${fmt(f.monthlyEarn||0)} Avios/mo</b>` +
-      (bonuses ? ` · welcome bonuses ${bonuses}` : "") +
-      (reds ? ` · redemptions ${reds}` : "") +
-      `. Projection anchors at today's pooled total and rolls forward to ${f.horizon?shortMonth(f.horizon):"the horizon"}.`;
-  }
-}
-
+/* ---- chart: budget vs actual ---- */
 function renderChart(){
-  const canvas = document.getElementById("trajChart");
-  const fallback = document.getElementById("chartFallback");
-  renderForecastReadout();
-  if (typeof Chart === "undefined"){
-    canvas.style.display = "none";
-    fallback.style.display = "block";
-    return;
-  }
-  canvas.style.display = "block"; fallback.style.display = "none";
-
-  const hist = monthlyPooledSeries();
-  const fc = forecastModel();
-  const histMap = {}; hist.months.forEach((m,i)=> histMap[m] = hist.values[i]);
-  const fcMap = {}; fc.points.forEach(p=> fcMap[p.month] = p.bal);
-
-  const fullMonths = hist.months.concat(fc.months);
-  const labels = fullMonths.map(formatMonth);
-
-  const cssvar = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
-  const accent = cssvar("--accent") || "#0e7c86";
-  const grid = cssvar("--border") || "#e3e8ee";
-  const txt = cssvar("--text-2") || "#566172";
-  const warn = cssvar("--warn") || "#9a6400";
-  const muted = cssvar("--text-3") || "#8a94a3";
-
-  const actualData = fullMonths.map(m => (m in histMap) ? histMap[m] : null);
-  const forecastData = fullMonths.map(m => {
-    if (m === fc.startMonth) return fc.startVal;   // join actual → forecast
-    if (m in fcMap) return fcMap[m];
-    return null;
-  });
-
-  const ny = state.gates.find(g=>g.id==="ny");
-  const tokyo = state.gates.find(g=>g.id==="tokyo");
-
-  const datasets = [
-    { label: "Actual", data: actualData, borderColor: accent, backgroundColor: accent+"22",
-      fill: false, tension: .3, borderWidth: 2.5, pointRadius: 4, pointBackgroundColor: accent, spanGaps: false },
-    { label: "Forecast", data: forecastData, borderColor: accent, backgroundColor: accent+"14",
-      fill: true, tension: .3, borderWidth: 2.5, borderDash: [7,5], pointRadius: 3, pointBackgroundColor: accent, spanGaps: true }
+  const canvas=document.getElementById("trajChart"), fallback=document.getElementById("chartFallback");
+  if (typeof Chart==="undefined"){ canvas.style.display="none"; fallback.style.display="block"; return; }
+  canvas.style.display="block"; fallback.style.display="none";
+  const path=budgetPath(); const months=path.map(p=>p.month); const labels=months.map(formatMonth);
+  const aMap=actualPooledByMonth();
+  const cssvar=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const accent=cssvar("--accent")||"#0e7c86", grid=cssvar("--border")||"#e3e8ee", txt=cssvar("--text-2")||"#566172",
+        warn=cssvar("--warn")||"#9a6400", muted=cssvar("--text-3")||"#8a94a3";
+  const budgetData=path.map(p=>p.target);
+  const actualData=months.map(m=> (m in aMap)? aMap[m] : null);
+  const ny=state.gates.find(g=>g.id==="ny"), tokyo=state.gates.find(g=>g.id==="tokyo");
+  const datasets=[
+    { label:"Budget (locked)", data:budgetData, borderColor:accent, backgroundColor:accent+"14", fill:true, tension:.3, borderWidth:2.5, borderDash:[7,5], pointRadius:2.5, pointBackgroundColor:accent },
+    { label:"Actual", data:actualData, borderColor:accent, backgroundColor:accent+"00", fill:false, tension:.3, borderWidth:3, pointRadius:4, pointBackgroundColor:accent, spanGaps:false }
   ];
-  if (ny) datasets.push({ label: "NYC target (187k)", data: fullMonths.map(()=>ny.targetAvios),
-      borderColor: muted, borderDash: [4,4], borderWidth: 1.5, pointRadius: 0, fill: false, tension: 0 });
-  if (tokyo) datasets.push({ label: "Tokyo target (320k)", data: fullMonths.map(()=>tokyo.targetAvios),
-      borderColor: warn, borderDash: [4,4], borderWidth: 1.5, pointRadius: 0, fill: false, tension: 0 });
+  if (ny) datasets.push({ label:"NYC target (187k)", data:months.map(()=>ny.targetAvios), borderColor:muted, borderDash:[3,4], borderWidth:1.3, pointRadius:0, fill:false, tension:0 });
+  if (tokyo) datasets.push({ label:"Tokyo target (320k)", data:months.map(()=>tokyo.targetAvios), borderColor:warn, borderDash:[3,4], borderWidth:1.3, pointRadius:0, fill:false, tension:0 });
+  const markers=[];
+  path.forEach(p=>{ if(p.booking) markers.push({ label:formatMonth(p.month), text:(p.booking==="ny"?"Book NY":"Book Tokyo"), color:p.booking==="tokyo"?warn:muted }); });
+  const deadlinePlugin={ id:"deadlines", afterDatasetsDraw(c){ const {ctx,chartArea,scales}=c;
+    markers.forEach(mk=>{ const idx=labels.indexOf(mk.label); if(idx<0)return; const x=scales.x.getPixelForValue(idx); if(x==null||isNaN(x))return;
+      ctx.save(); ctx.strokeStyle=mk.color; ctx.lineWidth=1.2; ctx.setLineDash([3,3]); ctx.beginPath(); ctx.moveTo(x,chartArea.top); ctx.lineTo(x,chartArea.bottom); ctx.stroke();
+      ctx.setLineDash([]); ctx.fillStyle=mk.color; ctx.font="700 9px Inter,sans-serif";
+      const hw=ctx.measureText(mk.text).width/2; ctx.textAlign = (x+hw>chartArea.right)?"right":(x-hw<chartArea.left)?"left":"center";
+      ctx.fillText(mk.text,x,chartArea.top-4); ctx.restore(); }); } };
+  const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const maxV=Math.max(...budgetData, ...(actualData.filter(v=>v!=null)), tokyo?tokyo.targetAvios:0, 1);
+  if (chart) chart.destroy();
+  chart=new Chart(canvas,{ type:"line", data:{labels,datasets}, plugins:[deadlinePlugin],
+    options:{ responsive:true, maintainAspectRatio:false, layout:{padding:{top:16}}, animation:reduced?false:{duration:900},
+      interaction:{mode:"index",intersect:false},
+      scales:{ y:{beginAtZero:true, suggestedMax:maxV*1.08, grid:{color:grid}, ticks:{color:txt,callback:v=>(v/1000)+"k"}},
+        x:{grid:{display:false}, ticks:{color:txt,maxRotation:0,autoSkipPadding:6,font:{size:10}}} },
+      plugins:{ legend:{labels:{color:txt,boxWidth:12,font:{size:11}}},
+        tooltip:{callbacks:{ label:c=>c.parsed.y==null?null:c.dataset.label+": "+fmt(c.parsed.y),
+          afterBody:items=>{ const m=months[items[0].dataIndex]; const p=path.find(pp=>pp.month===m); return (p&&p.events&&p.events.length)?p.events:[]; } }} } } });
+}
+function animateBars(){ requestAnimationFrame(()=>document.querySelectorAll(".bar>span[data-w]").forEach(s=>s.style.width=s.getAttribute("data-w"))); }
 
-  // vertical dashed markers at each gate deadline
-  const markers = [];
-  if (ny) markers.push({ label: formatMonth(ny.deadline.slice(0,7)), text: "NYC by "+shortMonth(ny.deadline), color: muted });
-  if (tokyo) markers.push({ label: formatMonth(tokyo.deadline.slice(0,7)), text: "Tokyo by "+shortMonth(tokyo.deadline), color: warn });
-  const deadlinePlugin = {
-    id: "deadlines",
-    afterDatasetsDraw(c){
-      const { ctx, chartArea, scales } = c;
-      markers.forEach(mk => {
-        const idx = labels.indexOf(mk.label);
-        if (idx < 0) return;
-        const x = scales.x.getPixelForValue(idx);
-        if (x == null || isNaN(x)) return;
-        ctx.save();
-        ctx.strokeStyle = mk.color; ctx.lineWidth = 1.2; ctx.setLineDash([3,3]);
-        ctx.beginPath(); ctx.moveTo(x, chartArea.top); ctx.lineTo(x, chartArea.bottom); ctx.stroke();
-        ctx.setLineDash([]);
-        ctx.fillStyle = mk.color; ctx.font = "700 9px Inter, sans-serif";
-        // keep the label inside the plot: right-align near the right edge, left-align near the left
-        const halfW = ctx.measureText(mk.text).width / 2;
-        if (x + halfW > chartArea.right){ ctx.textAlign = "right"; }
-        else if (x - halfW < chartArea.left){ ctx.textAlign = "left"; }
-        else { ctx.textAlign = "center"; }
-        ctx.fillText(mk.text, x, chartArea.top - 4);
-        ctx.restore();
-      });
-    }
-  };
-
-  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const allVals = actualData.concat(forecastData).filter(v=>v!=null);
-  const maxTarget = Math.max(tokyo?tokyo.targetAvios:0, ...(allVals.length?allVals:[1]));
-
-  if (chart){ chart.destroy(); }
-  chart = new Chart(canvas, {
-    type: "line",
-    data: { labels, datasets },
-    plugins: [deadlinePlugin],
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      layout: { padding: { top: 16 } },
-      animation: reduced ? false : { duration: 900 },
-      interaction: { mode: "index", intersect: false },
-      scales: {
-        y: { beginAtZero: true, suggestedMax: maxTarget * 1.08,
-             grid: { color: grid }, ticks: { color: txt, callback: v => (v/1000)+"k" } },
-        x: { grid: { display:false }, ticks: { color: txt, maxRotation: 0, autoSkipPadding: 8 } }
-      },
-      plugins: {
-        legend: { labels: { color: txt, boxWidth: 12, font: { size: 11 } } },
-        tooltip: { callbacks: {
-          label: c => c.parsed.y==null ? null : c.dataset.label + ": " + fmt(c.parsed.y),
-          afterBody: items => {
-            const m = fullMonths[items[0].dataIndex];
-            const p = fc.points.find(pp => pp.month === m);
-            return (p && p.events.length) ? p.events : [];
-          }
-        } }
-      }
-    }
-  });
+/* ============================================================================
+   TABS
+   ============================================================================ */
+function showTab(name){
+  document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("active", t.id==="tab-"+name));
+  document.querySelectorAll(".tabnav button").forEach(b=>b.classList.toggle("active", b.dataset.tab===name));
+  try{ history.replaceState(null,"","#"+name); }catch(e){}
+  window.scrollTo({top:0,behavior:"instant"in window?"instant":"auto"});
+  if (name==="budget") setTimeout(()=>renderChart(),30);
+  animateBars();
 }
 
-/* ============================================================
-   BAR ANIMATION (welcome/voucher bars)
-   ============================================================ */
-function animateBars(){
-  requestAnimationFrame(()=>{
-    document.querySelectorAll(".bar > span[data-w]").forEach(s => { s.style.width = s.getAttribute("data-w"); });
-  });
-}
-
-/* ============================================================
-   EDIT MODE + DRAFT
-   ============================================================ */
-function saveDraft(){
-  try { localStorage.setItem(DRAFT_KEY, JSON.stringify(state)); hasDraft = true; } catch(e){}
-}
-function setEditing(on){
-  editing = on;
-  document.body.classList.toggle("editing", on);
-  const btn = document.getElementById("editBtn");
-  btn.classList.toggle("on", on);
-  btn.setAttribute("aria-pressed", on ? "true":"false");
-  btn.textContent = on ? "✓ Done" : "✎ Edit";
-  render(); animateBars();
-}
-function resetToPublished(){
-  state = deepClone(DATA);
-  try { localStorage.removeItem(DRAFT_KEY); } catch(e){}
-  hasDraft = false;
-  render(); animateBars();
-  toast("Reset to published data");
-}
+/* ============================================================================
+   EDIT / DRAFT / DATA
+   ============================================================================ */
+function saveDraft(){ try{ localStorage.setItem(DRAFT_KEY, JSON.stringify(state)); hasDraft=true; }catch(e){} }
+function setEditing(on){ editing=on; document.body.classList.toggle("editing",on);
+  const b=document.getElementById("editBtn"); b.classList.toggle("on",on); b.setAttribute("aria-pressed",on?"true":"false"); b.textContent=on?"✓ Done":"✎ Edit";
+  render(); animateBars(); }
+function resetToPublished(){ state=deepClone(DATA); try{localStorage.removeItem(DRAFT_KEY);}catch(e){} hasDraft=false; render(); animateBars(); toast("Reset to published data"); }
 function addThisMonth(){
-  const ym = state.lastUpdated.slice(0,7); // use lastUpdated's month
-  // remove existing rows for this month to avoid dupes, then append current balances
-  state.history = state.history.filter(r => r.month !== ym);
-  state.people.forEach(p => {
-    state.history.push({
-      month: ym, name: p.name,
-      avios: Number(p.balances.avios)||0,
-      virgin: Number(p.balances.virgin)||0,
-      amexMR: Number(p.balances.amexMR)||0,
-      hilton: Number(p.balances.hilton)||0,
-      nectar: Number(p.balances.nectar)||0
-    });
-  });
-  saveDraft();
-  renderHistory(); renderChart();
-  toast("Added " + formatMonth(ym) + " snapshot");
+  const ym=currentMonth();
+  state.history=state.history.filter(r=>r.month!==ym);
+  state.people.forEach(p=>state.history.push({ month:ym, name:p.name,
+    avios:Number(p.balances.avios)||0, virgin:Number(p.balances.virgin)||0, amexMR:Number(p.balances.amexMR)||0,
+    hilton:Number(p.balances.hilton)||0, nectar:Number(p.balances.nectar)||0 }));
+  saveDraft(); renderHistory(); renderChart(); toast("Added "+formatMonth(ym)+" snapshot");
 }
+function dataBlock(){ return "const DATA = "+JSON.stringify(state,null,2)+";"; }
+function copyData(){ const block=dataBlock();
+  copyToClipboard(block).then(ok=>{ if(ok) toast("Copied — paste into index.html & commit");
+    else openModal("Updated DATA","Copy this and paste it over the DATA block in index.html, then commit & push.",block,"Copy",()=>{ const ta=document.getElementById("modalText"); ta.select(); try{document.execCommand("copy");}catch(e){} toast("Copied"); }); }); }
+function copyToClipboard(t){ if(navigator.clipboard&&navigator.clipboard.writeText) return navigator.clipboard.writeText(t).then(()=>true).catch(()=>false); return Promise.resolve(false); }
+function exportJSON(){ const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}); const url=URL.createObjectURL(blob);
+  const a=document.createElement("a"); a.href=url; a.download="points-hq-"+state.lastUpdated+".json"; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),1000); toast("Exported JSON"); }
+function importJSON(){ openModal("Import JSON","Paste previously exported JSON, or use the file picker.", "", "Load", ()=>{
+    try{ const obj=JSON.parse(document.getElementById("modalText").value.trim()); if(!obj.people||!obj.gates) throw 0; state=obj; saveDraft(); closeModal(); render(); animateBars(); toast("Imported data"); }
+    catch(e){ toast("Invalid JSON"); } }, true); }
 
-/* ============================================================
-   SERIALISE — produce a valid `const DATA = {…}` block
-   ============================================================ */
-function dataBlock(){
-  // stamp lastUpdated? keep user's value; they can edit. We keep as-is.
-  return "const DATA = " + JSON.stringify(state, null, 2) + ";";
-}
-function copyData(){
-  const block = dataBlock();
-  copyToClipboard(block).then(ok => {
-    if (ok) toast("Copied — paste into index.html & commit");
-    else openModal("Updated DATA", "Copy this and paste it over the DATA block in index.html, then commit & push.", block, "Copy", () => {
-      const ta = document.getElementById("modalText"); ta.select(); document.execCommand && document.execCommand("copy"); toast("Copied");
-    });
-  });
-}
-function copyToClipboard(text){
-  if (navigator.clipboard && navigator.clipboard.writeText){
-    return navigator.clipboard.writeText(text).then(()=>true).catch(()=>false);
-  }
-  return Promise.resolve(false);
-}
-function exportJSON(){
-  const blob = new Blob([JSON.stringify(state, null, 2)], {type:"application/json"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url; a.download = "points-hq-" + state.lastUpdated + ".json";
-  document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(()=>URL.revokeObjectURL(url), 1000);
-  toast("Exported JSON");
-}
-function importJSON(){
-  openModal("Import JSON", "Paste a previously exported JSON here, or use the file picker below.", "", "Load", () => {
-    const txt = document.getElementById("modalText").value.trim();
-    try {
-      const obj = JSON.parse(txt);
-      if (!obj.people || !obj.gates) throw new Error("Missing keys");
-      state = obj; saveDraft(); closeModal(); render(); animateBars();
-      toast("Imported data");
-    } catch(e){ toast("Invalid JSON"); }
-  }, true);
-}
-
-/* ============================================================
-   MODAL / TOAST
-   ============================================================ */
-let modalPrimaryFn = null;
-function openModal(title, help, content, primaryLabel, fn, showFile){
-  document.getElementById("modalTitle").textContent = title;
-  document.getElementById("modalHelp").textContent = help;
-  document.getElementById("modalText").value = content;
-  const pb = document.getElementById("modalPrimary");
-  pb.textContent = primaryLabel;
-  modalPrimaryFn = fn;
+let modalPrimaryFn=null;
+function openModal(title,help,content,label,fn,showFile){
+  document.getElementById("modalTitle").textContent=title; document.getElementById("modalHelp").textContent=help;
+  document.getElementById("modalText").value=content; const pb=document.getElementById("modalPrimary"); pb.textContent=label; modalPrimaryFn=fn;
   document.getElementById("modalBack").classList.add("show");
-  if (showFile){
-    if(!document.getElementById("pickFileBtn")){
-      const b = document.createElement("button");
-      b.className = "btn"; b.id="pickFileBtn"; b.textContent="⭱ Pick file…";
-      b.onclick = ()=> document.getElementById("fileInput").click();
-      pb.parentNode.appendChild(b);
-    }
-  }
+  if (showFile && !document.getElementById("pickFileBtn")){ const b=document.createElement("button"); b.className="btn"; b.id="pickFileBtn"; b.textContent="⭱ Pick file…"; b.onclick=()=>document.getElementById("fileInput").click(); pb.parentNode.appendChild(b); }
 }
 function closeModal(){ document.getElementById("modalBack").classList.remove("show"); }
+let toastTimer=null;
+function toast(m){ const t=document.getElementById("toast"); t.textContent=m; t.classList.add("show"); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove("show"),2200); }
 
-let toastTimer = null;
-function toast(msg){
-  const t = document.getElementById("toast");
-  t.textContent = msg; t.classList.add("show");
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(()=> t.classList.remove("show"), 2200);
-}
+function currentTheme(){ const s=document.documentElement.getAttribute("data-theme"); if(s)return s; return window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"; }
+function toggleTheme(){ const n=currentTheme()==="dark"?"light":"dark"; document.documentElement.setAttribute("data-theme",n); try{localStorage.setItem("pointsHQ_theme",n);}catch(e){} if(chart) renderChart(); }
 
-/* ============================================================
-   THEME
-   ============================================================ */
-function currentTheme(){
-  const set = document.documentElement.getAttribute("data-theme");
-  if (set) return set;
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-}
-function toggleTheme(){
-  const next = currentTheme() === "dark" ? "light" : "dark";
-  document.documentElement.setAttribute("data-theme", next);
-  try { localStorage.setItem("pointsHQ_theme", next); } catch(e){}
-  if (chart) renderChart();
-}
-
-/* ============================================================
-   WIRE UP
-   ============================================================ */
 function boot(){
-  // restore theme pref
-  try { const th = localStorage.getItem("pointsHQ_theme"); if (th) document.documentElement.setAttribute("data-theme", th); } catch(e){}
-
-  render();
-  animateBars();
-
-  document.getElementById("editBtn").addEventListener("click", ()=> setEditing(!editing));
-  document.getElementById("themeBtn").addEventListener("click", toggleTheme);
-  document.getElementById("resetBtn").addEventListener("click", resetToPublished);
-  document.getElementById("addMonthBtn").addEventListener("click", addThisMonth);
-  document.getElementById("copyBtn").addEventListener("click", copyData);
-  document.getElementById("copyBtn2").addEventListener("click", copyData);
-  document.getElementById("exportBtn").addEventListener("click", exportJSON);
-  document.getElementById("importBtn").addEventListener("click", importJSON);
-
-  document.getElementById("modalClose").addEventListener("click", closeModal);
-  document.getElementById("modalBack").addEventListener("click", e => { if (e.target.id==="modalBack") closeModal(); });
-  document.getElementById("modalPrimary").addEventListener("click", ()=> modalPrimaryFn && modalPrimaryFn());
-
-  // transfer map toggle label
-  const det = document.getElementById("transDetails");
-  det.addEventListener("toggle", ()=> {
-    document.getElementById("transToggle").textContent = det.open ? "tap to collapse ▴" : "tap to expand ▾";
-  });
-
-  // file import
-  document.getElementById("fileInput").addEventListener("change", e => {
-    const f = e.target.files[0]; if (!f) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      try {
-        const obj = JSON.parse(reader.result);
-        if (!obj.people || !obj.gates) throw new Error();
-        state = obj; saveDraft(); closeModal(); render(); animateBars(); toast("Imported file");
-      } catch(err){ toast("Invalid JSON file"); }
-    };
-    reader.readAsText(f);
-    e.target.value = "";
-  });
-
-  // if a draft was loaded, hint it
-  if (hasDraft) setTimeout(()=> toast("Local draft loaded — reset to see published data"), 400);
+  try{ const th=localStorage.getItem("pointsHQ_theme"); if(th) document.documentElement.setAttribute("data-theme",th); }catch(e){}
+  render(); animateBars();
+  document.getElementById("editBtn").addEventListener("click",()=>setEditing(!editing));
+  document.getElementById("themeBtn").addEventListener("click",toggleTheme);
+  document.getElementById("resetBtn").addEventListener("click",resetToPublished);
+  document.getElementById("addMonthBtn").addEventListener("click",addThisMonth);
+  document.getElementById("copyBtn").addEventListener("click",copyData);
+  document.getElementById("copyBtn2").addEventListener("click",copyData);
+  document.getElementById("exportBtn").addEventListener("click",exportJSON);
+  document.getElementById("importBtn").addEventListener("click",importJSON);
+  document.getElementById("modalClose").addEventListener("click",closeModal);
+  document.getElementById("modalBack").addEventListener("click",e=>{ if(e.target.id==="modalBack") closeModal(); });
+  document.getElementById("modalPrimary").addEventListener("click",()=>modalPrimaryFn&&modalPrimaryFn());
+  document.querySelectorAll(".tabnav button").forEach(b=>b.addEventListener("click",()=>showTab(b.dataset.tab)));
+  const det=document.getElementById("transDetails");
+  det.addEventListener("toggle",()=>document.getElementById("transToggle").textContent=det.open?"tap to collapse ▴":"tap to expand ▾");
+  document.getElementById("fileInput").addEventListener("change",e=>{ const f=e.target.files[0]; if(!f)return; const rd=new FileReader();
+    rd.onload=()=>{ try{ const obj=JSON.parse(rd.result); if(!obj.people||!obj.gates) throw 0; state=obj; saveDraft(); closeModal(); render(); animateBars(); toast("Imported file"); }catch(err){ toast("Invalid JSON file"); } };
+    rd.readAsText(f); e.target.value=""; });
+  const hash=(location.hash||"").replace("#",""); if(["home","budget","cash","cards","boost"].includes(hash)) showTab(hash);
+  if (hasDraft) setTimeout(()=>toast("Local draft loaded — reset to see published data"),400);
 }
 
-/* Load Chart.js from CDN, then boot. Boot regardless if it fails. */
 (function(){
-  const s = document.createElement("script");
-  s.src = "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js";
-  s.onload = boot;
-  s.onerror = boot; // graceful: boot() handles missing Chart
-  document.head.appendChild(s);
-  // safety timeout in case onload never fires
-  setTimeout(()=>{ if (!window.__booted){ window.__booted = true; boot(); } }, 4000);
-  const origBoot = boot;
-  boot = function(){ if (window.__booted) return; window.__booted = true; origBoot(); };
-  s.onload = boot; s.onerror = boot;
+  let booted=false; const run=()=>{ if(booted)return; booted=true; boot(); };
+  const s=document.createElement("script");
+  s.src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js";
+  s.onload=run; s.onerror=run; document.head.appendChild(s);
+  setTimeout(run,4000);
 })();
 </script>
 </body>
