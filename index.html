@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<title>Points HQ — Hayden &amp; Tammy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     THEME TOKENS
+     ============================================================ */
+  :root {
+    --bg: #f4f6f8;
+    --bg-2: #eef1f4;
+    --surface: #ffffff;
+    --surface-2: #f8fafb;
+    --border: #e3e8ee;
+    --border-strong: #d3dae2;
+    --text: #131a24;
+    --text-2: #566172;
+    --text-3: #8a94a3;
+    --accent: #0e7c86;        /* petrol/teal accent */
+    --accent-soft: #d7eef0;
+    --shadow: 0 1px 2px rgba(16,32,48,.05), 0 8px 24px rgba(16,32,48,.06);
+    --shadow-lg: 0 2px 4px rgba(16,32,48,.06), 0 18px 44px rgba(16,32,48,.12);
+    --radius: 16px;
+    --radius-sm: 12px;
+
+    /* currency colours */
+    --c-avios: #0e7c86;
+    --c-avios-bg: #d7eef0;
+    --c-virgin: #d1213a;
+    --c-virgin-bg: #fbdfe3;
+    --c-mr: #1f3a93;
+    --c-mr-bg: #dde3f7;
+    --c-hilton: #12294d;
+    --c-hilton-bg: #e0d7b8;
+    --c-nectar: #7a3aa0;
+    --c-nectar-bg: #ecdcf5;
+
+    /* status */
+    --ok: #1a7f4b;
+    --ok-bg: #d8f0e2;
+    --warn: #9a6400;
+    --warn-bg: #fbeecb;
+    --bad: #b3261e;
+    --bad-bg: #fbdedb;
+    --live: #1a7f4b;
+    --live-bg: #d8f0e2;
+    --watch: #9a6400;
+    --watch-bg: #fbeecb;
+    --expired: #6b7684;
+    --expired-bg: #e7ebef;
+  }
+
+  :root[data-theme="dark"], html.dark {
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0c1117;
+      --bg-2: #0f151c;
+      --surface: #161d26;
+      --surface-2: #1b232d;
+      --border: #263141;
+      --border-strong: #33414f;
+      --text: #eef2f7;
+      --text-2: #a4b0bf;
+      --text-3: #74808f;
+      --accent: #34c0cc;
+      --accent-soft: #123338;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.4);
+      --shadow-lg: 0 2px 6px rgba(0,0,0,.4), 0 22px 50px rgba(0,0,0,.55);
+
+      --c-avios: #34c0cc; --c-avios-bg: #123338;
+      --c-virgin: #ff5f73; --c-virgin-bg: #3d1a20;
+      --c-mr: #6d8bff; --c-mr-bg: #1a2445;
+      --c-hilton: #d8c98a; --c-hilton-bg: #2b2a1a;
+      --c-nectar: #c48ee0; --c-nectar-bg: #2c1c38;
+
+      --ok: #4fd08a; --ok-bg: #123326;
+      --warn: #f0c060; --warn-bg: #33280f;
+      --bad: #ff7369; --bad-bg: #3a1815;
+      --live: #4fd08a; --live-bg: #123326;
+      --watch: #f0c060; --watch-bg: #33280f;
+      --expired: #97a3b2; --expired-bg: #232c37;
+    }
+  }
+  /* explicit override wins over media query */
+  :root[data-theme="dark"] {
+    --bg: #0c1117; --bg-2: #0f151c; --surface: #161d26; --surface-2: #1b232d;
+    --border: #263141; --border-strong: #33414f;
+    --text: #eef2f7; --text-2: #a4b0bf; --text-3: #74808f;
+    --accent: #34c0cc; --accent-soft: #123338;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.4);
+    --shadow-lg: 0 2px 6px rgba(0,0,0,.4), 0 22px 50px rgba(0,0,0,.55);
+    --c-avios: #34c0cc; --c-avios-bg: #123338;
+    --c-virgin: #ff5f73; --c-virgin-bg: #3d1a20;
+    --c-mr: #6d8bff; --c-mr-bg: #1a2445;
+    --c-hilton: #d8c98a; --c-hilton-bg: #2b2a1a;
+    --c-nectar: #c48ee0; --c-nectar-bg: #2c1c38;
+    --ok: #4fd08a; --ok-bg: #123326;
+    --warn: #f0c060; --warn-bg: #33280f;
+    --bad: #ff7369; --bad-bg: #3a1815;
+    --live: #4fd08a; --live-bg: #123326;
+    --watch: #f0c060; --watch-bg: #33280f;
+    --expired: #97a3b2; --expired-bg: #232c37;
+  }
+  :root[data-theme="light"] {
+    --bg: #f4f6f8; --bg-2: #eef1f4; --surface: #ffffff; --surface-2: #f8fafb;
+    --border: #e3e8ee; --border-strong: #d3dae2;
+    --text: #131a24; --text-2: #566172; --text-3: #8a94a3;
+    --accent: #0e7c86; --accent-soft: #d7eef0;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+  .num { font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
+  h1,h2,h3 { margin: 0; font-weight: 700; letter-spacing: -.01em; }
+
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px 64px; }
+
+  /* ============================================================
+     HEADER
+     ============================================================ */
+  header.top {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  .top-inner {
+    max-width: 1120px; margin: 0 auto; padding: 10px 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .brand { display: flex; flex-direction: column; min-width: 0; }
+  .brand .name { font-size: 15px; font-weight: 800; letter-spacing: -.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .brand .sub { font-size: 11px; color: var(--text-3); white-space: nowrap; }
+  .top-actions { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+
+  .btn {
+    appearance: none; border: 1px solid var(--border-strong); background: var(--surface);
+    color: var(--text); font: inherit; font-size: 13px; font-weight: 600;
+    padding: 9px 13px; border-radius: 11px; cursor: pointer; min-height: 40px;
+    display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
+    transition: transform .08s ease, background .15s ease, border-color .15s ease;
+  }
+  .btn:hover { border-color: var(--accent); }
+  .btn:active { transform: scale(.97); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  :root[data-theme="dark"] .btn.primary,
+  @media (prefers-color-scheme: dark) { }
+  .btn.primary { color: #04252a; }
+  .btn.ghost { background: transparent; border-color: var(--border); }
+  .btn.icon { padding: 9px 11px; }
+  .btn.sm { min-height: 34px; padding: 6px 10px; font-size: 12px; }
+  .btn.wide { width: 100%; justify-content: center; }
+  .btn:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* Edit toggle switch look */
+  .edit-toggle.on { background: var(--accent); border-color: var(--accent); color: #04252a; }
+
+  /* ============================================================
+     SECTIONS
+     ============================================================ */
+  section { margin-top: 26px; }
+  .sec-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px; }
+  .sec-head h2 { font-size: 16px; letter-spacing: -.01em; }
+  .sec-head .hint { font-size: 12px; color: var(--text-3); }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px;
+  }
+
+  /* ---- GATES (hero) ---- */
+  .gates { display: grid; grid-template-columns: 1fr; gap: 14px; }
+  @media (min-width: 768px) { .gates { grid-template-columns: 1fr 1fr; } }
+
+  .gate {
+    position: relative; overflow: hidden;
+    padding: 18px 18px 20px;
+    box-shadow: var(--shadow-lg);
+  }
+  .gate.priority { border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); }
+  .gate.priority::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(120% 100% at 100% 0%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 55%);
+  }
+  .gate-top { display: flex; align-items: flex-start; gap: 10px; position: relative; }
+  .gate-title { font-size: 17px; font-weight: 800; letter-spacing: -.02em; }
+  .gate-meta { font-size: 12px; color: var(--text-2); margin-top: 2px; }
+  .star { color: var(--accent); font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;
+          background: var(--accent-soft); padding: 3px 8px; border-radius: 999px; }
+
+  .gate-body { display: flex; align-items: center; gap: 16px; margin-top: 14px; position: relative; }
+  .ring { width: 110px; height: 110px; flex: 0 0 auto; position: relative; }
+  .ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .ring .track { fill: none; stroke: var(--border); stroke-width: 11; }
+  .ring .prog { fill: none; stroke-width: 11; stroke-linecap: round;
+                transition: stroke-dashoffset 1s cubic-bezier(.2,.7,.2,1); }
+  .ring-label { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .ring-pct { font-size: 24px; font-weight: 800; letter-spacing: -.03em; }
+  .ring-sub { font-size: 10px; color: var(--text-3); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+
+  .gate-stats { flex: 1; min-width: 0; }
+  .gate-nums { font-size: 13px; color: var(--text-2); }
+  .gate-nums b { color: var(--text); font-weight: 700; }
+  .pill { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700;
+          padding: 5px 10px; border-radius: 999px; white-space: nowrap; }
+  .pill.ok { background: var(--ok-bg); color: var(--ok); }
+  .pill.warn { background: var(--warn-bg); color: var(--warn); }
+  .pill.bad { background: var(--bad-bg); color: var(--bad); }
+  .pill.muted { background: var(--surface-2); color: var(--text-2); border: 1px solid var(--border); }
+  .gate-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .gate-extra { font-size: 12px; color: var(--text-2); margin-top: 12px; line-height: 1.4;
+                border-top: 1px dashed var(--border); padding-top: 10px; }
+  .countdown { font-size: 12px; font-weight: 700; color: var(--text); }
+
+  /* ---- POOLED STRIP ---- */
+  .pooled { display: grid; grid-template-columns: 1fr; gap: 14px; align-items: center; }
+  @media (min-width: 620px) { .pooled { grid-template-columns: auto 1fr; } }
+  .pooled-big { line-height: 1; }
+  .pooled-big .n { font-size: 40px; font-weight: 800; letter-spacing: -.03em; color: var(--accent); }
+  .pooled-big .u { font-size: 13px; color: var(--text-2); font-weight: 600; margin-top: 4px; }
+  .pooled-incoming { font-size: 12.5px; color: var(--text-2); margin-top: 8px; }
+  .pooled-incoming b { color: var(--text); }
+  .breakdown { display: flex; flex-wrap: wrap; gap: 8px; }
+  .bk {
+    display: flex; flex-direction: column; gap: 2px; padding: 9px 12px; border-radius: 12px;
+    background: var(--surface-2); border: 1px solid var(--border); min-width: 92px; flex: 1 1 92px;
+  }
+  .bk .k { font-size: 11px; color: var(--text-3); font-weight: 600; }
+  .bk .v { font-size: 16px; font-weight: 700; }
+
+  /* ---- PEOPLE ---- */
+  .people { display: grid; grid-template-columns: 1fr; gap: 14px; }
+  @media (min-width: 700px) { .people { grid-template-columns: 1fr 1fr; } }
+  .person-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .avatar { width: 38px; height: 38px; border-radius: 11px; background: var(--accent); color: #04252a;
+            display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; flex: 0 0 auto; }
+  .person-head .pname { font-size: 15px; font-weight: 700; }
+  .person-head .prole { font-size: 11px; color: var(--text-3); }
+  .bal-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid var(--border); }
+  .bal-row:first-of-type { border-top: none; }
+  .cur-badge { width: 30px; height: 30px; border-radius: 9px; display: flex; align-items: center; justify-content: center;
+               font-size: 11px; font-weight: 800; flex: 0 0 auto; letter-spacing: -.02em; }
+  .bal-name { font-size: 13px; color: var(--text-2); flex: 1; }
+  .bal-val { font-size: 15px; font-weight: 700; text-align: right; }
+  .bal-input { width: 116px; text-align: right; font: inherit; font-weight: 700; font-size: 15px;
+               padding: 7px 9px; border-radius: 9px; border: 1px solid var(--border-strong);
+               background: var(--surface-2); color: var(--text); }
+  .note { margin-top: 12px; font-size: 12px; color: var(--text-2); background: var(--surface-2);
+          border: 1px solid var(--border); border-radius: 11px; padding: 10px 12px; line-height: 1.45; }
+  .note-input { width: 100%; font: inherit; font-size: 12px; color: var(--text); background: var(--surface-2);
+                border: 1px solid var(--border-strong); border-radius: 11px; padding: 10px 12px; resize: vertical; min-height: 60px; }
+
+  /* ---- CARDS IN PLAY ---- */
+  .ccard { padding: 14px; }
+  .ccard + .ccard { margin-top: 12px; }
+  .ccard-top { display: flex; align-items: flex-start; gap: 8px; flex-wrap: wrap; }
+  .ccard-name { font-size: 14px; font-weight: 700; }
+  .ccard-owner { font-size: 11px; color: var(--text-3); font-weight: 600; }
+  .ccard-grid { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 8px; font-size: 12px; color: var(--text-2); }
+  .ccard-grid b { color: var(--text); font-weight: 600; }
+  .ccard-perk { font-size: 12px; color: var(--text-2); margin-top: 8px; line-height: 1.4; }
+  .prog-wrap { margin-top: 10px; }
+  .prog-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-2); margin-bottom: 4px; font-weight: 600; }
+  .bar { height: 8px; border-radius: 999px; background: var(--border); overflow: hidden; }
+  .bar > span { display: block; height: 100%; border-radius: 999px; background: var(--accent);
+                transition: width 1s cubic-bezier(.2,.7,.2,1); }
+  .bar.gold > span { background: linear-gradient(90deg, #c9a227, #e8c85a); }
+
+  .status-active { background: var(--ok-bg); color: var(--ok); }
+  .status-order { background: var(--warn-bg); color: var(--warn); }
+  .status-plan { background: var(--surface-2); color: var(--text-2); border: 1px solid var(--border); }
+
+  /* ---- VOUCHERS ---- */
+  .tiles { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  @media (min-width: 620px) { .tiles { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 920px) { .tiles { grid-template-columns: 1fr 1fr 1fr; } }
+  .tile { padding: 14px; }
+  .tile h3 { font-size: 13.5px; font-weight: 700; }
+  .tile .row { font-size: 12px; color: var(--text-2); margin-top: 6px; }
+  .tile .row b { color: var(--text); font-weight: 600; }
+
+  /* ---- CHART ---- */
+  .chart-box { position: relative; height: 300px; }
+  #trajChart { max-width: 100%; }
+  .chart-fallback { font-size: 12.5px; color: var(--text-2); }
+
+  /* ---- TABLE ---- */
+  .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: var(--radius-sm); }
+  table { border-collapse: collapse; width: 100%; font-size: 12.5px; min-width: 460px; }
+  th, td { padding: 9px 10px; text-align: right; white-space: nowrap; }
+  th:first-child, td:first-child { text-align: left; }
+  thead th { color: var(--text-3); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: .04em;
+             border-bottom: 1px solid var(--border); }
+  tbody td { border-bottom: 1px solid var(--border); }
+  tbody tr:last-child td { border-bottom: none; }
+
+  /* ---- TRANSFER MAP ---- */
+  details.collapsible summary { cursor: pointer; list-style: none; }
+  details.collapsible summary::-webkit-details-marker { display: none; }
+  .tmap { display: grid; grid-template-columns: 1fr; gap: 8px; }
+  @media (min-width: 620px) { .tmap { grid-template-columns: 1fr 1fr; } }
+  .tmap-row { display: flex; align-items: center; gap: 8px; font-size: 12.5px; padding: 9px 12px;
+              background: var(--surface-2); border: 1px solid var(--border); border-radius: 11px; }
+  .tmap-row .from { font-weight: 700; }
+  .tmap-row .arrow { color: var(--text-3); }
+  .tmap-row .to { font-weight: 700; }
+  .tmap-row .ratio { margin-left: auto; color: var(--text-2); font-weight: 600; text-align: right; }
+
+  /* ---- TIMELINE ---- */
+  .timeline { position: relative; padding-left: 22px; }
+  .timeline::before { content: ""; position: absolute; left: 6px; top: 4px; bottom: 4px; width: 2px; background: var(--border); }
+  .tl-item { position: relative; padding: 4px 0 14px; }
+  .tl-item::before { content: ""; position: absolute; left: -19px; top: 6px; width: 11px; height: 11px; border-radius: 50%;
+                     background: var(--accent); border: 2px solid var(--surface); }
+  .tl-date { font-size: 12px; font-weight: 700; color: var(--accent); }
+  .tl-label { font-size: 13px; margin-top: 2px; }
+  .tl-count { font-size: 11px; color: var(--text-3); margin-top: 2px; }
+
+  /* ---- OFFERS ---- */
+  .offers { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  @media (min-width: 620px) { .offers { grid-template-columns: 1fr 1fr; } }
+  .offer { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; }
+  .offer .otag { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em;
+                 padding: 4px 8px; border-radius: 999px; flex: 0 0 auto; }
+  .otag.live { background: var(--live-bg); color: var(--live); }
+  .otag.watch { background: var(--watch-bg); color: var(--watch); }
+  .otag.expired { background: var(--expired-bg); color: var(--expired); }
+  .offer.is-expired .otitle { text-decoration: line-through; color: var(--text-3); }
+  .otitle { font-size: 13px; font-weight: 700; }
+  .odetail { font-size: 12px; color: var(--text-2); margin-top: 2px; }
+
+  /* ---- FOOTER / NEXT ACTION ---- */
+  .nextaction { display: flex; gap: 12px; align-items: center; padding: 16px 18px;
+                background: linear-gradient(135deg, var(--accent-soft), transparent);
+                border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--border)); }
+  .nextaction .na-ic { font-size: 20px; }
+  .nextaction .na-txt { font-size: 13.5px; font-weight: 600; }
+  .nextaction .na-txt small { display: block; font-weight: 500; color: var(--text-2); font-size: 12px; margin-top: 2px; }
+
+  .foot-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .foot-note { font-size: 11px; color: var(--text-3); margin-top: 16px; line-height: 1.5; }
+  .foot-note a { color: var(--accent); }
+
+  /* ---- EDIT MODE PANEL ---- */
+  .edit-banner {
+    display: none; align-items: center; gap: 10px; flex-wrap: wrap;
+    background: var(--warn-bg); border: 1px solid color-mix(in srgb, var(--warn) 40%, var(--border));
+    color: var(--warn); border-radius: var(--radius); padding: 12px 14px; margin-top: 16px; font-size: 12.5px; font-weight: 600;
+  }
+  body.editing .edit-banner { display: flex; }
+  body.editing .edit-only { display: inline-flex; }
+  .edit-only { display: none; }
+  body:not(.editing) .view-hide { }
+
+  /* Toast */
+  .toast {
+    position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%) translateY(20px);
+    background: var(--text); color: var(--bg); padding: 11px 18px; border-radius: 12px; font-size: 13px; font-weight: 600;
+    box-shadow: var(--shadow-lg); opacity: 0; pointer-events: none; transition: opacity .25s ease, transform .25s ease; z-index: 200;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* Modal for copy/import */
+  .modal-back { position: fixed; inset: 0; background: rgba(6,12,20,.55); display: none; z-index: 150;
+                align-items: center; justify-content: center; padding: 16px; }
+  .modal-back.show { display: flex; }
+  .modal { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+           max-width: 640px; width: 100%; max-height: 82vh; overflow: auto; box-shadow: var(--shadow-lg); }
+  .modal-head { display: flex; align-items: center; gap: 10px; padding: 16px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--surface); }
+  .modal-head h3 { font-size: 15px; }
+  .modal-body { padding: 16px; }
+  textarea.code { width: 100%; min-height: 300px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+                  font-size: 12px; line-height: 1.5; border: 1px solid var(--border-strong); border-radius: 12px;
+                  padding: 12px; background: var(--surface-2); color: var(--text); resize: vertical; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">
+      <span class="name" id="hhName">Points HQ</span>
+      <span class="sub" id="hhUpdated">Last updated —</span>
+    </div>
+    <div class="top-actions">
+      <button class="btn ghost icon" id="themeBtn" title="Toggle theme" aria-label="Toggle light/dark theme">🌗</button>
+      <button class="btn edit-toggle" id="editBtn" aria-pressed="false">✎ Edit</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="edit-banner" role="status">
+    <span>✎ Edit mode — changes are a local draft only. Copy the updated DATA and commit it to publish for both of you.</span>
+    <button class="btn sm" id="resetBtn">↺ Reset to published data</button>
+    <button class="btn sm primary" id="copyBtn2">⧉ Copy updated DATA</button>
+  </div>
+
+  <!-- GATES -->
+  <section id="secGates">
+    <div class="sec-head"><h2>Reward-flight gates</h2><span class="hint">Progress toward both trips</span></div>
+    <div class="gates" id="gates"></div>
+  </section>
+
+  <!-- POOLED -->
+  <section id="secPooled">
+    <div class="sec-head"><h2>Pooled position</h2></div>
+    <div class="card pooled" id="pooled"></div>
+  </section>
+
+  <!-- PEOPLE -->
+  <section id="secPeople">
+    <div class="sec-head"><h2>Balances by person</h2><span class="hint edit-only" style="color:var(--accent)">tap a number to edit</span></div>
+    <div class="people" id="people"></div>
+  </section>
+
+  <!-- CARDS -->
+  <section id="secCards">
+    <div class="sec-head"><h2>Cards in play</h2></div>
+    <div class="people" id="cards"></div>
+  </section>
+
+  <!-- VOUCHERS -->
+  <section id="secVouchers">
+    <div class="sec-head"><h2>Vouchers &amp; levers</h2></div>
+    <div class="tiles" id="vouchers"></div>
+  </section>
+
+  <!-- CHART -->
+  <section id="secChart">
+    <div class="sec-head"><h2>Trajectory</h2><span class="hint">Pooled Avios-equivalent vs targets</span></div>
+    <div class="card">
+      <div class="chart-box">
+        <canvas id="trajChart"></canvas>
+        <div id="chartFallback" class="chart-fallback" style="display:none">Chart couldn't load — see the history table below.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HISTORY -->
+  <section id="secHistory">
+    <div class="sec-head"><h2>Monthly history</h2>
+      <button class="btn sm edit-only" id="addMonthBtn" style="margin-left:auto">＋ Add this month</button>
+    </div>
+    <div class="card table-scroll">
+      <table id="histTable"><thead></thead><tbody></tbody></table>
+    </div>
+  </section>
+
+  <!-- TRANSFER MAP -->
+  <section id="secTransfers">
+    <details class="collapsible card" id="transDetails">
+      <summary class="sec-head" style="margin:0; cursor:pointer">
+        <h2>Transfer map</h2><span class="hint" id="transToggle">tap to expand ▾</span>
+      </summary>
+      <div class="tmap" id="transfers" style="margin-top:14px"></div>
+    </details>
+  </section>
+
+  <!-- ELIGIBILITY -->
+  <section id="secEligibility">
+    <div class="sec-head"><h2>Eligibility timeline</h2></div>
+    <div class="card"><div class="timeline" id="eligibility"></div></div>
+  </section>
+
+  <!-- OFFERS -->
+  <section id="secOffers">
+    <div class="sec-head"><h2>Live offers</h2><span class="hint">Refreshed weekly by the offer scanner</span></div>
+    <div class="offers" id="offers"></div>
+  </section>
+
+  <!-- FOOTER / NEXT ACTION -->
+  <section id="secFooter">
+    <div class="card nextaction" id="nextAction"></div>
+    <div class="foot-actions">
+      <button class="btn" id="copyBtn">⧉ Copy updated DATA</button>
+      <button class="btn" id="exportBtn">⭳ Export JSON</button>
+      <button class="btn" id="importBtn">⭱ Import JSON</button>
+    </div>
+    <p class="foot-note" id="footNote"></p>
+  </section>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- Modal (copy DATA / import) -->
+<div class="modal-back" id="modalBack">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modalTitle">Updated DATA</h3>
+      <button class="btn sm ghost" id="modalClose" style="margin-left:auto">✕ Close</button>
+    </div>
+    <div class="modal-body">
+      <p id="modalHelp" style="font-size:12.5px;color:var(--text-2);margin:0 0 10px"></p>
+      <textarea class="code" id="modalText" spellcheck="false"></textarea>
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button class="btn primary" id="modalPrimary"></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<input type="file" id="fileInput" accept="application/json,.json" style="display:none" />
+
+<script>
+/* ============================================================
+   DATA — single source of truth.
+   Edit this block (or paste from "Copy updated DATA") and commit
+   to GitHub Pages to publish new numbers to both phones.
+   ============================================================ */
+const DATA = {
+  household: "Hayden & Tammy — Points HQ",
+  lastUpdated: "2026-07-20",
+  people: [
+    {
+      name: "Hayden",
+      balances: { avios: 1500, virgin: 0, amexMR: 0, hilton: 120000, nectar: 0 },
+      note: "Amex Platinum ordered via Tammy's referral — 80k MR welcome incoming (+£250 credit). Hilton Gold via work stays (~60 nights/yr)."
+    },
+    {
+      name: "Tammy",
+      balances: { avios: 27500, virgin: 5000, amexMR: 75000, hilton: 0, nectar: 0 },
+      note: "Ordering BA Amex Premium Plus (the 2-4-1 card). Keeps Amex Gold. Second earner: Barclaycard Avios Plus."
+    }
+  ],
+  gates: [
+    { id: "ny",    name: "New York — Club",  targetAvios: 187000, deadline: "2027-01-31", priority: false, extra: "Needs Tammy's BA Amex 2-4-1 voucher in hand" },
+    { id: "tokyo", name: "Tokyo — Qatar business", targetAvios: 320000, deadline: "2027-05-31", priority: true,  extra: "PRIORITY. Book from Birmingham (787-8, not full Qsuite). ~£600 cash." }
+  ],
+  cards: [
+    { owner: "Hayden", name: "Barclaycard Avios Plus", fee: "£240/yr (£20/mo)", earn: "1.5 Avios/£", status: "Active — everyday engine", perk: "Cabin upgrade voucher or 7k Avios at £10k/yr spend", spendYTD: null, spendTarget: 10000 },
+    { owner: "Hayden", name: "Amex Platinum", fee: "£650/yr", earn: "1 MR/£ (more on travel)", status: "Ordered (via Tammy referral)", perk: "80k MR welcome + £250 travel credit; Hilton & Marriott Gold; lounges", welcomeBonus: 80000, welcomeSpendTarget: 6000, spendYTD: 0 },
+    { owner: "Tammy", name: "Amex Preferred Rewards Gold", fee: "£195 (free yr1)", earn: "1 MR/£", status: "Active — MR tank + referrals", perk: "Lounge passes, dining credits" },
+    { owner: "Tammy", name: "BA Amex Premium Plus", fee: "£300/yr", earn: "1.5 Avios/£ (3 on BA)", status: "Ordering", perk: "2-4-1 ANY-CABIN companion voucher at £15k/yr spend (valid 2yr)", welcomeBonus: 30000, welcomeSpendTarget: 6000, spendYTD: 0, voucherSpendTarget: 15000 },
+    { owner: "Tammy", name: "Barclaycard Avios Plus", fee: "£240/yr", earn: "1.5 Avios/£", status: "Planned (2nd earner)", perk: "Cabin upgrade voucher at £10k/yr" }
+  ],
+  vouchers: [
+    { name: "BA Amex 2-4-1 (Premium Plus)", owner: "Tammy", earnedBy: "£15k/yr on Premium Plus", status: "Not yet earned", value: "2 people, any cabin, one person's Avios; valid 2yr", targetForGate: "ny" },
+    { name: "Barclaycard cabin upgrade", owner: "Hayden", earnedBy: "£10k/yr on Avios Plus", status: "In progress", value: "Bump a reward booking up one cabin (backup lever)" },
+    { name: "Hilton 5th night free", owner: "Hayden", earnedBy: "Any Hilton status", status: "Available", value: "On 5-night award stays" }
+  ],
+  eligibility: [
+    { date: "2027-06-01", label: "Hayden: BA Amex Premium Plus new-bonus eligibility returns", who: "Hayden" }
+  ],
+  transfers: [
+    { from: "Amex MR", to: "Avios", ratio: "1:1" },
+    { from: "Amex MR", to: "Virgin", ratio: "1:1 (UK — any 30% bonus quoted online is US-only; verify in-account)" },
+    { from: "Amex MR", to: "Hilton", ratio: "1:2" },
+    { from: "Nectar", to: "Avios", ratio: "400 Nectar → 250 Avios" },
+    { from: "Avios family", to: "Avios family", ratio: "1:1 (BA / Aer Lingus / Iberia / Qatar / Finnair)" },
+    { from: "Virgin", to: "—", ratio: "One-way IN only — transfer only against a confirmed booking" }
+  ],
+  liveOffers: [
+    { title: "Amex referral window", detail: "Enhanced referrer bonuses ended 21 Jul 2026", tag: "expired" },
+    { title: "BA Amex (free) welcome", detail: "Boosted 30k Avios (£5k/3mo) currently live", tag: "live" },
+    { title: "BA devaluation", detail: "Cash element of Avios redemptions rose 27 May — favour off-peak & partner (Qatar/Iberia) sweet spots", tag: "watch" }
+  ],
+  history: [
+    { month: "2026-07", name: "Hayden", avios: 1500, virgin: 0, amexMR: 0, hilton: 120000, nectar: 0 },
+    { month: "2026-07", name: "Tammy", avios: 27500, virgin: 5000, amexMR: 75000, hilton: 0, nectar: 0 }
+  ]
+};
+
+/* ============================================================
+   STATE — deep clone DATA into a working `state`.
+   A local draft (editing) may be kept in localStorage, but the
+   PUBLISHED source of truth is always the DATA const above.
+   ============================================================ */
+const DRAFT_KEY = "pointsHQ_draft_v1";
+const PLATINUM_INCOMING_MR = 80000;
+
+function deepClone(o){ return JSON.parse(JSON.stringify(o)); }
+
+let state = deepClone(DATA);
+let editing = false;
+let chart = null;
+let hasDraft = false;
+
+// Load any saved draft (so a half-finished edit survives refresh)
+try {
+  const raw = localStorage.getItem(DRAFT_KEY);
+  if (raw) { state = JSON.parse(raw); hasDraft = true; }
+} catch(e){ /* ignore */ }
+
+/* ---- Currency metadata ---- */
+const CUR = [
+  { key: "avios",  label: "Avios",   short: "AV", varc: "avios" },
+  { key: "virgin", label: "Virgin",  short: "VS", varc: "virgin" },
+  { key: "amexMR", label: "Amex MR", short: "MR", varc: "mr" },
+  { key: "hilton", label: "Hilton",  short: "HH", varc: "hilton" },
+  { key: "nectar", label: "Nectar",  short: "NE", varc: "nectar" }
+];
+
+/* ============================================================
+   CALCULATIONS (per spec §5)
+   ============================================================ */
+function sumBal(key){ return state.people.reduce((a,p)=> a + (Number(p.balances[key])||0), 0); }
+
+function nectarToAvios(n){ return Math.floor(n/400*250); }
+
+function pooledAvios(){
+  return sumBal("avios") + sumBal("amexMR") + nectarToAvios(sumBal("nectar"));
+  // Virgin excluded by design.
+}
+function pooledBreakdown(){
+  return {
+    avios: sumBal("avios"),
+    mr: sumBal("amexMR"),
+    nectar: nectarToAvios(sumBal("nectar")),
+    nectarRaw: sumBal("nectar")
+  };
+}
+function gateProgress(gate, pooled){
+  const pct = Math.min(100, Math.round(pooled * 100 / gate.targetAvios)); // integer-first avoids float rounding (e.g. 0.575*100=57.4999)
+  const shortfall = Math.max(0, gate.targetAvios - pooled);
+  let status; // ok | warn | bad
+  if (pooled >= gate.targetAvios) status = "ok";
+  else if (pooled >= gate.targetAvios * 0.75) status = "warn";
+  else status = "bad";
+  return { pct, shortfall, status };
+}
+function voucherForGate(gateId){
+  return state.vouchers.find(v => v.targetForGate === gateId);
+}
+function voucherEarned(v){
+  if(!v) return false;
+  return /earned|in hand|available|complete/i.test(v.status) && !/not/i.test(v.status);
+}
+
+/* ---- date helpers ---- */
+function today(){ return new Date(); }
+function parseISO(d){ const [y,m,day]=d.split("-").map(Number); return new Date(y, m-1, day); }
+function daysBetween(a,b){ return Math.round((b - a) / 86400000); }
+function countdownText(deadlineISO){
+  const now = today(); now.setHours(0,0,0,0);
+  const dl = parseISO(deadlineISO);
+  const days = daysBetween(now, dl);
+  if (days < 0) return { text: "Past deadline", days, over: true };
+  const months = Math.floor(days / 30.44);
+  const remDays = days - Math.round(months*30.44);
+  if (months >= 1) return { text: months + " mo" + (months>1?"s":"") + " · " + days + " days left", days, over:false };
+  return { text: days + " days left", days, over:false };
+}
+
+/* ---- formatting ---- */
+function fmt(n){ return Number(n).toLocaleString("en-GB"); }
+function initials(name){ return name.trim().charAt(0).toUpperCase(); }
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+function render(){
+  document.getElementById("hhName").textContent = state.household.split("—").pop().trim() || state.household;
+  document.querySelector(".brand .name").textContent = "Points HQ";
+  document.getElementById("hhUpdated").textContent = "Last updated " + formatDate(state.lastUpdated);
+
+  renderGates();
+  renderPooled();
+  renderPeople();
+  renderCards();
+  renderVouchers();
+  renderHistory();
+  renderTransfers();
+  renderEligibility();
+  renderOffers();
+  renderNextAction();
+  renderFootNote();
+  renderChart();
+}
+
+function formatDate(iso){
+  try { return parseISO(iso).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}); }
+  catch(e){ return iso; }
+}
+
+function ringSVG(pct, colorVar){
+  const r = 46, c = 2*Math.PI*r;
+  const off = c * (1 - pct/100);
+  return `<svg viewBox="0 0 110 110" aria-hidden="true">
+    <circle class="track" cx="55" cy="55" r="${r}"></circle>
+    <circle class="prog" cx="55" cy="55" r="${r}" stroke="var(${colorVar})"
+      stroke-dasharray="${c.toFixed(1)}" stroke-dashoffset="${c.toFixed(1)}"
+      data-target="${off.toFixed(1)}"></circle>
+  </svg>`;
+}
+
+function renderGates(){
+  const pooled = pooledAvios();
+  const withIncoming = pooled + PLATINUM_INCOMING_MR;
+  const el = document.getElementById("gates");
+  el.innerHTML = state.gates.map(g => {
+    const p = gateProgress(g, pooled);
+    const pInc = gateProgress(g, withIncoming);
+    const cd = countdownText(g.deadline);
+    const statusPill = p.status === "ok"
+      ? `<span class="pill ok">✓ On track</span>`
+      : `<span class="pill ${p.status==="warn"?"warn":"bad"}">Short by ${fmt(p.shortfall)}</span>`;
+
+    // Voucher chip for NY gate
+    let voucherChip = "";
+    const v = voucherForGate(g.id);
+    if (v){
+      voucherChip = voucherEarned(v)
+        ? `<span class="pill ok">✓ 2-4-1 in hand</span>`
+        : `<span class="pill warn">2-4-1 not yet earned</span>`;
+    }
+    const colorVar = p.status==="ok" ? "--ok" : p.status==="warn" ? "--warn" : "--bad";
+
+    return `<div class="card gate ${g.priority?"priority":""}">
+      <div class="gate-top">
+        <div style="flex:1;min-width:0">
+          <div class="gate-title">${g.name}</div>
+          <div class="gate-meta">${countdownLine(cd)} · target ${fmt(g.targetAvios)}</div>
+        </div>
+        ${g.priority?`<span class="star">★ Priority</span>`:``}
+      </div>
+      <div class="gate-body">
+        <div class="ring">
+          ${ringSVG(p.pct, colorVar)}
+          <div class="ring-label"><span class="ring-pct num">${p.pct}%</span><span class="ring-sub">funded</span></div>
+        </div>
+        <div class="gate-stats">
+          <div class="gate-nums"><b class="num">${fmt(pooled)}</b> / <span class="num">${fmt(g.targetAvios)}</span> Avios</div>
+          <div class="gate-chips">
+            ${statusPill}
+            ${voucherChip}
+          </div>
+          <div class="gate-nums" style="margin-top:8px">With incoming +80k MR → <b class="num">${pInc.pct}%</b> (${fmt(withIncoming)})</div>
+        </div>
+      </div>
+      <div class="gate-extra">${g.extra}</div>
+    </div>`;
+  }).join("");
+  // animate rings
+  requestAnimationFrame(()=> {
+    document.querySelectorAll(".ring .prog").forEach(c => {
+      c.style.strokeDashoffset = c.getAttribute("data-target");
+    });
+  });
+}
+function countdownLine(cd){
+  const cls = cd.over ? "bad" : (cd.days < 60 ? "warn" : "");
+  return `<span class="countdown" style="${cd.over?'color:var(--bad)':''}">${cd.text}</span>`;
+}
+
+function renderPooled(){
+  const b = pooledBreakdown();
+  const pooled = pooledAvios();
+  const withIncoming = pooled + PLATINUM_INCOMING_MR;
+  document.getElementById("pooled").innerHTML = `
+    <div class="pooled-big">
+      <div class="n num">${fmt(pooled)}</div>
+      <div class="u">Pooled Avios-equivalent<br><span style="color:var(--text-3)">MR &amp; Nectar counted at transfer value; Virgin excluded</span></div>
+      <div class="pooled-incoming">Pooled today: <b class="num">${fmt(pooled)}</b> · with confirmed incoming (Platinum 80k MR): <b class="num">${fmt(withIncoming)}</b></div>
+    </div>
+    <div class="breakdown">
+      <div class="bk"><span class="k">Avios (raw)</span><span class="v num">${fmt(b.avios)}</span></div>
+      <div class="bk"><span class="k">Amex MR → Avios</span><span class="v num">${fmt(b.mr)}</span></div>
+      <div class="bk"><span class="k">Nectar → Avios</span><span class="v num">${fmt(b.nectar)}</span><span class="k">${fmt(b.nectarRaw)} Nectar</span></div>
+    </div>`;
+}
+
+function renderPeople(){
+  const el = document.getElementById("people");
+  el.innerHTML = state.people.map((p, pi) => {
+    const rows = CUR.map(cur => {
+      const val = Number(p.balances[cur.key])||0;
+      const valCell = editing
+        ? `<input class="bal-input num" type="number" inputmode="numeric" min="0" step="1"
+             data-person="${pi}" data-key="${cur.key}" value="${val}" aria-label="${p.name} ${cur.label}">`
+        : `<span class="bal-val num">${fmt(val)}</span>`;
+      return `<div class="bal-row">
+        <span class="cur-badge" style="background:var(--c-${cur.varc}-bg);color:var(--c-${cur.varc})">${cur.short}</span>
+        <span class="bal-name">${cur.label}</span>
+        ${valCell}
+      </div>`;
+    }).join("");
+    const noteBlock = editing
+      ? `<textarea class="note-input" data-person="${pi}" data-note="1" aria-label="${p.name} note">${p.note||""}</textarea>`
+      : `<div class="note">${p.note||""}</div>`;
+    return `<div class="card">
+      <div class="person-head">
+        <div class="avatar">${initials(p.name)}</div>
+        <div><div class="pname">${p.name}</div><div class="prole">Player ${pi+1}</div></div>
+      </div>
+      ${rows}
+      <div style="margin-top:6px">${noteBlock}</div>
+    </div>`;
+  }).join("");
+
+  // wire inputs
+  if (editing){
+    el.querySelectorAll(".bal-input").forEach(inp => {
+      inp.addEventListener("input", e => {
+        const pi = +e.target.dataset.person, key = e.target.dataset.key;
+        state.people[pi].balances[key] = Math.max(0, Math.round(Number(e.target.value)||0));
+        saveDraft();
+        // live-update dependents (not people, to avoid losing focus)
+        renderGates(); renderPooled(); renderNextAction(); renderChart();
+      });
+    });
+    el.querySelectorAll(".note-input").forEach(t => {
+      t.addEventListener("input", e => {
+        state.people[+e.target.dataset.person].note = e.target.value;
+        saveDraft();
+      });
+    });
+  }
+}
+
+function statusClass(status){
+  if (/active/i.test(status)) return "status-active";
+  if (/order|ordering/i.test(status)) return "status-order";
+  return "status-plan";
+}
+
+function renderCards(){
+  // group by owner into two columns like people
+  const owners = state.people.map(p=>p.name);
+  const el = document.getElementById("cards");
+  el.innerHTML = owners.map(owner => {
+    const cards = state.cards.filter(c => c.owner === owner);
+    const cardHTML = cards.map(c => {
+      let bars = "";
+      if (c.welcomeSpendTarget){
+        const done = Number(c.spendYTD)||0, tgt = c.welcomeSpendTarget;
+        const pct = Math.min(100, Math.round(done/tgt*100));
+        bars += barBlock(`Welcome bonus spend (${fmt(c.welcomeBonus||0)} pts)`, `£${fmt(done)} / £${fmt(tgt)}`, pct, false);
+      }
+      if (c.voucherSpendTarget){
+        const done = Number(c.spendYTD)||0, tgt = c.voucherSpendTarget;
+        const pct = Math.min(100, Math.round(done/tgt*100));
+        bars += barBlock(`2-4-1 voucher spend`, `£${fmt(done)} / £${fmt(tgt)}`, pct, true);
+      }
+      if (c.spendTarget && !c.welcomeSpendTarget && !c.voucherSpendTarget){
+        const done = Number(c.spendYTD)||0, tgt = c.spendTarget;
+        const pct = Math.min(100, Math.round(done/tgt*100));
+        bars += barBlock(`Annual spend perk`, `£${fmt(done)} / £${fmt(tgt)}`, pct, true);
+      }
+      return `<div class="card ccard">
+        <div class="ccard-top">
+          <div style="flex:1;min-width:0">
+            <div class="ccard-name">${c.name}</div>
+            <div class="ccard-owner">${c.owner}</div>
+          </div>
+          <span class="pill ${statusClass(c.status)}" style="font-size:11px">${c.status}</span>
+        </div>
+        <div class="ccard-grid">
+          <span>Fee <b>${c.fee}</b></span>
+          <span>Earn <b>${c.earn}</b></span>
+        </div>
+        <div class="ccard-perk">${c.perk}</div>
+        ${bars}
+      </div>`;
+    }).join("");
+    return `<div><div class="prole" style="margin:0 4px 8px;font-weight:700;color:var(--text-2)">${owner}</div>${cardHTML}</div>`;
+  }).join("");
+}
+function barBlock(label, right, pct, gold){
+  return `<div class="prog-wrap">
+    <div class="prog-label"><span>${label}</span><span class="num">${right} · ${pct}%</span></div>
+    <div class="bar ${gold?"gold":""}"><span style="width:0" data-w="${pct}%"></span></div>
+  </div>`;
+}
+
+function renderVouchers(){
+  document.getElementById("vouchers").innerHTML = state.vouchers.map(v => {
+    const earned = voucherEarned(v);
+    const inProg = /progress/i.test(v.status);
+    const pillCls = earned ? "ok" : inProg ? "warn" : "muted";
+    return `<div class="card tile">
+      <h3>${v.name}</h3>
+      <div class="row"><span class="pill ${pillCls}" style="font-size:11px">${v.status}</span></div>
+      <div class="row">Owner <b>${v.owner}</b></div>
+      <div class="row">Earned by <b>${v.earnedBy}</b></div>
+      <div class="row">${v.value}</div>
+    </div>`;
+  }).join("");
+}
+
+function renderHistory(){
+  const cols = ["Month","Name","Avios","Virgin","Amex MR","Hilton","Nectar","Pooled eq."];
+  document.querySelector("#histTable thead").innerHTML =
+    "<tr>" + cols.map(c=>`<th>${c}</th>`).join("") + "</tr>";
+  const rows = [...state.history].sort((a,b)=> b.month.localeCompare(a.month) || a.name.localeCompare(b.name));
+  document.querySelector("#histTable tbody").innerHTML = rows.map(r => {
+    const pooledEq = (Number(r.avios)||0) + (Number(r.amexMR)||0) + nectarToAvios(Number(r.nectar)||0);
+    return `<tr>
+      <td>${formatMonth(r.month)}</td>
+      <td>${r.name}</td>
+      <td class="num">${fmt(r.avios)}</td>
+      <td class="num">${fmt(r.virgin)}</td>
+      <td class="num">${fmt(r.amexMR)}</td>
+      <td class="num">${fmt(r.hilton)}</td>
+      <td class="num">${fmt(r.nectar)}</td>
+      <td class="num"><b>${fmt(pooledEq)}</b></td>
+    </tr>`;
+  }).join("");
+}
+function formatMonth(m){
+  const [y,mo] = m.split("-").map(Number);
+  return new Date(y, mo-1, 1).toLocaleDateString("en-GB",{month:"short",year:"numeric"});
+}
+
+function renderTransfers(){
+  document.getElementById("transfers").innerHTML = state.transfers.map(t => `
+    <div class="tmap-row">
+      <span class="from">${t.from}</span>
+      <span class="arrow">→</span>
+      <span class="to">${t.to}</span>
+      <span class="ratio">${t.ratio}</span>
+    </div>`).join("");
+}
+
+function renderEligibility(){
+  const items = [...state.eligibility].sort((a,b)=>a.date.localeCompare(b.date));
+  document.getElementById("eligibility").innerHTML = items.map(e => {
+    const cd = countdownText(e.date);
+    return `<div class="tl-item">
+      <div class="tl-date">${formatDate(e.date)}</div>
+      <div class="tl-label">${e.label}</div>
+      <div class="tl-count">${cd.over ? "Now eligible" : cd.text}</div>
+    </div>`;
+  }).join("");
+}
+
+function renderOffers(){
+  document.getElementById("offers").innerHTML = state.liveOffers.map(o => `
+    <div class="card offer ${o.tag==="expired"?"is-expired":""}">
+      <span class="otag ${o.tag}">${o.tag}</span>
+      <div><div class="otitle">${o.title}</div><div class="odetail">${o.detail}</div></div>
+    </div>`).join("");
+}
+
+function renderNextAction(){
+  const pooled = pooledAvios();
+  const ny = state.gates.find(g=>g.id==="ny");
+  const tokyo = state.gates.find(g=>g.id==="tokyo");
+  const v241 = voucherForGate("ny");
+  const nyProg = ny ? gateProgress(ny, pooled) : null;
+  const tokProg = tokyo ? gateProgress(tokyo, pooled) : null;
+
+  let ic = "🎯", msg = "", sub = "";
+  if (v241 && !voucherEarned(v241)){
+    ic = "💳"; msg = "Get Tammy's Premium Plus to £15k to unlock the 2-4-1 voucher.";
+    sub = "That companion voucher is the key that makes the New York gate work.";
+  } else if (tokProg && tokProg.status !== "ok"){
+    ic = "✈️"; msg = `Tokyo (priority) is short by ${fmt(tokProg.shortfall)} Avios — keep the earn engines running.`;
+    sub = "Bank to 187k for NY first, then rebuild to 320k for Tokyo by end May.";
+  } else if (nyProg && nyProg.status !== "ok"){
+    ic = "✈️"; msg = `New York gate short by ${fmt(nyProg.shortfall)} Avios.`;
+    sub = "Voucher is in hand — now top up the Avios pool.";
+  } else {
+    ic = "🎉"; msg = "Both gates funded and the 2-4-1 is in hand — time to book.";
+    sub = "Lock in the reward seats before the next devaluation.";
+  }
+  document.getElementById("nextAction").innerHTML =
+    `<span class="na-ic">${ic}</span><div class="na-txt">${msg}<small>${sub}</small></div>`;
+}
+
+function renderFootNote(){
+  document.getElementById("footNote").innerHTML =
+    `Shared source of truth is the committed <code>DATA</code> block in <code>index.html</code>. ` +
+    `Monthly: edit balances → <b>Copy updated DATA</b> → commit &amp; push → GitHub Pages redeploys → both phones see the update on the same link.<br>` +
+    `Privacy: a free GitHub Pages site is public (obscure URL, public repo). This is only points balances &amp; card names — low sensitivity — but for full privacy use a private repo (paid) or Cloudflare Pages/Netlify with access protection.`;
+}
+
+/* ============================================================
+   CHART (Chart.js via CDN, graceful fallback)
+   ============================================================ */
+function monthlyPooledSeries(){
+  // aggregate history into pooled-equivalent per month
+  const byMonth = {};
+  state.history.forEach(r => {
+    const eq = (Number(r.avios)||0) + (Number(r.amexMR)||0) + nectarToAvios(Number(r.nectar)||0);
+    byMonth[r.month] = (byMonth[r.month]||0) + eq;
+  });
+  const months = Object.keys(byMonth).sort();
+  return { months, values: months.map(m=>byMonth[m]) };
+}
+function renderChart(){
+  const canvas = document.getElementById("trajChart");
+  const fallback = document.getElementById("chartFallback");
+  if (typeof Chart === "undefined"){
+    canvas.style.display = "none";
+    fallback.style.display = "block";
+    return;
+  }
+  const { months, values } = monthlyPooledSeries();
+  const labels = months.map(formatMonth);
+  const cssvar = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const accent = cssvar("--accent") || "#0e7c86";
+  const grid = cssvar("--border") || "#e3e8ee";
+  const txt = cssvar("--text-2") || "#566172";
+
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: "Pooled Avios-eq", data: values, borderColor: accent,
+        backgroundColor: accent + "22", fill: true, tension: .3, borderWidth: 2.5,
+        pointRadius: 4, pointBackgroundColor: accent
+      }
+    ]
+  };
+  const targetLines = state.gates.map(g => ({
+    label: g.name + " (" + fmt(g.targetAvios) + ")",
+    data: labels.map(()=>g.targetAvios),
+    borderColor: g.priority ? cssvar("--warn") : cssvar("--text-3"),
+    borderDash: [6,5], borderWidth: 1.5, pointRadius: 0, fill: false, tension: 0
+  }));
+  data.datasets.push(...targetLines);
+
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const maxTarget = Math.max(...state.gates.map(g=>g.targetAvios));
+
+  if (chart){ chart.destroy(); }
+  chart = new Chart(canvas, {
+    type: "line",
+    data,
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      animation: reduced ? false : { duration: 900 },
+      interaction: { mode: "index", intersect: false },
+      scales: {
+        y: { beginAtZero: true, suggestedMax: maxTarget * 1.08,
+             grid: { color: grid }, ticks: { color: txt, callback: v => (v/1000)+"k" } },
+        x: { grid: { display:false }, ticks: { color: txt } }
+      },
+      plugins: {
+        legend: { labels: { color: txt, boxWidth: 12, font: { size: 11 } } },
+        tooltip: { callbacks: { label: c => c.dataset.label + ": " + fmt(c.parsed.y) } }
+      }
+    }
+  });
+}
+
+/* ============================================================
+   BAR ANIMATION (welcome/voucher bars)
+   ============================================================ */
+function animateBars(){
+  requestAnimationFrame(()=>{
+    document.querySelectorAll(".bar > span[data-w]").forEach(s => { s.style.width = s.getAttribute("data-w"); });
+  });
+}
+
+/* ============================================================
+   EDIT MODE + DRAFT
+   ============================================================ */
+function saveDraft(){
+  try { localStorage.setItem(DRAFT_KEY, JSON.stringify(state)); hasDraft = true; } catch(e){}
+}
+function setEditing(on){
+  editing = on;
+  document.body.classList.toggle("editing", on);
+  const btn = document.getElementById("editBtn");
+  btn.classList.toggle("on", on);
+  btn.setAttribute("aria-pressed", on ? "true":"false");
+  btn.textContent = on ? "✓ Done" : "✎ Edit";
+  render(); animateBars();
+}
+function resetToPublished(){
+  state = deepClone(DATA);
+  try { localStorage.removeItem(DRAFT_KEY); } catch(e){}
+  hasDraft = false;
+  render(); animateBars();
+  toast("Reset to published data");
+}
+function addThisMonth(){
+  const ym = state.lastUpdated.slice(0,7); // use lastUpdated's month
+  // remove existing rows for this month to avoid dupes, then append current balances
+  state.history = state.history.filter(r => r.month !== ym);
+  state.people.forEach(p => {
+    state.history.push({
+      month: ym, name: p.name,
+      avios: Number(p.balances.avios)||0,
+      virgin: Number(p.balances.virgin)||0,
+      amexMR: Number(p.balances.amexMR)||0,
+      hilton: Number(p.balances.hilton)||0,
+      nectar: Number(p.balances.nectar)||0
+    });
+  });
+  saveDraft();
+  renderHistory(); renderChart();
+  toast("Added " + formatMonth(ym) + " snapshot");
+}
+
+/* ============================================================
+   SERIALISE — produce a valid `const DATA = {…}` block
+   ============================================================ */
+function dataBlock(){
+  // stamp lastUpdated? keep user's value; they can edit. We keep as-is.
+  return "const DATA = " + JSON.stringify(state, null, 2) + ";";
+}
+function copyData(){
+  const block = dataBlock();
+  copyToClipboard(block).then(ok => {
+    if (ok) toast("Copied — paste into index.html & commit");
+    else openModal("Updated DATA", "Copy this and paste it over the DATA block in index.html, then commit & push.", block, "Copy", () => {
+      const ta = document.getElementById("modalText"); ta.select(); document.execCommand && document.execCommand("copy"); toast("Copied");
+    });
+  });
+}
+function copyToClipboard(text){
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    return navigator.clipboard.writeText(text).then(()=>true).catch(()=>false);
+  }
+  return Promise.resolve(false);
+}
+function exportJSON(){
+  const blob = new Blob([JSON.stringify(state, null, 2)], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = "points-hq-" + state.lastUpdated + ".json";
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 1000);
+  toast("Exported JSON");
+}
+function importJSON(){
+  openModal("Import JSON", "Paste a previously exported JSON here, or use the file picker below.", "", "Load", () => {
+    const txt = document.getElementById("modalText").value.trim();
+    try {
+      const obj = JSON.parse(txt);
+      if (!obj.people || !obj.gates) throw new Error("Missing keys");
+      state = obj; saveDraft(); closeModal(); render(); animateBars();
+      toast("Imported data");
+    } catch(e){ toast("Invalid JSON"); }
+  }, true);
+}
+
+/* ============================================================
+   MODAL / TOAST
+   ============================================================ */
+let modalPrimaryFn = null;
+function openModal(title, help, content, primaryLabel, fn, showFile){
+  document.getElementById("modalTitle").textContent = title;
+  document.getElementById("modalHelp").textContent = help;
+  document.getElementById("modalText").value = content;
+  const pb = document.getElementById("modalPrimary");
+  pb.textContent = primaryLabel;
+  modalPrimaryFn = fn;
+  document.getElementById("modalBack").classList.add("show");
+  if (showFile){
+    if(!document.getElementById("pickFileBtn")){
+      const b = document.createElement("button");
+      b.className = "btn"; b.id="pickFileBtn"; b.textContent="⭱ Pick file…";
+      b.onclick = ()=> document.getElementById("fileInput").click();
+      pb.parentNode.appendChild(b);
+    }
+  }
+}
+function closeModal(){ document.getElementById("modalBack").classList.remove("show"); }
+
+let toastTimer = null;
+function toast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=> t.classList.remove("show"), 2200);
+}
+
+/* ============================================================
+   THEME
+   ============================================================ */
+function currentTheme(){
+  const set = document.documentElement.getAttribute("data-theme");
+  if (set) return set;
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+function toggleTheme(){
+  const next = currentTheme() === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+  try { localStorage.setItem("pointsHQ_theme", next); } catch(e){}
+  if (chart) renderChart();
+}
+
+/* ============================================================
+   WIRE UP
+   ============================================================ */
+function boot(){
+  // restore theme pref
+  try { const th = localStorage.getItem("pointsHQ_theme"); if (th) document.documentElement.setAttribute("data-theme", th); } catch(e){}
+
+  render();
+  animateBars();
+
+  document.getElementById("editBtn").addEventListener("click", ()=> setEditing(!editing));
+  document.getElementById("themeBtn").addEventListener("click", toggleTheme);
+  document.getElementById("resetBtn").addEventListener("click", resetToPublished);
+  document.getElementById("addMonthBtn").addEventListener("click", addThisMonth);
+  document.getElementById("copyBtn").addEventListener("click", copyData);
+  document.getElementById("copyBtn2").addEventListener("click", copyData);
+  document.getElementById("exportBtn").addEventListener("click", exportJSON);
+  document.getElementById("importBtn").addEventListener("click", importJSON);
+
+  document.getElementById("modalClose").addEventListener("click", closeModal);
+  document.getElementById("modalBack").addEventListener("click", e => { if (e.target.id==="modalBack") closeModal(); });
+  document.getElementById("modalPrimary").addEventListener("click", ()=> modalPrimaryFn && modalPrimaryFn());
+
+  // transfer map toggle label
+  const det = document.getElementById("transDetails");
+  det.addEventListener("toggle", ()=> {
+    document.getElementById("transToggle").textContent = det.open ? "tap to collapse ▴" : "tap to expand ▾";
+  });
+
+  // file import
+  document.getElementById("fileInput").addEventListener("change", e => {
+    const f = e.target.files[0]; if (!f) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const obj = JSON.parse(reader.result);
+        if (!obj.people || !obj.gates) throw new Error();
+        state = obj; saveDraft(); closeModal(); render(); animateBars(); toast("Imported file");
+      } catch(err){ toast("Invalid JSON file"); }
+    };
+    reader.readAsText(f);
+    e.target.value = "";
+  });
+
+  // if a draft was loaded, hint it
+  if (hasDraft) setTimeout(()=> toast("Local draft loaded — reset to see published data"), 400);
+}
+
+/* Load Chart.js from CDN, then boot. Boot regardless if it fails. */
+(function(){
+  const s = document.createElement("script");
+  s.src = "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js";
+  s.onload = boot;
+  s.onerror = boot; // graceful: boot() handles missing Chart
+  document.head.appendChild(s);
+  // safety timeout in case onload never fires
+  setTimeout(()=>{ if (!window.__booted){ window.__booted = true; boot(); } }, 4000);
+  const origBoot = boot;
+  boot = function(){ if (window.__booted) return; window.__booted = true; origBoot(); };
+  s.onload = boot; s.onerror = boot;
+})();
+</script>
+</body>
+</html>
