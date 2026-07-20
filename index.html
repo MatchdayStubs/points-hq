@@ -390,6 +390,21 @@
                   font-size: 12px; line-height: 1.5; border: 1px solid var(--border-strong); border-radius: 12px;
                   padding: 12px; background: var(--surface-2); color: var(--text); resize: vertical; }
 
+  /* ---- FORECAST CONTROLS ---- */
+  .fc-controls { display: flex; align-items: center; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+  .fc-controls > label { font-size: 12px; font-weight: 600; color: var(--text-2); }
+  .fc-input-wrap { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 220px; }
+  .fc-input-wrap input[type=range] { flex: 1; min-width: 120px; accent-color: var(--accent); height: 4px; }
+  .fc-input-wrap input[type=number] { width: 92px; text-align: right; font: inherit; font-weight: 700; font-size: 14px;
+    padding: 7px 9px; border-radius: 9px; border: 1px solid var(--border-strong); background: var(--surface-2); color: var(--text); }
+  .fc-unit { font-size: 12px; color: var(--text-3); white-space: nowrap; }
+  .fc-readout { display: flex; flex-direction: column; gap: 6px; margin-top: 14px; }
+  .fc-line { font-size: 12.5px; font-weight: 600; padding: 9px 12px; border-radius: 10px; line-height: 1.4; }
+  .fc-line.ok { background: var(--ok-bg); color: var(--ok); }
+  .fc-line.bad { background: var(--bad-bg); color: var(--bad); }
+  .fc-line b { font-weight: 800; }
+  .fc-help { font-size: 11px; color: var(--text-3); margin: 12px 0 0; line-height: 1.5; }
+
   @media (prefers-reduced-motion: reduce) {
     * { transition: none !important; animation: none !important; }
   }
@@ -448,14 +463,24 @@
     <div class="tiles" id="vouchers"></div>
   </section>
 
-  <!-- CHART -->
+  <!-- CHART / FORECAST -->
   <section id="secChart">
-    <div class="sec-head"><h2>Trajectory</h2><span class="hint">Pooled Avios-equivalent vs targets</span></div>
+    <div class="sec-head"><h2>Trajectory &amp; forecast</h2><span class="hint">Actuals + rolling projection to the Tokyo booking</span></div>
     <div class="card">
       <div class="chart-box">
         <canvas id="trajChart"></canvas>
         <div id="chartFallback" class="chart-fallback" style="display:none">Chart couldn't load — see the history table below.</div>
       </div>
+      <div class="fc-controls">
+        <label for="earnInput">Assumed monthly earn</label>
+        <div class="fc-input-wrap">
+          <input type="range" id="earnRange" min="0" max="60000" step="1000" aria-label="Monthly earn slider" />
+          <input type="number" id="earnInput" class="num" min="0" step="1000" aria-label="Monthly earn (Avios)" />
+          <span class="fc-unit">Avios / mo</span>
+        </div>
+      </div>
+      <div id="forecastReadout" class="fc-readout"></div>
+      <p class="fc-help">Projection anchors at today's pooled total, adds your monthly earn plus known welcome bonuses, and subtracts the NYC redemption in Jan 2027. Drag the slider to match your real spend — the whole forecast and both verdicts update live.</p>
     </div>
   </section>
 
@@ -581,7 +606,19 @@ const DATA = {
   history: [
     { month: "2026-07", name: "Hayden", avios: 1500, virgin: 0, amexMR: 0, hilton: 120000, nectar: 0 },
     { month: "2026-07", name: "Tammy", avios: 27500, virgin: 5000, amexMR: 75000, hilton: 0, nectar: 0 }
-  ]
+  ],
+  // ---- FORECAST MODEL (editable assumptions; drives the projection chart) ----
+  forecast: {
+    monthlyEarn: 30000,          // pooled Avios earned per month from ongoing card spend (tune to real spend)
+    horizon: "2027-05",          // project through the Tokyo booking month
+    oneOffs: [                   // welcome bonuses / big lumps landing in a specific month
+      { month: "2026-09", label: "Platinum welcome", amount: 80000 },
+      { month: "2026-11", label: "BA PP welcome", amount: 30000 }
+    ],
+    redemptions: [               // gate bookings that spend down the pool
+      { month: "2027-01", label: "NYC booking", amount: 187000 }
+    ]
+  }
 };
 
 /* ============================================================
@@ -688,6 +725,7 @@ function render(){
   renderOffers();
   renderNextAction();
   renderFootNote();
+  initForecastControls();
   renderChart();
 }
 
@@ -1001,58 +1039,166 @@ function monthlyPooledSeries(){
   const months = Object.keys(byMonth).sort();
   return { months, values: months.map(m=>byMonth[m]) };
 }
+function nextMonth(ym){
+  let [y,m] = ym.split("-").map(Number);
+  m++; if (m>12){ m=1; y++; }
+  return y + "-" + String(m).padStart(2,"0");
+}
+function shortMonth(iso){
+  const ym = iso.length>7 ? iso.slice(0,7) : iso;
+  return parseISO(ym + "-01").toLocaleDateString("en-GB",{month:"short",year:"2-digit"});
+}
+
+/* Roll the pooled balance forward month by month from today's total,
+   adding monthlyEarn + one-off bonuses and subtracting gate redemptions. */
+function forecastModel(){
+  const f = state.forecast || {};
+  const monthlyEarn = Math.max(0, Number(f.monthlyEarn)||0);
+  const hist = monthlyPooledSeries();
+  const startMonth = hist.months.length ? hist.months[hist.months.length-1] : (state.lastUpdated||"2026-07").slice(0,7);
+  const startVal = pooledAvios();          // anchor at current pooled total
+  const horizon = f.horizon || startMonth;
+  const oneOffs = f.oneOffs || [];
+  const redemptions = f.redemptions || [];
+  const months = [], points = [];
+  let cur = startMonth, bal = startVal, guard = 0;
+  while (cur < horizon && guard < 240){
+    cur = nextMonth(cur); guard++;
+    bal += monthlyEarn;
+    const events = [];
+    oneOffs.filter(o=>o.month===cur).forEach(o=>{ bal += Number(o.amount)||0; events.push("＋"+fmt(o.amount)+" "+o.label); });
+    redemptions.filter(r=>r.month===cur).forEach(r=>{ bal = Math.max(0, bal - (Number(r.amount)||0)); events.push("－"+fmt(r.amount)+" "+r.label); });
+    months.push(cur); points.push({ month: cur, bal: Math.round(bal), events });
+  }
+  return { startMonth, startVal, months, points, monthlyEarn };
+}
+
+function renderForecastReadout(){
+  const el = document.getElementById("forecastReadout");
+  if (!el) return;
+  const fc = forecastModel();
+  const series = [{ month: fc.startMonth, bal: fc.startVal }].concat(fc.points);
+  const crossing = target => { const hit = series.find(pt => pt.bal >= target); return hit ? hit.month : null; };
+  const line = gate => {
+    if (!gate) return "";
+    const name = gate.name.split("—")[0].trim();
+    const hitMonth = crossing(gate.targetAvios);
+    const deadlineMonth = gate.deadline.slice(0,7);
+    if (!hitMonth)
+      return `<span class="fc-line bad">✗ ${name}: forecast never reaches ${fmt(gate.targetAvios)} — needs more monthly earn</span>`;
+    const onTime = hitMonth <= deadlineMonth;
+    return `<span class="fc-line ${onTime?"ok":"bad"}">${onTime?"✓":"✗"} ${name}: forecast hits ${fmt(gate.targetAvios)} in <b>${formatMonth(hitMonth)}</b> — ${onTime?"on track for "+shortMonth(gate.deadline):"MISSES the "+shortMonth(gate.deadline)+" deadline"}</span>`;
+  };
+  el.innerHTML = line(state.gates.find(g=>g.id==="ny")) + line(state.gates.find(g=>g.id==="tokyo"));
+}
+
+function initForecastControls(){
+  const v = (state.forecast && Number(state.forecast.monthlyEarn)) || 0;
+  const r = document.getElementById("earnRange"), i = document.getElementById("earnInput");
+  if (r) r.value = Math.min(Number(r.max), v);
+  if (i) i.value = v;
+}
+
 function renderChart(){
   const canvas = document.getElementById("trajChart");
   const fallback = document.getElementById("chartFallback");
+  renderForecastReadout();
   if (typeof Chart === "undefined"){
     canvas.style.display = "none";
     fallback.style.display = "block";
     return;
   }
-  const { months, values } = monthlyPooledSeries();
-  const labels = months.map(formatMonth);
+  canvas.style.display = "block"; fallback.style.display = "none";
+
+  const hist = monthlyPooledSeries();
+  const fc = forecastModel();
+  const histMap = {}; hist.months.forEach((m,i)=> histMap[m] = hist.values[i]);
+  const fcMap = {}; fc.points.forEach(p=> fcMap[p.month] = p.bal);
+
+  const fullMonths = hist.months.concat(fc.months);
+  const labels = fullMonths.map(formatMonth);
+
   const cssvar = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
   const accent = cssvar("--accent") || "#0e7c86";
   const grid = cssvar("--border") || "#e3e8ee";
   const txt = cssvar("--text-2") || "#566172";
+  const warn = cssvar("--warn") || "#9a6400";
+  const muted = cssvar("--text-3") || "#8a94a3";
 
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: "Pooled Avios-eq", data: values, borderColor: accent,
-        backgroundColor: accent + "22", fill: true, tension: .3, borderWidth: 2.5,
-        pointRadius: 4, pointBackgroundColor: accent
-      }
-    ]
+  const actualData = fullMonths.map(m => (m in histMap) ? histMap[m] : null);
+  const forecastData = fullMonths.map(m => {
+    if (m === fc.startMonth) return fc.startVal;   // join actual → forecast
+    if (m in fcMap) return fcMap[m];
+    return null;
+  });
+
+  const ny = state.gates.find(g=>g.id==="ny");
+  const tokyo = state.gates.find(g=>g.id==="tokyo");
+
+  const datasets = [
+    { label: "Actual", data: actualData, borderColor: accent, backgroundColor: accent+"22",
+      fill: false, tension: .3, borderWidth: 2.5, pointRadius: 4, pointBackgroundColor: accent, spanGaps: false },
+    { label: "Forecast", data: forecastData, borderColor: accent, backgroundColor: accent+"14",
+      fill: true, tension: .3, borderWidth: 2.5, borderDash: [7,5], pointRadius: 3, pointBackgroundColor: accent, spanGaps: true }
+  ];
+  if (ny) datasets.push({ label: "NYC target (187k)", data: fullMonths.map(()=>ny.targetAvios),
+      borderColor: muted, borderDash: [4,4], borderWidth: 1.5, pointRadius: 0, fill: false, tension: 0 });
+  if (tokyo) datasets.push({ label: "Tokyo target (320k)", data: fullMonths.map(()=>tokyo.targetAvios),
+      borderColor: warn, borderDash: [4,4], borderWidth: 1.5, pointRadius: 0, fill: false, tension: 0 });
+
+  // vertical dashed markers at each gate deadline
+  const markers = [];
+  if (ny) markers.push({ label: formatMonth(ny.deadline.slice(0,7)), text: "NYC by "+shortMonth(ny.deadline), color: muted });
+  if (tokyo) markers.push({ label: formatMonth(tokyo.deadline.slice(0,7)), text: "Tokyo by "+shortMonth(tokyo.deadline), color: warn });
+  const deadlinePlugin = {
+    id: "deadlines",
+    afterDatasetsDraw(c){
+      const { ctx, chartArea, scales } = c;
+      markers.forEach(mk => {
+        const idx = labels.indexOf(mk.label);
+        if (idx < 0) return;
+        const x = scales.x.getPixelForValue(idx);
+        if (x == null || isNaN(x)) return;
+        ctx.save();
+        ctx.strokeStyle = mk.color; ctx.lineWidth = 1.2; ctx.setLineDash([3,3]);
+        ctx.beginPath(); ctx.moveTo(x, chartArea.top); ctx.lineTo(x, chartArea.bottom); ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = mk.color; ctx.font = "700 9px Inter, sans-serif"; ctx.textAlign = "center";
+        ctx.fillText(mk.text, x, chartArea.top - 4);
+        ctx.restore();
+      });
+    }
   };
-  const targetLines = state.gates.map(g => ({
-    label: g.name + " (" + fmt(g.targetAvios) + ")",
-    data: labels.map(()=>g.targetAvios),
-    borderColor: g.priority ? cssvar("--warn") : cssvar("--text-3"),
-    borderDash: [6,5], borderWidth: 1.5, pointRadius: 0, fill: false, tension: 0
-  }));
-  data.datasets.push(...targetLines);
 
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const maxTarget = Math.max(...state.gates.map(g=>g.targetAvios));
+  const allVals = actualData.concat(forecastData).filter(v=>v!=null);
+  const maxTarget = Math.max(tokyo?tokyo.targetAvios:0, ...(allVals.length?allVals:[1]));
 
   if (chart){ chart.destroy(); }
   chart = new Chart(canvas, {
     type: "line",
-    data,
+    data: { labels, datasets },
+    plugins: [deadlinePlugin],
     options: {
       responsive: true, maintainAspectRatio: false,
+      layout: { padding: { top: 16 } },
       animation: reduced ? false : { duration: 900 },
       interaction: { mode: "index", intersect: false },
       scales: {
         y: { beginAtZero: true, suggestedMax: maxTarget * 1.08,
              grid: { color: grid }, ticks: { color: txt, callback: v => (v/1000)+"k" } },
-        x: { grid: { display:false }, ticks: { color: txt } }
+        x: { grid: { display:false }, ticks: { color: txt, maxRotation: 0, autoSkipPadding: 8 } }
       },
       plugins: {
         legend: { labels: { color: txt, boxWidth: 12, font: { size: 11 } } },
-        tooltip: { callbacks: { label: c => c.dataset.label + ": " + fmt(c.parsed.y) } }
+        tooltip: { callbacks: {
+          label: c => c.parsed.y==null ? null : c.dataset.label + ": " + fmt(c.parsed.y),
+          afterBody: items => {
+            const m = fullMonths[items[0].dataIndex];
+            const p = fc.points.find(pp => pp.month === m);
+            return (p && p.events.length) ? p.events : [];
+          }
+        } }
       }
     }
   });
@@ -1215,6 +1361,22 @@ function boot(){
   document.getElementById("copyBtn2").addEventListener("click", copyData);
   document.getElementById("exportBtn").addEventListener("click", exportJSON);
   document.getElementById("importBtn").addEventListener("click", importJSON);
+
+  // forecast earn controls
+  const earnRange = document.getElementById("earnRange");
+  const earnInput = document.getElementById("earnInput");
+  function setEarn(v){
+    v = Math.max(0, Math.round(Number(v)||0));
+    state.forecast = state.forecast || {};
+    state.forecast.monthlyEarn = v;
+    earnRange.value = Math.min(Number(earnRange.max), v);
+    earnInput.value = v;
+    saveDraft();
+    renderChart();
+  }
+  earnRange.addEventListener("input", e => setEarn(e.target.value));
+  earnInput.addEventListener("input", e => setEarn(e.target.value));
+  initForecastControls();
 
   document.getElementById("modalClose").addEventListener("click", closeModal);
   document.getElementById("modalBack").addEventListener("click", e => { if (e.target.id==="modalBack") closeModal(); });
