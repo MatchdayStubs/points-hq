@@ -115,7 +115,9 @@
   .tabnav button.active::before{content:"";position:absolute;top:0;left:22%;right:22%;height:2.5px;
     background:var(--accent);border-radius:0 0 3px 3px;}
   @media (min-width:768px){
-    .tabnav{position:static;max-width:1120px;margin:0 auto;padding:0 8px;border-top:none;background:none;backdrop-filter:none;}
+    header.top{position:static;}
+    .tabnav{position:sticky;top:0;bottom:auto;left:auto;right:auto;justify-content:center;
+      border-top:none;border-bottom:1px solid var(--border);padding:0 8px;z-index:55;}
     .tabnav button{flex:0 0 auto;flex-direction:row;gap:7px;font-size:13.5px;padding:12px 16px;min-height:auto;}
     .tabnav button .ic{font-size:16px;}
     .tabnav button.active::before{top:auto;bottom:0;left:16px;right:16px;height:2.5px;border-radius:3px 3px 0 0;}
@@ -313,6 +315,8 @@
     border:1px solid color-mix(in srgb,var(--warn) 40%,var(--border));color:var(--warn);border-radius:var(--radius);
     padding:12px 14px;margin-top:14px;font-size:12.5px;font-weight:600;}
   body.editing .edit-banner{display:flex;} .edit-only{display:none;} body.editing .edit-only{display:inline-flex;}
+  .edit-block{display:none;} body.editing .edit-block{display:block;}
+  .view-block{display:block;} body.editing .view-block{display:none;}
 
   .toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%) translateY(20px);background:var(--text);
     color:var(--bg);padding:11px 18px;border-radius:12px;font-size:13px;font-weight:600;box-shadow:var(--shadow-lg);
@@ -328,6 +332,30 @@
   .modal-head h3{font-size:15px;} .modal-body{padding:16px;}
   textarea.code{width:100%;min-height:300px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.5;
     border:1px solid var(--border-strong);border-radius:12px;padding:12px;background:var(--surface-2);color:var(--text);resize:vertical;}
+
+  /* EDIT INPUTS */
+  .e-inp{font:inherit;font-size:13px;color:var(--text);background:var(--surface-2);border:1px solid var(--border-strong);
+    border-radius:8px;padding:6px 8px;width:100%;min-height:34px;}
+  .e-inp.num{text-align:right;font-weight:700;font-variant-numeric:tabular-nums;}
+  .e-inp.w-sm{width:110px;} .e-inp.w-xs{width:84px;}
+  .e-area{font:inherit;font-size:12.5px;color:var(--text);background:var(--surface-2);border:1px solid var(--border-strong);
+    border-radius:9px;padding:8px 10px;width:100%;resize:vertical;min-height:44px;line-height:1.4;}
+  .e-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 0;border-top:1px solid var(--border);}
+  .e-row:first-child{border-top:none;}
+  .e-field{display:flex;flex-direction:column;gap:3px;flex:1;min-width:96px;}
+  .e-field .lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-3);}
+  .e-del{flex:0 0 auto;color:var(--bad);border-color:var(--border);min-height:34px;padding:6px 10px;}
+  .e-add{margin-top:12px;}
+  .e-hint{font-size:11px;color:var(--text-3);margin:2px 0 8px;line-height:1.5;}
+  .settings-grid{display:grid;grid-template-columns:1fr;gap:12px;} @media(min-width:620px){.settings-grid{grid-template-columns:1fr 1fr;}}
+
+  /* ALERTS */
+  .alert{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:var(--radius);margin-bottom:4px;}
+  .alert .ai{font-size:20px;flex:0 0 auto;line-height:1.2;}
+  .alert .at{font-size:13.5px;font-weight:700;} .alert .ad{font-size:12.5px;margin-top:3px;line-height:1.45;font-weight:500;}
+  .alert.ok{background:var(--ok-bg);color:var(--ok);border:1px solid color-mix(in srgb,var(--ok) 30%,var(--border));}
+  .alert.warn{background:var(--warn-bg);color:var(--warn);border:1px solid color-mix(in srgb,var(--warn) 35%,var(--border));}
+  .alert.bad{background:var(--bad-bg);color:var(--bad);border:1px solid color-mix(in srgb,var(--bad) 35%,var(--border));}
 
   @media (prefers-reduced-motion: reduce){*{transition:none !important;animation:none !important;}}
 </style>
@@ -345,25 +373,26 @@
       <button class="btn edit-toggle" id="editBtn" aria-pressed="false">✎ Edit</button>
     </div>
   </div>
-  <nav class="tabnav" id="tabnav" role="tablist">
-    <button data-tab="home"   class="active"><span class="ic">📊</span>Home</button>
-    <button data-tab="budget"><span class="ic">📈</span>Budget</button>
-    <button data-tab="cash"><span class="ic">💷</span>Cash</button>
-    <button data-tab="cards"><span class="ic">💳</span>Cards</button>
-    <button data-tab="boost"><span class="ic">🚀</span>Boost</button>
-  </nav>
 </header>
+<nav class="tabnav" id="tabnav" role="tablist">
+  <button data-tab="home"   class="active"><span class="ic">📊</span>Home</button>
+  <button data-tab="budget"><span class="ic">📈</span>Budget</button>
+  <button data-tab="cash"><span class="ic">💷</span>Cash</button>
+  <button data-tab="cards"><span class="ic">💳</span>Cards</button>
+  <button data-tab="boost"><span class="ic">🚀</span>Boost</button>
+</nav>
 
 <div class="wrap">
 
   <div class="edit-banner" role="status">
-    <span>✎ Edit mode — a local draft only. Copy the updated DATA and commit it to publish for both of you.</span>
+    <span>✎ <b>Edit mode</b> — change anything below and it recalculates live. When done: <b>Copy updated DATA</b> → paste over the DATA block in index.html → commit. Changes are a local draft until you publish.</span>
     <button class="btn sm" id="resetBtn">↺ Reset to published</button>
     <button class="btn sm primary" id="copyBtn2">⧉ Copy updated DATA</button>
   </div>
 
   <!-- ============ HOME ============ -->
   <div class="tab active" id="tab-home">
+    <section id="homeAlertSec" style="display:none"><div id="homeAlert"></div></section>
     <section>
       <div class="sec-head"><h2>Reward-flight gates</h2><span class="hint">Progress vs the locked budget</span></div>
       <div class="gates" id="gates"></div>
@@ -412,6 +441,10 @@
       <div class="sec-head"><h2>Monthly history (actuals)</h2>
         <button class="btn sm edit-only" id="addMonthBtn" style="margin-left:auto">＋ Add this month</button></div>
       <div class="card table-scroll"><table id="histTable"><thead></thead><tbody></tbody></table></div>
+    </section>
+    <section class="edit-block">
+      <div class="sec-head"><h2>Plan settings &amp; gates</h2><span class="hint">edit mode — the levers behind the plan</span></div>
+      <div class="card" id="editSettings"></div>
     </section>
   </div>
 
@@ -661,6 +694,45 @@ const CUR = [
   { key:"nectar", label:"Nectar", short:"NE", varc:"nectar" }
 ];
 
+/* ============================================================================
+   EDIT FRAMEWORK — every input carries a data-path; a single delegated handler
+   writes it back into `state`, saves the draft, and re-renders derived views.
+   This is what makes every field editable in-page and live.
+   ============================================================================ */
+function escHtml(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function escAttr(s){ return escHtml(s).replace(/"/g,"&quot;"); }
+function getByPath(o,path){ return path.split(".").reduce((c,k)=> c==null?undefined:c[/^\d+$/.test(k)?+k:k], o); }
+function setByPath(o,path,v){ const ks=path.split("."); const last=ks.pop(); let c=o;
+  for(const k of ks){ c=c[/^\d+$/.test(k)?+k:k]; } c[/^\d+$/.test(last)?+last:last]=v; }
+function eNum(path,val,cls,extra){ return `<input class="e-inp num ${cls||""}" type="number" inputmode="decimal" data-path="${path}" data-type="num" ${extra||""} value="${val==null?"":val}">`; }
+function eText(path,val,cls,extra){ return `<input class="e-inp ${cls||""}" type="text" data-path="${path}" ${extra||""} value="${escAttr(val==null?"":val)}">`; }
+function eArea(path,val,cls){ return `<textarea class="e-area ${cls||""}" data-path="${path}">${escHtml(val==null?"":val)}</textarea>`; }
+function eSel(path,val,opts,cls){ return `<select class="e-inp ${cls||""}" data-path="${path}">`+opts.map(o=>`<option value="${escAttr(o)}" ${String(o)===String(val)?"selected":""}>${escHtml(o===""?"— none —":o)}</option>`).join("")+`</select>`; }
+function delBtn(path,idx){ return `<button class="btn sm e-del" data-del="${path}" data-idx="${idx}" title="Remove" aria-label="Remove">✕</button>`; }
+function addBtn(path,label){ return `<button class="btn sm e-add" data-add="${path}">＋ ${label}</button>`; }
+const ROW_TEMPLATES = {
+  "cashflow": ()=>({ month:currentMonth(), label:"New cash item", amount:0, cat:"fee", who:"", note:"" }),
+  "budget.path": ()=>({ month:currentMonth(), target:0, events:[] }),
+  "budget.path.#.events": ()=>"",
+  "balanceBoost.purchases": ()=>({ month:currentMonth(), earn:"", buy:0, cost:0 }),
+  "liveOffers": ()=>({ title:"New offer", detail:"", tag:"live" }),
+  "eligibility": ()=>({ date:currentMonth()+"-01", label:"New reminder", who:"" }),
+  "feesSaved": ()=>({ label:"New saving", amount:0 }),
+  "levers": ()=>"New lever",
+  "vouchers": ()=>({ name:"New voucher", owner:"", earnedBy:"", status:"Not yet earned", value:"", targetForGate:"" })
+};
+function tplKey(path){ return path.replace(/\.\d+/g,".#"); }
+function addRow(path){ const arr=getByPath(state,path); if(!Array.isArray(arr))return; const t=ROW_TEMPLATES[tplKey(path)]; arr.push(t?t():{}); saveDraft(); render(); animateBars(); }
+function delRow(path,idx){ const arr=getByPath(state,path); if(!Array.isArray(arr))return; arr.splice(idx,1); saveDraft(); render(); animateBars(); }
+function onEditInput(e){ if(!editing) return; const el=e.target.closest("[data-path]"); if(!el) return;
+  let v=el.value; if(el.dataset.type==="num") v=(el.value===""?0:Number(el.value));
+  setByPath(state, el.dataset.path, v); saveDraft(); refreshDerived(); }
+function onEditClick(e){ if(!editing) return; const a=e.target.closest("[data-add]"); if(a){ addRow(a.dataset.add); return; }
+  const d=e.target.closest("[data-del]"); if(d){ delRow(d.dataset.del, +d.dataset.idx); } }
+// Re-render only DERIVED views (never a section that holds a focused input).
+function refreshDerived(){ renderGates(); renderPooled(); renderNextAction(); renderShortfall();
+  renderPerformance(); renderBudgetText(); renderCashSummary(); renderBoostSummary(); renderChart(); }
+
 /* ---- calc ---- */
 function sumBal(k){ return state.people.reduce((a,p)=>a+(Number(p.balances[k])||0),0); }
 function nectarToAvios(n){ return Math.floor(n/400*250); }
@@ -721,8 +793,8 @@ function initials(n){ return n.trim().charAt(0).toUpperCase(); }
    ============================================================================ */
 function render(){
   document.getElementById("hhUpdated").textContent = "Last updated "+formatDate(state.lastUpdated);
-  renderGates(); renderPooled(); renderNextAction(); renderOffers(); renderFootNote();
-  renderBudgetText(); renderPerformance(); renderBudgetEvents(); renderHistory();
+  renderGates(); renderPooled(); renderNextAction(); renderShortfall(); renderOffers(); renderFootNote();
+  renderBudgetText(); renderPerformance(); renderBudgetEvents(); renderHistory(); renderSettings();
   renderCash(); renderFeesSaved();
   renderPeople(); renderCards(); renderVouchers(); renderPlaybook(); renderEligibility();
   renderBoost(); renderLevers(); renderTransfers();
@@ -790,9 +862,19 @@ function renderNextAction(){
   document.getElementById("nextAction").innerHTML = `<span class="na-ic">${ic}</span><div class="na-txt">${msg}<small>${sub}</small></div>`;
 }
 function renderOffers(){
-  document.getElementById("offers").innerHTML = state.liveOffers.map(o=>`
-    <div class="card offer ${o.tag==="expired"?"is-expired":""}"><span class="otag ${o.tag}">${o.tag}</span>
-      <div><div class="otitle">${o.title}</div><div class="odetail">${o.detail}</div></div></div>`).join("");
+  const el=document.getElementById("offers");
+  if (editing){
+    el.innerHTML = (state.liveOffers||[]).map((o,i)=>`<div class="card">
+      <div class="e-field"><span class="lbl">Title</span>${eText("liveOffers."+i+".title",o.title)}</div>
+      <div class="e-field" style="margin-top:6px"><span class="lbl">Detail</span>${eArea("liveOffers."+i+".detail",o.detail)}</div>
+      <div style="display:flex;gap:8px;align-items:flex-end;margin-top:6px">
+        <div class="e-field" style="flex:0 0 130px"><span class="lbl">Tag</span>${eSel("liveOffers."+i+".tag",o.tag,["live","watch","expired"])}</div>${delBtn("liveOffers",i)}</div>
+      </div>`).join("")+`<div class="card" style="display:flex;align-items:center;justify-content:center">${addBtn("liveOffers","Add offer")}</div>`;
+    return;
+  }
+  el.innerHTML = state.liveOffers.map(o=>`
+    <div class="card offer ${o.tag==="expired"?"is-expired":""}"><span class="otag ${o.tag}">${escHtml(o.tag)}</span>
+      <div><div class="otitle">${escHtml(o.title)}</div><div class="odetail">${escHtml(o.detail)}</div></div></div>`).join("");
 }
 function renderFootNote(){
   document.getElementById("footNote").innerHTML =
@@ -807,8 +889,30 @@ function renderBudgetText(){
   document.getElementById("budgetIntro").innerHTML =
     `This is the plan from your Excel v6, <b>locked as the budget</b>. It funds both trips and ends about <b>+${fmt(b.finalSurplus||0)} Avios</b> after the Jun '27 Tokyo booking — but it <b>relies on ~£1,380 of Balance Boost purchases</b> (≈150k Avios) to close Tokyo. The solid line is where you actually are; the dashed line is the budget.`;
 }
+function computeShortfall(){
+  const perf=performance(); const out=[];
+  if (perf.variance==null) return out;
+  const surplus=(state.budget&&state.budget.finalSurplus)||0;
+  if (perf.variance<0){
+    const behind=-perf.variance;
+    if (behind>surplus) out.push({ level:"bad", short:behind-surplus,
+      msg:`You're ${fmt(behind)} behind the budget — that's ${fmt(behind-surplus)} past the ${fmt(surplus)} Tokyo buffer. On this trend Tokyo (Jun '27) falls short. Catch up with extra spend or bigger Balance Boost buys.` });
+    else out.push({ level:"warn", short:0,
+      msg:`You're ${fmt(behind)} behind the budget — still inside the ${fmt(surplus)} Tokyo buffer, but keep an eye on it and lean on the Balance Boost.` });
+  }
+  return out;
+}
+function alertHTML(level,ic,t,d){ return `<div class="alert ${level}"><span class="ai">${ic}</span><div><div class="at">${t}</div><div class="ad">${d}</div></div></div>`; }
+function renderShortfall(){
+  const box=document.getElementById("homeAlert"), sec=document.getElementById("homeAlertSec"); if(!box) return;
+  const perf=performance(), sf=computeShortfall(); let html="";
+  if (sf.length){ const a=sf[0]; html=alertHTML(a.level, a.level==="bad"?"⚠️":"👀", a.level==="bad"?"Shortfall warning":"Watch your pace", a.msg); }
+  else if (perf.variance!=null && perf.variance>0){ html=alertHTML("ok","✓","Ahead of budget", `You're ${fmt(perf.variance)} ahead of the plan — both trips comfortably on track.`); }
+  else if (perf.variance===0){ html=alertHTML("ok","✓","On budget", "Bang on the plan — both trips on track for Jan '27 (NY) and Jun '27 (Tokyo)."); }
+  if (html){ box.innerHTML=html; sec.style.display="block"; } else { sec.style.display="none"; }
+}
 function renderPerformance(){
-  const perf=performance(), el=document.getElementById("perfReadout");
+  const perf=performance(), el=document.getElementById("perfReadout"); if(!el) return;
   let rows="";
   if (perf.budget==null){
     rows = `<div class="rline info">Add monthly balances to start tracking actuals vs budget.</div>`;
@@ -817,15 +921,48 @@ function renderPerformance(){
     const word = perf.variance>=0 ? (perf.variance===0?"exactly on budget":fmt(perf.variance)+" ahead of budget") : fmt(Math.abs(perf.variance))+" behind budget";
     rows += `<div class="rline ${cls}">${perf.status==="ok"?"✓":"⚠️"} ${formatMonth(perf.latest)}: actual <b>${fmt(perf.actual)}</b> vs budget <b>${fmt(perf.budget)}</b> — ${word}.</div>`;
   }
+  computeShortfall().forEach(a=> rows += `<div class="rline ${a.level}">${a.level==="bad"?"⚠️":"👀"} ${a.msg}</div>`);
   rows += `<div class="rline info">Budget verdict: both gates funded — NY (187k) by <b>Jan '27</b>, Tokyo (320k) by <b>Jun '27</b> — ending ~<b>+${fmt((state.budget||{}).finalSurplus||0)}</b>. Tokyo depends on the Balance Boost buys (see the Boost tab).</div>`;
   el.innerHTML = rows;
 }
+function renderSettings(){
+  const el=document.getElementById("editSettings"); if(!el) return;
+  const b=state.budget||{};
+  const gatesHTML = state.gates.map((g,i)=>`
+    <div class="e-row">
+      <div class="e-field"><span class="lbl">${escHtml(g.name)} — target Avios</span>${eNum("gates."+i+".targetAvios",g.targetAvios)}</div>
+      <div class="e-field"><span class="lbl">Book by (YYYY-MM-DD)</span>${eText("gates."+i+".deadline",g.deadline)}</div>
+    </div>
+    <div class="e-field" style="margin:0 0 4px"><span class="lbl">${escHtml(g.name)} — note</span>${eArea("gates."+i+".extra",g.extra)}</div>`).join("");
+  el.innerHTML = `<p class="e-hint">These drive the gate rings, chart target lines, booking countdowns and the shortfall buffer.</p>${gatesHTML}
+    <div class="e-row">
+      <div class="e-field"><span class="lbl">Last updated</span>${eText("lastUpdated",state.lastUpdated)}</div>
+      <div class="e-field"><span class="lbl">Budget locked on</span>${eText("budget.lockedOn",b.lockedOn||"")}</div>
+      <div class="e-field"><span class="lbl">Final surplus / Tokyo buffer</span>${eNum("budget.finalSurplus",b.finalSurplus||0)}</div>
+    </div>`;
+}
 function renderBudgetEvents(){
-  const cm=currentMonth();
-  document.getElementById("budgetEvents").innerHTML = budgetPath().map(p=>{
+  const el=document.getElementById("budgetEvents"); const cm=currentMonth();
+  if (editing){
+    el.innerHTML = `<p class="e-hint">This is the locked forecast. Each row = a month's expected pooled balance (Avios). Edit targets, set a booking, add/remove events or whole months — the chart, gates and shortfall recalc live.</p>`+
+      budgetPath().map((p,i)=>{
+        const evs=(p.events||[]).map((ev,j)=>`<div style="display:flex;gap:6px;align-items:center;margin-top:6px">${eText("budget.path."+i+".events."+j,ev)}${delBtn("budget.path."+i+".events",j)}</div>`).join("");
+        return `<div style="padding:12px 0;border-top:1px solid var(--border)">
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end">
+            <div class="e-field" style="flex:0 0 84px"><span class="lbl">Month</span>${eText("budget.path."+i+".month",p.month)}</div>
+            <div class="e-field" style="flex:0 0 108px"><span class="lbl">Target Avios</span>${eNum("budget.path."+i+".target",p.target)}</div>
+            <div class="e-field" style="flex:0 0 116px"><span class="lbl">Booking</span>${eSel("budget.path."+i+".booking",p.booking||"",["","ny","tokyo"])}</div>
+            ${delBtn("budget.path",i)}
+          </div>
+          <div style="margin-top:6px"><span class="lbl">Events</span>${evs}<div style="margin-top:6px">${addBtn("budget.path."+i+".events","Add event")}</div></div>
+        </div>`;
+      }).join("") + `<div class="e-add">${addBtn("budget.path","Add month")}</div>`;
+    return;
+  }
+  el.innerHTML = budgetPath().map(p=>{
     const past = p.month < cm;
     const booking = p.booking ? `<span class="booking-tag">Book ${p.booking==="ny"?"NY":"Tokyo"}</span>` : "";
-    const evs = (p.events||[]).map(e=>`<div class="d">• ${e}</div>`).join("");
+    const evs = (p.events||[]).map(e=>`<div class="d">• ${escHtml(e)}</div>`).join("");
     return `<div class="evrow ${past?"past":""}"><div class="evmonth">${shortMonth(p.month)}</div>
       <div class="evbody"><div class="t">Target ${fmt(p.target)}${booking}</div>${evs}</div></div>`;
   }).join("");
@@ -855,58 +992,64 @@ function renderHistory(){
 }
 
 /* ---- cash tab ---- */
-function renderCash(){
-  const cf=[...(state.cashflow||[])].sort((a,b)=>a.month.localeCompare(b.month));
-  const total=cf.reduce((s,c)=>s+(Number(c.amount)||0),0);
+function renderCash(){ renderCashSummary(); renderCashTimeline(); }
+function renderCashSummary(){
+  const cf=state.cashflow||[]; const total=cf.reduce((s,c)=>s+(Number(c.amount)||0),0);
   const byCat={fee:0,tax:0,boost:0}; cf.forEach(c=>byCat[c.cat]=(byCat[c.cat]||0)+(Number(c.amount)||0));
   document.getElementById("cashIntro").innerHTML =
-    `Points are "free" but the plan still needs real cash: card fees, flight taxes, and — the big one — <b>buying Avios via Balance Boost</b> to fund Tokyo. Against that, four business-class seats worth <b>${state.seatValue||""}</b>.`;
+    `Points are "free" but the plan still needs real cash: card fees, flight taxes, and — the big one — <b>buying Avios via Balance Boost</b> to fund Tokyo. Against that, four business-class seats worth <b>${escHtml(state.seatValue||"")}</b>.`;
   document.getElementById("cashSummary").innerHTML = `
     <div class="card cash-stat"><div class="k">Total cash out</div><div class="v num" style="color:var(--accent)">${fmtGBP(total)}</div></div>
     <div class="card cash-stat"><div class="k">of which Balance Boost</div><div class="v num" style="color:var(--cat-boost)">${fmtGBP(byCat.boost||0)}</div></div>
     <div class="card cash-stat"><div class="k">Fees + taxes</div><div class="v num">${fmtGBP((byCat.fee||0)+(byCat.tax||0))}</div></div>`;
-  let run=0;
-  document.getElementById("cashTimeline").innerHTML = cf.map(c=>{
-    run+=Number(c.amount)||0;
-    const catLabel={fee:"Fee",tax:"Tax",boost:"Boost"}[c.cat]||c.cat;
+}
+function renderCashTimeline(){
+  const el=document.getElementById("cashTimeline");
+  if (editing){
+    el.innerHTML = `<p class="e-hint">Add / edit / remove any cash-out. Type: fee, tax or boost — the totals above and the Cash summary update live.</p>`+
+      (state.cashflow||[]).map((c,i)=>`<div class="e-row">
+        <div class="e-field" style="flex:0 0 84px"><span class="lbl">Month</span>${eText("cashflow."+i+".month",c.month)}</div>
+        <div class="e-field" style="flex:2 1 150px"><span class="lbl">Label</span>${eText("cashflow."+i+".label",c.label)}</div>
+        <div class="e-field" style="flex:0 0 92px"><span class="lbl">Amount £</span>${eNum("cashflow."+i+".amount",c.amount)}</div>
+        <div class="e-field" style="flex:0 0 92px"><span class="lbl">Type</span>${eSel("cashflow."+i+".cat",c.cat,["fee","tax","boost"])}</div>
+        <div class="e-field" style="flex:0 0 84px"><span class="lbl">Who</span>${eText("cashflow."+i+".who",c.who||"")}</div>
+        <div class="e-field" style="flex:2 1 150px"><span class="lbl">Note</span>${eText("cashflow."+i+".note",c.note||"")}</div>
+        ${delBtn("cashflow",i)}</div>`).join("") + `<div class="e-add">${addBtn("cashflow","Add cash item")}</div>`;
+    return;
+  }
+  const cf=[...(state.cashflow||[])].sort((a,b)=>a.month.localeCompare(b.month)); let run=0;
+  el.innerHTML = cf.map(c=>{ run+=Number(c.amount)||0; const catLabel={fee:"Fee",tax:"Tax",boost:"Boost"}[c.cat]||c.cat;
     return `<div class="cashrow"><div class="cm">${shortMonth(c.month)}</div>
-      <div class="cl">${c.label}${c.who?` · ${c.who}`:""}<small><span class="cat-badge cat-${c.cat}">${catLabel}</span>${c.note?" "+c.note:""}</small></div>
-      <div class="ca num">${fmtGBP(c.amount)}</div><div class="cc num">Σ ${fmtGBP(run)}</div></div>`;
-  }).join("");
+      <div class="cl">${escHtml(c.label)}${c.who?` · ${escHtml(c.who)}`:""}<small><span class="cat-badge cat-${c.cat}">${catLabel}</span>${c.note?" "+escHtml(c.note):""}</small></div>
+      <div class="ca num">${fmtGBP(c.amount)}</div><div class="cc num">Σ ${fmtGBP(run)}</div></div>`; }).join("");
 }
 function renderFeesSaved(){
-  const fs=state.feesSaved||[]; const total=fs.reduce((s,f)=>s+(Number(f.amount)||0),0);
-  document.getElementById("feesSaved").innerHTML =
-    fs.map(f=>`<div class="cashrow"><div class="cl">${f.label}</div><div class="ca num" style="color:var(--ok)">${fmtGBP(f.amount)}</div></div>`).join("")+
+  const el=document.getElementById("feesSaved"); const fs=state.feesSaved||[]; const total=fs.reduce((s,f)=>s+(Number(f.amount)||0),0);
+  if (editing){
+    el.innerHTML = fs.map((f,i)=>`<div class="e-row"><div class="e-field" style="flex:2"><span class="lbl">What</span>${eText("feesSaved."+i+".label",f.label)}</div>
+      <div class="e-field" style="flex:0 0 96px"><span class="lbl">£ saved</span>${eNum("feesSaved."+i+".amount",f.amount)}</div>${delBtn("feesSaved",i)}</div>`).join("")+`<div class="e-add">${addBtn("feesSaved","Add saving")}</div>`;
+    return;
+  }
+  el.innerHTML = fs.map(f=>`<div class="cashrow"><div class="cl">${escHtml(f.label)}</div><div class="ca num" style="color:var(--ok)">${fmtGBP(f.amount)}</div></div>`).join("")+
     `<div class="cashrow"><div class="cl"><b>Total saved by cancelling on time</b></div><div class="ca num" style="color:var(--ok)"><b>${fmtGBP(total)}</b></div></div>`;
 }
 
 /* ---- cards tab ---- */
 function renderPeople(){
-  const el=document.getElementById("people");
-  el.innerHTML = state.people.map((p,pi)=>{
+  document.getElementById("people").innerHTML = state.people.map((p,pi)=>{
     const rows=CUR.map(cur=>{
       const val=Number(p.balances[cur.key])||0;
       const cell = editing
-        ? `<input class="bal-input num" type="number" inputmode="numeric" min="0" step="1" data-person="${pi}" data-key="${cur.key}" value="${val}" aria-label="${p.name} ${cur.label}">`
+        ? eNum("people."+pi+".balances."+cur.key, val, "w-sm", 'aria-label="'+escAttr(p.name+" "+cur.label)+'"')
         : `<span class="bal-val num">${fmt(val)}</span>`;
       return `<div class="bal-row"><span class="cur-badge" style="background:var(--c-${cur.varc}-bg);color:var(--c-${cur.varc})">${cur.short}</span>
         <span class="bal-name">${cur.label}</span>${cell}</div>`;
     }).join("");
-    const note = editing
-      ? `<textarea class="note-input" data-person="${pi}" data-note="1" aria-label="${p.name} note">${p.note||""}</textarea>`
-      : `<div class="note">${p.note||""}</div>`;
+    const note = editing ? eArea("people."+pi+".note", p.note||"") : `<div class="note">${escHtml(p.note||"")}</div>`;
     return `<div class="card"><div class="person-head"><div class="avatar">${initials(p.name)}</div>
-      <div><div class="pname">${p.name}</div><div class="prole">Player ${pi+1}</div></div></div>
+      <div><div class="pname">${escHtml(p.name)}</div><div class="prole">Player ${pi+1}</div></div></div>
       ${rows}<div style="margin-top:6px">${note}</div></div>`;
   }).join("");
-  if (editing){
-    el.querySelectorAll(".bal-input").forEach(inp=>inp.addEventListener("input",e=>{
-      state.people[+e.target.dataset.person].balances[e.target.dataset.key]=Math.max(0,Math.round(Number(e.target.value)||0));
-      saveDraft(); renderGates(); renderPooled(); renderNextAction(); renderPerformance(); renderChart();
-    }));
-    el.querySelectorAll(".note-input").forEach(t=>t.addEventListener("input",e=>{ state.people[+e.target.dataset.person].note=e.target.value; saveDraft(); }));
-  }
 }
 function statusClass(s){ return /active/i.test(s)?"status-active":/order/i.test(s)?"status-order":"status-plan"; }
 function barBlock(label,right,pct,gold){ return `<div class="prog-wrap"><div class="prog-label"><span>${label}</span><span class="num">${right} · ${pct}%</span></div>
@@ -914,26 +1057,42 @@ function barBlock(label,right,pct,gold){ return `<div class="prog-wrap"><div cla
 function renderCards(){
   const owners=state.people.map(p=>p.name);
   document.getElementById("cards").innerHTML = owners.map(owner=>{
-    const cardHTML=state.cards.filter(c=>c.owner===owner).map(c=>{
-      let bars="";
-      if (c.welcomeSpendTarget){ const d=Number(c.spendYTD)||0,t=c.welcomeSpendTarget,pct=Math.min(100,Math.round(d*100/t)); bars+=barBlock(`Welcome spend (${fmt(c.welcomeBonus||0)} pts)`,`£${fmt(d)} / £${fmt(t)}`,pct,false); }
-      if (c.voucherSpendTarget){ const d=Number(c.spendYTD)||0,t=c.voucherSpendTarget,pct=Math.min(100,Math.round(d*100/t)); bars+=barBlock(`2-4-1 voucher spend`,`£${fmt(d)} / £${fmt(t)}`,pct,true); }
-      if (c.spendTarget && !c.welcomeSpendTarget && !c.voucherSpendTarget){ const d=Number(c.spendYTD)||0,t=c.spendTarget,pct=Math.min(100,Math.round(d*100/t)); bars+=barBlock(`Annual spend perk`,`£${fmt(d)} / £${fmt(t)}`,pct,true); }
-      return `<div class="card ccard"><div class="ccard-top"><div style="flex:1;min-width:0"><div class="ccard-name">${c.name}</div><div class="ccard-owner">${c.owner}</div></div>
-        <span class="pill ${statusClass(c.status)}" style="font-size:11px">${c.status}</span></div>
-        <div class="ccard-grid"><span>Fee <b>${c.fee}</b></span><span>Earn <b>${c.earn}</b></span></div>
-        <div class="ccard-perk">${c.perk}</div>${bars}</div>`;
+    const cardHTML=state.cards.map((c,ci)=>({c,ci})).filter(x=>x.c.owner===owner).map(({c,ci})=>{
+      let bars=""; const d=Number(c.spendYTD)||0;
+      if (c.welcomeSpendTarget){ const t=c.welcomeSpendTarget,pct=Math.min(100,Math.round(d*100/t)); bars+=barBlock(`Welcome spend (${fmt(c.welcomeBonus||0)} pts)`,`£${fmt(d)} / £${fmt(t)}`,pct,false); }
+      if (c.voucherSpendTarget){ const t=c.voucherSpendTarget,pct=Math.min(100,Math.round(d*100/t)); bars+=barBlock(`2-4-1 voucher spend`,`£${fmt(d)} / £${fmt(t)}`,pct,true); }
+      if (c.spendTarget && !c.welcomeSpendTarget && !c.voucherSpendTarget){ const t=c.spendTarget,pct=Math.min(100,Math.round(d*100/t)); bars+=barBlock(`Annual spend perk`,`£${fmt(d)} / £${fmt(t)}`,pct,true); }
+      let editFields="";
+      if (editing){
+        const hasSpend=c.welcomeSpendTarget||c.voucherSpendTarget||c.spendTarget;
+        editFields=`<div class="e-row" style="border-top:1px dashed var(--border);margin-top:8px">
+          ${hasSpend?`<div class="e-field"><span class="lbl">Spend so far (£)</span>${eNum("cards."+ci+".spendYTD",d)}</div>`:""}
+          <div class="e-field"><span class="lbl">Status</span>${eText("cards."+ci+".status",c.status)}</div></div>`;
+      }
+      return `<div class="card ccard"><div class="ccard-top"><div style="flex:1;min-width:0"><div class="ccard-name">${escHtml(c.name)}</div><div class="ccard-owner">${escHtml(c.owner)}</div></div>
+        <span class="pill ${statusClass(c.status)}" style="font-size:11px">${escHtml(c.status)}</span></div>
+        <div class="ccard-grid"><span>Fee <b>${escHtml(c.fee)}</b></span><span>Earn <b>${escHtml(c.earn)}</b></span></div>
+        <div class="ccard-perk">${escHtml(c.perk)}</div>${bars}${editFields}</div>`;
     }).join("");
-    return `<div><div class="prole" style="margin:0 4px 8px;font-weight:700;color:var(--text-2)">${owner}</div>${cardHTML}</div>`;
+    return `<div><div class="prole" style="margin:0 4px 8px;font-weight:700;color:var(--text-2)">${escHtml(owner)}</div>${cardHTML}</div>`;
   }).join("");
 }
 function renderVouchers(){
-  document.getElementById("vouchers").innerHTML = state.vouchers.map(v=>{
-    const earned=voucherEarned(v), inProg=/progress/i.test(v.status);
-    const cls=earned?"ok":inProg?"warn":"muted";
-    return `<div class="card tile"><h3>${v.name}</h3><div class="row"><span class="pill ${cls}" style="font-size:11px">${v.status}</span></div>
-      <div class="row">Owner <b>${v.owner}</b></div><div class="row">Earned by <b>${v.earnedBy}</b></div><div class="row">${v.value}</div></div>`;
-  }).join("");
+  document.getElementById("vouchers").innerHTML = state.vouchers.map((v,i)=>{
+    if (editing){
+      return `<div class="card tile">
+        <div class="e-field"><span class="lbl">Voucher name</span>${eText("vouchers."+i+".name",v.name)}</div>
+        <div class="e-field" style="margin-top:6px"><span class="lbl">Status</span>${eSel("vouchers."+i+".status",v.status,["Not yet earned","In progress","Earned","In hand","Available"])}</div>
+        <div class="e-field" style="margin-top:6px"><span class="lbl">Owner</span>${eText("vouchers."+i+".owner",v.owner)}</div>
+        <div class="e-field" style="margin-top:6px"><span class="lbl">Earned by</span>${eText("vouchers."+i+".earnedBy",v.earnedBy)}</div>
+        <div class="e-field" style="margin-top:6px"><span class="lbl">What it's worth</span>${eArea("vouchers."+i+".value",v.value)}</div>
+        <div class="e-field" style="margin-top:6px"><span class="lbl">Counts toward gate (ny / tokyo / blank)</span>${eText("vouchers."+i+".targetForGate",v.targetForGate||"")}</div>
+        <div style="margin-top:8px">${delBtn("vouchers",i)}</div></div>`;
+    }
+    const earned=voucherEarned(v), inProg=/progress/i.test(v.status); const cls=earned?"ok":inProg?"warn":"muted";
+    return `<div class="card tile"><h3>${escHtml(v.name)}</h3><div class="row"><span class="pill ${cls}" style="font-size:11px">${escHtml(v.status)}</span></div>
+      <div class="row">Owner <b>${escHtml(v.owner)}</b></div><div class="row">Earned by <b>${escHtml(v.earnedBy)}</b></div><div class="row">${escHtml(v.value)}</div></div>`;
+  }).join("") + (editing?`<div class="card tile" style="display:flex;align-items:center;justify-content:center">${addBtn("vouchers","Add voucher")}</div>`:"");
 }
 function renderPlaybook(){
   const pb=state.playbook||{};
@@ -948,16 +1107,23 @@ function renderPlaybook(){
   }).join("");
 }
 function renderEligibility(){
+  const el=document.getElementById("eligibility");
+  if (editing){
+    el.innerHTML = (state.eligibility||[]).map((e,i)=>`<div class="e-row">
+      <div class="e-field" style="flex:0 0 120px"><span class="lbl">Date</span>${eText("eligibility."+i+".date",e.date)}</div>
+      <div class="e-field" style="flex:2 1 160px"><span class="lbl">Reminder</span>${eText("eligibility."+i+".label",e.label)}</div>
+      <div class="e-field" style="flex:0 0 84px"><span class="lbl">Who</span>${eText("eligibility."+i+".who",e.who||"")}</div>${delBtn("eligibility",i)}</div>`).join("")+`<div class="e-add">${addBtn("eligibility","Add reminder")}</div>`;
+    return;
+  }
   const items=[...(state.eligibility||[])].sort((a,b)=>a.date.localeCompare(b.date));
-  document.getElementById("eligibility").innerHTML = items.map(e=>{
-    const cd=countdownText(e.date);
-    return `<div class="tl-item"><div class="tl-when">${formatDate(e.date)}</div><div class="tl-label" style="font-weight:600">${e.label}</div>
-      <div class="tl-note">${cd.over?"Now":cd.text}</div></div>`;
-  }).join("");
+  el.innerHTML = items.map(e=>{ const cd=countdownText(e.date);
+    return `<div class="tl-item"><div class="tl-when">${formatDate(e.date)}</div><div class="tl-label" style="font-weight:600">${escHtml(e.label)}</div>
+      <div class="tl-note">${cd.over?"Now":cd.text}</div></div>`; }).join("");
 }
 
 /* ---- boost tab ---- */
-function renderBoost(){
+function renderBoost(){ renderBoostSummary(); renderBoostTable(); }
+function renderBoostSummary(){
   const bb=state.balanceBoost||{}; const buys=bb.purchases||[];
   const totalBuy=buys.reduce((s,p)=>s+(Number(p.buy)||0),0), totalCost=buys.reduce((s,p)=>s+(Number(p.cost)||0),0);
   document.getElementById("boostIntro").innerHTML =
@@ -967,13 +1133,33 @@ function renderBoost(){
     <div class="card cash-stat"><div class="k">Cash cost</div><div class="v num">${fmtGBP(totalCost)}</div></div>
     <div class="card cash-stat"><div class="k">Annual cap</div><div class="v num">${fmt(bb.annualCap||300000)}</div></div>`;
   document.getElementById("boostRate").textContent = (bb.rate||0.92)+"p per Avios · "+ (bb.note||"");
-  document.querySelector("#boostTable thead").innerHTML = "<tr>"+["Month","Earn boosted (200%)","Avios bought","Cost"].map(c=>`<th>${c}</th>`).join("")+"</tr>";
-  document.querySelector("#boostTable tbody").innerHTML = buys.map(p=>`<tr><td>${shortMonth(p.month)}</td><td style="white-space:normal">${p.earn}</td>
+}
+function renderBoostTable(){
+  const bb=state.balanceBoost||{}; const buys=bb.purchases||[];
+  const thead=document.querySelector("#boostTable thead"), tbody=document.querySelector("#boostTable tbody");
+  if (editing){
+    thead.innerHTML="";
+    tbody.innerHTML = `<tr><td style="padding:0"><p class="e-hint">Buy = Avios purchased (usually 200% of that month's earn). Cost = £ paid. Totals + the Cash tab update live.</p>`+
+      buys.map((p,i)=>`<div class="e-row"><div class="e-field" style="flex:0 0 80px"><span class="lbl">Month</span>${eText("balanceBoost.purchases."+i+".month",p.month)}</div>
+        <div class="e-field" style="flex:2 1 150px"><span class="lbl">Earn boosted</span>${eText("balanceBoost.purchases."+i+".earn",p.earn)}</div>
+        <div class="e-field" style="flex:0 0 96px"><span class="lbl">Avios bought</span>${eNum("balanceBoost.purchases."+i+".buy",p.buy)}</div>
+        <div class="e-field" style="flex:0 0 86px"><span class="lbl">Cost £</span>${eNum("balanceBoost.purchases."+i+".cost",p.cost)}</div>${delBtn("balanceBoost.purchases",i)}</div>`).join("")+
+      `<div class="e-add">${addBtn("balanceBoost.purchases","Add boost month")}</div></td></tr>`;
+    return;
+  }
+  const totalBuy=buys.reduce((s,p)=>s+(Number(p.buy)||0),0), totalCost=buys.reduce((s,p)=>s+(Number(p.cost)||0),0);
+  thead.innerHTML = "<tr>"+["Month","Earn boosted (200%)","Avios bought","Cost"].map(c=>`<th>${c}</th>`).join("")+"</tr>";
+  tbody.innerHTML = buys.map(p=>`<tr><td>${shortMonth(p.month)}</td><td style="white-space:normal">${escHtml(p.earn)}</td>
     <td class="num">${fmt(p.buy)}</td><td class="num">${fmtGBP(p.cost)}</td></tr>`).join("")+
     `<tr><td><b>Total</b></td><td></td><td class="num"><b>${fmt(totalBuy)}</b></td><td class="num"><b>${fmtGBP(totalCost)}</b></td></tr>`;
 }
 function renderLevers(){
-  document.getElementById("levers").innerHTML = (state.levers||[]).map((l,i)=>`<div class="lever"><span class="lnum">${i+1}</span><span>${l}</span></div>`).join("");
+  const el=document.getElementById("levers");
+  if (editing){
+    el.innerHTML = (state.levers||[]).map((l,i)=>`<div class="e-row"><span class="lnum" style="flex:0 0 22px;height:22px">${i+1}</span><div style="flex:1">${eArea("levers."+i,l)}</div>${delBtn("levers",i)}</div>`).join("")+`<div class="e-add">${addBtn("levers","Add lever")}</div>`;
+    return;
+  }
+  el.innerHTML = (state.levers||[]).map((l,i)=>`<div class="lever"><span class="lnum">${i+1}</span><span>${escHtml(l)}</span></div>`).join("");
 }
 function renderTransfers(){
   document.getElementById("transfers").innerHTML = state.transfers.map(t=>`<div class="tmap-row"><span class="from">${t.from}</span>
@@ -1089,6 +1275,10 @@ function boot(){
   document.getElementById("modalBack").addEventListener("click",e=>{ if(e.target.id==="modalBack") closeModal(); });
   document.getElementById("modalPrimary").addEventListener("click",()=>modalPrimaryFn&&modalPrimaryFn());
   document.querySelectorAll(".tabnav button").forEach(b=>b.addEventListener("click",()=>showTab(b.dataset.tab)));
+  // delegated edit handlers — every [data-path] input + add/remove button
+  document.addEventListener("input", onEditInput);
+  document.addEventListener("change", onEditInput);
+  document.addEventListener("click", onEditClick);
   const det=document.getElementById("transDetails");
   det.addEventListener("toggle",()=>document.getElementById("transToggle").textContent=det.open?"tap to collapse ▴":"tap to expand ▾");
   document.getElementById("fileInput").addEventListener("change",e=>{ const f=e.target.files[0]; if(!f)return; const rd=new FileReader();
