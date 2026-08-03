@@ -1,2 +1,7 @@
-.DS_Store
-node_modules/
+# Points HQ — publish ONLY the dashboard.
+# Everything else in this folder is private strategy material and must never
+# reach the public GitHub repo. Whitelist approach: ignore everything, then
+# re-include just the two files that belong in the repo.
+/*
+!/.gitignore
+!/index.html
