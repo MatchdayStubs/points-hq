@@ -484,7 +484,8 @@
       <div class="people" id="playbook"></div>
     </section>
     <section>
-      <div class="sec-head"><h2>Eligibility timeline</h2></div>
+      <div class="sec-head"><h2>Eligibility map</h2><span class="hint">when new-card bonuses re-open · 5-yr view</span></div>
+      <p class="page-intro">Amex rule of thumb: <b>no welcome bonus if you've held any personal Amex in the prior 24 months</b> — except <b>Platinum</b> (blocked only by prior MR cards: Gold/Platinum/Rewards) and <b>BA Premium Plus</b> (blocked only by a prior BA Amex). Barclaycard &amp; HSBC are separate issuers with their own rules. The two <b>Barclaycard upgrade vouchers</b> renew yearly at £10k spend each and stay parked for a future off-peak trip; Hayden's <b>BA PP</b> becomes the household's rolling 2-4-1 engine from mid-'27. Dates are estimates — <b>pin each to the exact card-closure date</b>.</p>
       <div class="card"><div class="timeline" id="eligibility"></div></div>
     </section>
   </div>
@@ -539,7 +540,7 @@ const DATA = {
       note: "Actuals 3 Aug '26: Avios 1,235 settled + 6,396 PENDING from latest card bill (posts within days). Amex MR 1,003. Hilton 118,576 (hotel tank, outside gates). Platinum 80k MR welcome still incoming (posts ~Oct after £6k spend)." },
     { name: "Tami",
       balances: { avios: 27105, virgin: 5000, amexMR: 100947, hilton: 0, nectar: 0 },
-      note: "Actuals 3 Aug '26: Avios 27,105, Amex MR 100,947. BA Amex Premium Plus now received — spend starts in a few days; 33k referral bonus lands after welcome spend. Keeps Amex Gold until Jan '27." }
+      note: "Actuals 3 Aug '26: Avios 27,105, Amex MR 100,947. BA Amex Premium Plus now received — spend starts in a few days; 33k referral bonus lands after welcome spend. Keeps Amex Gold until Oct '26 (hits bonus + moves MR to Avios, then cancels)." }
   ],
 
   // Gates are BOOKING events (per Excel v6). NY books Jan '27, Tokyo books Jun '27.
@@ -553,7 +554,7 @@ const DATA = {
   cards: [
     { owner: "Hayden", name: "Barclaycard Avios Plus", fee: "£240/yr (£20/mo)", earn: "1.5 Avios/£", status: "Active — everyday engine", perk: "Cabin upgrade voucher or 7k Avios at £10k/yr spend", spendYTD: null, spendTarget: 10000 },
     { owner: "Hayden", name: "Amex Platinum", fee: "£650/yr", earn: "1 MR/£ (more on travel)", status: "Ordered (via Tami referral)", perk: "80k MR welcome + £250 travel credit; Hilton & Marriott Gold; lounges. Cancel before Jun '27 renewal.", welcomeBonus: 80000, welcomeSpendTarget: 6000, spendYTD: 0 },
-    { owner: "Tami", name: "Amex Preferred Rewards Gold", fee: "£195 (free yr1)", earn: "1 MR/£", status: "Active — MR tank", perk: "Lounge passes, dining credits. Transfer all MR to Avios, then cancel Jan/Feb '27 (before Mar renewal)." },
+    { owner: "Tami", name: "Amex Preferred Rewards Gold", fee: "£195 (free yr1)", earn: "1 MR/£", status: "Active — MR tank", perk: "Lounge passes, dining credits. Hits bonus Oct '26 → transfer all MR to Avios, then cancel Oct '26 (starts Platinum 24-mo clock → eligible ~Oct '28)." },
     { owner: "Tami", name: "BA Amex Premium Plus", fee: "£300/yr", earn: "1.5 Avios/£ → 1.25 from 7 Oct '26", status: "Applied — via Mom's referral", perk: "33k bonus via Mom's referral (Mom banks 12k referrer Avios when Tami clears spend) + 2-4-1 ANY-CABIN voucher at £15k/yr spend (valid 2yr in BAEC).", welcomeBonus: 33000, welcomeSpendTarget: 3000, spendYTD: 0, voucherSpendTarget: 15000, referrerBonus: 12000, referrer: "Mom" },
     { owner: "Tami", name: "Barclaycard Avios Plus", fee: "£240/yr (£20/mo)", earn: "1.5 Avios/£", status: "Planned — apply Dec '26", perk: "25k bonus (£1k spend, lands ~Feb '27). Cabin upgrade voucher at £10k/yr." }
   ],
@@ -565,8 +566,18 @@ const DATA = {
   ],
 
   eligibility: [
-    { date: "2027-06-01", label: "Hayden: BA Amex Premium Plus new-bonus eligibility returns (own 2-4-1 pathway)", who: "Hayden" },
-    { date: "2027-03-01", label: "Tami: cancel Amex Gold before renewal (transfer MR to Avios first)", who: "Tami" }
+    { date: "2026-11-01", label: "Tami — 2-4-1 EARNED (£15k on BA PP). Valid 2yr → must fly by ~Nov '28. This is the New York voucher.", who: "Tami" },
+    { date: "2026-10-15", label: "Tami — cancel Amex Gold in Oct (hits bonus, move MR→Avios first). Starts her 24-mo clock: Amex Platinum bonus re-opens ~Oct '28.", who: "Tami" },
+    { date: "2027-06-01", label: "Hayden — BA Amex Premium Plus bonus RE-OPENS (24mo since his last BA Amex). Take it → his OWN 2-4-1 engine, renews at £15k/yr while held.", who: "Hayden" },
+    { date: "2027-06-15", label: "Hayden — cancel Amex Platinum before renewal. Starts 24-mo clock: Platinum bonus re-opens ~Jun '29.", who: "Hayden" },
+    { date: "2027-06-20", label: "Tami — cancel BA Amex PP (the 2-4-1 is already banked & still valid). Starts clock: BA PP bonus re-opens ~Jun '29.", who: "Tami" },
+    { date: "2027-10-01", label: "Both — Barclaycard upgrade vouchers renew at £10k/yr spend each. Keep both cards long-term = 2 vouchers/yr, PARKED for a future OFF-PEAK BA long-haul (worth ~100k each; peak isn't worth it).", who: "Both" },
+    { date: "2028-06-01", label: "Hayden — renew his 2-4-1 (£15k/yr on BA PP). Recurring every year he holds the card — this is now the household's 2-4-1 engine.", who: "Hayden" },
+    { date: "2028-11-01", label: "Tami — her original 2-4-1 EXPIRES (~2yr from earn). Must have flown by now.", who: "Tami" },
+    { date: "2028-10-15", label: "Tami — Amex Platinum bonus ELIGIBLE (24mo since Gold cancel in Oct '26). Big MR welcome available again (take via Hayden's referral).", who: "Tami" },
+    { date: "2029-06-01", label: "Hayden — Amex Platinum bonus ELIGIBLE again (24mo since cancel).", who: "Hayden" },
+    { date: "2029-06-20", label: "Tami — BA Amex PP bonus ELIGIBLE again (24mo since cancel). Re-take for a fresh welcome bonus + a new 2-4-1.", who: "Tami" },
+    { date: "2030-01-01", label: "Note — Amex Gold bonuses (either of you) only re-open 24mo after holding NO personal Amex at all; blocked while you keep any Amex. Not a near-term target.", who: "Both" }
   ],
 
   transfers: [
@@ -633,7 +644,7 @@ const DATA = {
   feesSaved: [
     { label: "Hayden cancels Amex Platinum before Jul '27", amount: 650 },
     { label: "Tami cancels BA Amex PP before Jul '27", amount: 300 },
-    { label: "Tami cancels Amex Gold before Mar '27", amount: 195 }
+    { label: "Tami cancels Amex Gold in Oct '26 (before renewal)", amount: 195 }
   ],
   seatValue: "£20,000+",
 
@@ -672,9 +683,9 @@ const DATA = {
       { when: "Now",      action: "Keep",          card: "Amex Gold",              note: "1 MR/£. Transfer all MR to Avios before cancelling." },
       { when: "Aug '26",  action: "Applied",        card: "BA Amex Premium Plus",   note: "Via Mom's referral: 33k to Tami + 12k to Mom. Target £15k total for the 2-4-1 by Nov '26." },
       { when: "Aug '26",  action: "Collect bonus", card: "BA Amex PP",             note: "33k Avios lands after welcome spend; Mom's 12k referrer bonus posts then too." },
+      { when: "Oct '26",  action: "Cancel",        card: "Amex Gold",              note: "Hits her bonus in Oct → transfer MR to Avios first, then cancel. Saves £195 & starts Platinum 24-mo clock early (eligible ~Oct '28)." },
       { when: "Nov '26",  action: "2-4-1 earned",  card: "BA Amex PP",             note: "£15k hit → voucher (any cabin), valid 2yr in BAEC. Use at NY booking." },
       { when: "Dec '26",  action: "Apply",         card: "Barclaycard Avios Plus", note: "25k after £1k, lands ~Feb '27." },
-      { when: "Jan '27",  action: "Cancel",        card: "Amex Gold",              note: "Transfer MR to Avios first. Before Mar renewal — saves £195." },
       { when: "Jun '27",  action: "Cancel",        card: "BA Amex PP",             note: "2-4-1 stays valid in BAEC. Saves £300." },
       { when: "~Oct '27", action: "Upgrade voucher", card: "Barclaycard Avios Plus", note: "After £10k/yr spend. Accept in app when you know the trip." }
     ]
